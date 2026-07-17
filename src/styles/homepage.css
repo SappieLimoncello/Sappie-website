@@ -287,7 +287,7 @@
 }
 .prod__body--geel { background: var(--citroengeel); color: var(--olijf-zwart); }
 .prod__body--blauw { background: var(--lucht-blauw); color: var(--olijf-zwart); }
-.prod__body--sage { background: var(--sappie-sage); color: var(--warm-wit); }
+.prod__body--sage { background: var(--olijfgroen); color: var(--warm-wit); }
 .prod__name {
   font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
   letter-spacing: -0.01em; font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: 0;
