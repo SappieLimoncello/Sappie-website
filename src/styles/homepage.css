@@ -1,0 +1,316 @@
+/* ================================================================
+   SAPPIE HOMEPAGE — page-specific styles
+   Hero, waterline, tiles, intro, De Stijl grid, smaakbanden,
+   panels, shop, placeholders, buttons.
+   ================================================================ */
+
+/* ================================================================
+   HERO
+   ================================================================ */
+.hero {
+  position: relative; width: 100%;
+  min-height: clamp(528px, 82.5vh, 902px); overflow: hidden;
+}
+.hero__img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 20%;
+}
+.hero__overlay {
+  position: absolute; inset: 0; display: flex; align-items: flex-end;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  background: linear-gradient(to top, rgba(58,62,44,0.52) 0%, rgba(58,62,44,0.18) 40%, transparent 70%);
+}
+.hero__content {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  width: 100%; gap: 2rem;
+}
+.hero__text { max-width: 580px; }
+.hero__eyebrow {
+  font-family: var(--font-display); font-weight: 700; font-size: 0.8rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(250,244,230,0.8); margin: 0 0 0.6rem;
+}
+.hero__headline {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.02em; line-height: 0.90; margin: 0;
+  font-size: clamp(2.42rem, 5.72vw, 4.4rem); color: var(--warm-wit);
+  animation: heroHeadlineFade 1.2s ease;
+}
+@keyframes heroHeadlineFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.qmark { position: relative; display: inline-block; }
+.qmark__dot {
+  position: absolute; inset: 0;
+  color: var(--citroengeel);
+  text-align: center;
+}
+
+/* ---- Entry tiles ---- */
+.tiles { display: flex; gap: 0; }
+.tile {
+  display: flex; flex-direction: column; justify-content: space-between;
+  width: 9.35rem; min-height: 7.7rem; padding: 1.1rem 1.155rem;
+  text-decoration: none; cursor: pointer;
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  font-size: 1.32rem; line-height: 0.92; letter-spacing: -0.01em;
+  transition: filter 140ms ease;
+}
+.tile:hover { filter: brightness(0.96); }
+.tile .arr {
+  align-self: flex-end; font-size: 1.485rem; line-height: 1;
+  transition: transform 140ms ease;
+}
+.tile:hover .arr { transform: translateX(4px); }
+.tile--mark {
+  position: relative; overflow: hidden;
+  width: 9.35rem; min-height: 7.7rem;
+}
+.tile--mark-geel { background: var(--citroengeel); color: var(--olijf-zwart); }
+.tile--mark-blauw { background: var(--lucht-blauw); color: var(--olijf-zwart); }
+.tile__bg {
+  position: absolute; z-index: 0;
+  opacity: 0.25; pointer-events: none;
+}
+.tile--mark-geel .tile__bg {
+  width: 180%; height: 180%; bottom: -30%; left: -30%;
+}
+.tile--mark-blauw .tile__bg {
+  width: 180%; height: 180%; top: -30%; right: -30%;
+}
+.tile--mark-geel .arr { color: var(--utrecht-rood); }
+.tile__text,
+.tile--mark .arr { position: relative; z-index: 1; }
+
+/* ---- Waterline ---- */
+.waterline { display: flex; height: 14px; }
+.waterline i { display: block; }
+.waterline .a { background: var(--citroengeel); flex: 3; }
+.waterline .b { background: var(--baksteen); flex: 1; }
+.waterline .c { background: var(--lucht-blauw); flex: 2; }
+.waterline .d { background: var(--utrecht-rood); flex: 0.6; }
+.waterline .e { background: var(--olijfgroen); flex: 2.4; }
+
+/* ================================================================
+   DISPLAY TEXT HELPERS
+   ================================================================ */
+.display {
+  font-family: var(--font-display); font-weight: 900;
+  text-transform: uppercase; letter-spacing: -0.02em;
+  line-height: 0.92; margin: 0;
+}
+.eyebrow {
+  font-family: var(--font-display); font-weight: 800; font-size: 0.8125rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-soft); margin: 0;
+}
+.rule { height: 2px; background: var(--olijf-zwart); width: 80px; }
+
+/* ================================================================
+   BORDERED GRID
+   ================================================================ */
+.bg {
+  display: grid; gap: 2px;
+  background: var(--olijf-zwart);
+  border: 2px solid var(--olijf-zwart);
+}
+.bg > * { background: var(--warm-wit); }
+
+/* ================================================================
+   INTRO (centered statement)
+   ================================================================ */
+.intro {
+  text-align: center;
+  padding: calc(clamp(2.6rem, 6vw, 4.2rem) + 20px) clamp(1.25rem, 4vw, 3.5rem) calc(clamp(2.2rem, 4.8vw, 3.6rem) - 20px);
+}
+.hl-red {
+  background: var(--utrecht-rood); color: var(--warm-wit);
+  padding: 0.02em 0.24em;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+.intro__title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.02em; line-height: 0.94;
+  font-size: clamp(2rem, 4.5vw, 3.2rem); margin: 0 0 1.2rem;
+}
+.intro__body { max-width: 68ch; margin: 0 auto; line-height: 1.65; color: var(--text-soft); }
+
+/* ================================================================
+   CELL — generic content block inside .bg grid
+   ================================================================ */
+.cell { padding: clamp(2rem, 4vw, 3.5rem); }
+.cell--creme { background: var(--creme); }
+.cell--zand { background: var(--zand); }
+.cell--olijf { background: var(--olijfgroen); color: var(--warm-wit); }
+
+/* ================================================================
+   SMAAKBAND
+   ================================================================ */
+.smaak {
+  padding: clamp(1.2rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.5rem);
+  display: flex; align-items: flex-start;
+}
+.smaak__label {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(0.85rem, 1.4vw, 1.05rem); letter-spacing: 0.04em; margin: 0;
+}
+.smaak--blauw { background: var(--lucht-blauw); }
+.smaak--geel  { background: var(--citroengeel); }
+.smaak--sage  { background: var(--water-groen); }
+.smaak--blauw-light { background: color-mix(in srgb, var(--lucht-blauw) 50%, var(--warm-wit)); }
+.smaak--geel-light  { background: color-mix(in srgb, var(--citroengeel) 50%, var(--warm-wit)); }
+.smaak--sage-dark   { background: color-mix(in srgb, var(--water-groen) 80%, var(--olijf-zwart)); color: var(--warm-wit); }
+
+/* ================================================================
+   NUMBERED FEATURE
+   ================================================================ */
+.nfeat { padding: clamp(1.5rem, 3vw, 2.5rem); }
+.nfeat__num {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 0.9rem; letter-spacing: 0.08em; margin: 0 0 0.6rem;
+}
+.nfeat__num--red    { color: var(--utrecht-rood); }
+.nfeat__num--yellow { color: var(--citroengeel); }
+.nfeat__num--sage   { color: var(--sappie-sage); }
+.nfeat__title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.01em; line-height: 1; font-size: clamp(1.1rem, 2vw, 1.35rem);
+  margin: 0 0 0.5rem;
+}
+.nfeat__body { margin: 0; line-height: 1.6; color: var(--text-soft); font-size: 0.95rem; }
+
+/* ================================================================
+   DISTRIBUTION POINT
+   ================================================================ */
+.dist { padding: clamp(1.2rem, 2.5vw, 2rem); }
+.dist__dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--utrecht-rood); margin-bottom: 0.65rem;
+}
+.dist__title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  font-size: 0.85rem; letter-spacing: 0.03em; margin: 0;
+}
+.dist__sub { color: var(--text-soft); font-size: 0.9rem; margin: 0.2rem 0 0; }
+
+/* ================================================================
+   STACKED PANELS
+   ================================================================ */
+.stack {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  background: var(--warm-wit);
+}
+.panel {
+  display: grid; grid-template-columns: clamp(60px, 7vw, 90px) 1fr;
+  align-items: start; gap: clamp(1.2rem, 2.5vw, 2rem);
+  padding: clamp(1.8rem, 4vw, 2.75rem) clamp(1.5rem, 3vw, 2.25rem);
+}
+.panel__num {
+  font-family: var(--font-display); font-weight: 900; line-height: 1;
+  font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: -0.02em;
+  opacity: 0.55;
+}
+.panel__body { max-width: 900px; }
+.panel__body--wide { max-width: 640px; }
+.panel__title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.01em; line-height: 0.98; margin: 0 0 0.9rem;
+  font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+}
+.panel__text { margin: 0 0 1.2rem; max-width: 44ch; line-height: 1.6; }
+.panel--sage  { background: var(--sappie-sage); color: var(--warm-wit); }
+.panel--olijf { background: var(--olijfgroen);  color: var(--warm-wit); }
+.panel--blauw { background: var(--lucht-blauw); color: var(--olijf-zwart); }
+.panel--geel  { background: var(--citroengeel); color: var(--olijf-zwart); }
+.panel--sage .panel__num,
+.panel--olijf .panel__num { color: var(--warm-wit); }
+.panel--blauw .panel__num,
+.panel--geel .panel__num { color: var(--olijf-zwart); }
+
+@media (max-width: 700px) {
+  .stack { grid-template-columns: 1fr; }
+  .panel { grid-template-columns: 1fr; }
+}
+
+/* ================================================================
+   SHOP — product cards
+   ================================================================ */
+.shop {
+  padding: clamp(1.4rem, 3vw, 2.4rem) clamp(1.25rem, 4vw, 3.5rem) clamp(2.6rem, 6vw, 4.5rem);
+}
+.hl-blauw {
+  background: var(--lucht-blauw); color: var(--olijf-zwart);
+  padding: 0.02em 0.24em; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+.shop__title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.02em; line-height: 0.95; text-align: center;
+  font-size: clamp(2rem, 5vw, 3.4rem); margin: 0 0 clamp(2rem, 4vw, 3rem);
+}
+.shop__grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+@media (max-width: 760px) { .shop__grid { grid-template-columns: 1fr; } }
+.prod { display: flex; flex-direction: column; overflow: hidden; }
+.prod__photo {
+  aspect-ratio: 4 / 3; background: #d8d4c9;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.prod__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.prod__body {
+  flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 0.55rem; padding: clamp(1.25rem, 2.5vw, 1.6rem);
+}
+.prod__body--geel { background: var(--citroengeel); color: var(--olijf-zwart); }
+.prod__body--blauw { background: var(--lucht-blauw); color: var(--olijf-zwart); }
+.prod__body--sage { background: var(--sappie-sage); color: var(--warm-wit); }
+.prod__name {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.01em; font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: 0;
+}
+.prod__ml { display: block; font-size: 0.62em; letter-spacing: 0.06em; opacity: 0.75; margin-top: 0.2rem; }
+.prod__text { margin: 0; line-height: 1.55; font-weight: 500; font-size: 0.92rem; opacity: 0.9; }
+.prod__price {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(1.6rem, 3vw, 2.1rem); margin: auto 0 0;
+}
+
+/* ================================================================
+   PLACEHOLDER
+   ================================================================ */
+.placeholder {
+  background: #d8d4c9; display: flex; align-items: center; justify-content: center;
+  min-height: 240px;
+}
+.placeholder__text {
+  font-family: 'Courier New', monospace; font-size: 0.75rem;
+  color: rgba(58,62,44,0.35); text-transform: uppercase; letter-spacing: 0.12em;
+}
+
+/* ================================================================
+   BUTTONS
+   ================================================================ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.7rem;
+  font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; line-height: 1; cursor: pointer;
+  border: 2px solid transparent; border-radius: 0;
+  padding: 0.85rem 1.45rem; font-size: 0.82rem; text-decoration: none;
+  transition: filter 140ms ease, background 140ms ease;
+}
+.btn:hover { filter: brightness(0.92); }
+.btn--order { background: var(--utrecht-rood); color: var(--warm-wit); border-radius: 4px; }
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 760px) {
+  .hero__content { flex-direction: column; align-items: flex-start; }
+  .tiles { align-self: flex-end; }
+  .bg[data-cols="2"] { grid-template-columns: 1fr !important; }
+  .bg[data-cols="3"] { grid-template-columns: 1fr !important; }
+}

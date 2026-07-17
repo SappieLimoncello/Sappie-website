@@ -1,0 +1,174 @@
+/* ============================================================
+   SAPPIE — interne tools (overzicht, prospects, taken, verkoop
+   per relatie). Nav/ph/foot come from public.css; this sheet
+   adds only the tool-specific component classes.
+   ============================================================ */
+
+/* ---- Dashboard shell (overzicht) ---- */
+.dash { margin: 0 clamp(1.5rem, 4vw, 3.5rem) clamp(3rem, 6vw, 5rem); }
+
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2vw, 1.5rem); margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+@media (max-width: 760px) { .kpis { grid-template-columns: 1fr; } }
+.kpi { background: var(--warm-wit); padding: clamp(1.5rem, 3vw, 2.25rem); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 0.5rem; min-height: 160px; border: 2px solid var(--olijf-zwart); }
+.kpi__label { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; margin: 0; opacity: 0.85; max-width: 22ch; }
+.kpi__value { font-family: var(--font-display); font-weight: 900; letter-spacing: -0.02em; line-height: 0.9; font-size: clamp(2.6rem, 5vw, 3.6rem); margin: 0; }
+.kpi__unit { font-size: 0.42em; letter-spacing: 0; margin-left: 0.25em; opacity: 0.7; }
+
+.panel { border: 2px solid var(--olijf-zwart); background: var(--warm-wit); margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+.panel__head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: clamp(1rem, 2vw, 1.4rem) clamp(1.25rem, 2.5vw, 1.75rem); border-bottom: 2px solid var(--olijf-zwart); }
+.panel__title { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; font-size: clamp(1.05rem, 2vw, 1.35rem); margin: 0; }
+.panel__hint { font-size: 0.8rem; color: var(--text-soft); font-weight: 600; }
+
+.tbl { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.tbl thead th { text-align: left; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.68rem; letter-spacing: 0.1em; color: var(--text-soft); padding: 0.85rem clamp(1.25rem, 2.5vw, 1.75rem); border-bottom: 2px solid var(--ink-16); }
+.tbl tbody td { padding: 0.9rem clamp(1.25rem, 2.5vw, 1.75rem); border-bottom: 1px solid var(--ink-08); vertical-align: middle; }
+.tbl tbody tr:last-child td { border-bottom: none; }
+.tbl tbody tr:hover { background: var(--ink-08); }
+.tbl__batch { font-family: var(--font-display); font-weight: 800; letter-spacing: 0.02em; }
+.tbl__num { font-variant-numeric: tabular-nums; }
+.tbl th.is-right, .tbl td.is-right { text-align: right; }
+
+.badge { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.66rem; letter-spacing: 0.08em; padding: 0.32rem 0.6rem; border: 2px solid var(--olijf-zwart); line-height: 1; }
+.badge__dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.badge--in-productie { background: var(--citroengeel); color: var(--olijf-zwart); }
+.badge--gebotteld { background: var(--lucht-blauw); color: var(--olijf-zwart); }
+.badge--uitverkocht { background: var(--warm-wit); color: var(--text-soft); border-color: var(--ink-40); }
+
+.chart__wrap { padding: clamp(1.25rem, 2.5vw, 1.75rem); }
+.chart__svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart__grid { stroke: var(--ink-08); stroke-width: 1; }
+.chart__axis { stroke: var(--ink-40); stroke-width: 1.5; }
+.chart__axislabel { font-family: var(--font-body); font-size: 11px; fill: var(--text-soft); }
+.chart__line { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.chart__dot { stroke: var(--warm-wit); stroke-width: 1.5; }
+.legend { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid var(--ink-08); }
+.legend__item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 600; }
+.legend__swatch { width: 14px; height: 14px; border: 1.5px solid var(--olijf-zwart); }
+
+/* ---- Identity switch (ingelogd als) ---- */
+.who { display: flex; align-items: center; gap: 0.6rem; }
+.who__label { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.68rem; letter-spacing: 0.1em; color: var(--text-soft); }
+.who__seg { display: inline-flex; border: 2px solid var(--olijf-zwart); }
+.who__btn { background: var(--warm-wit); border: none; cursor: pointer; padding: 0.5rem 1rem; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.06em; color: var(--olijf-zwart); }
+.who__btn + .who__btn { border-left: 2px solid var(--olijf-zwart); }
+.who__btn--on { background: var(--citroengeel); }
+.ph__row { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.ph__mark--blauw { background: var(--lucht-blauw); }
+
+/* ---- Toolbar + prospects table (potentiele-klanten) ---- */
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin: 0 clamp(1.5rem, 4vw, 3.5rem) 1rem; }
+.bar__count { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.08em; color: var(--text-soft); }
+.bar__btn { background: var(--citroengeel); color: var(--olijf-zwart); border: 2px solid var(--olijf-zwart); cursor: pointer; padding: 0.55rem 1.1rem; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.06em; transition: filter 120ms ease; }
+.bar__btn:hover { filter: brightness(0.94); }
+
+.tblwrap { margin: 0 clamp(1.5rem, 4vw, 3.5rem) clamp(3rem, 6vw, 5rem); border: 2px solid var(--olijf-zwart); overflow-x: auto; }
+.pt { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 960px; }
+.pt thead th { text-align: left; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.08em; color: var(--text-soft); padding: 0.85rem 0.7rem; border-bottom: 2px solid var(--ink-16); white-space: nowrap; background: var(--creme); position: sticky; top: 0; }
+.pt thead th.sortable { cursor: pointer; user-select: none; }
+.pt thead th.sortable:hover { color: var(--olijf-zwart); }
+.pt__arrow { margin-left: 0.3rem; opacity: 0.9; }
+.pt thead th.is-sorted { color: var(--olijf-zwart); }
+.pt td { padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--ink-08); vertical-align: middle; }
+.pt tbody tr:last-child td { border-bottom: none; }
+.pt tbody tr:hover { background: var(--ink-08); }
+.pt td:first-child, .pt th:first-child { padding-left: clamp(1rem, 2vw, 1.4rem); }
+.pt td:last-child, .pt th:last-child { padding-right: clamp(1rem, 2vw, 1.4rem); }
+
+.cell { border: 1.5px solid transparent; background: transparent; font-family: inherit; font-size: 0.86rem; color: var(--olijf-zwart); padding: 0.4rem 0.45rem; width: 100%; min-width: 90px; }
+.cell:hover { border-color: var(--ink-16); }
+.cell:focus { outline: none; border-color: var(--olijf-zwart); background: var(--warm-wit); }
+select.cell { cursor: pointer; -webkit-appearance: none; appearance: none; }
+.statuscell select { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.64rem; letter-spacing: 0.04em; border: 1.5px solid var(--olijf-zwart); min-width: 150px; }
+.del { background: none; border: 1.5px solid transparent; cursor: pointer; color: var(--ink-40); font-size: 1.1rem; line-height: 1; padding: 0.25rem 0.45rem; }
+.del:hover { color: var(--utrecht-rood); border-color: var(--utrecht-rood); }
+.certnote { display: flex; align-items: flex-start; gap: 0.6rem; margin: 0 clamp(1.5rem, 4vw, 3.5rem) 1.25rem; padding: 0.8rem 1rem; background: var(--creme); border-left: 4px solid var(--sappie-sage); font-size: 0.84rem; color: var(--text-soft); }
+.certnote strong { color: var(--olijf-zwart); }
+
+/* ---- Taken board ---- */
+.board { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.25rem, 3vw, 2rem); margin: 0 clamp(1.5rem, 4vw, 3.5rem) clamp(3rem, 6vw, 5rem); align-items: start; }
+@media (max-width: 900px) { .board { grid-template-columns: 1fr; } }
+.list { border: 2px solid var(--olijf-zwart); background: var(--warm-wit); display: flex; flex-direction: column; }
+.list__head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: clamp(1rem, 2vw, 1.4rem) clamp(1.1rem, 2.2vw, 1.5rem); border-bottom: 2px solid var(--olijf-zwart); }
+.list__head--oscar { background: var(--citroengeel); }
+.list__head--jesse { background: var(--lucht-blauw); }
+.list__title { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; font-size: clamp(1.1rem, 2vw, 1.4rem); margin: 0; }
+.list__count { font-family: var(--font-display); font-weight: 800; font-size: 0.8rem; letter-spacing: 0.04em; }
+
+.tt { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.tt thead th { text-align: left; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.08em; color: var(--text-soft); padding: 0.7rem 0.8rem; border-bottom: 2px solid var(--ink-16); white-space: nowrap; }
+.tt td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--ink-08); vertical-align: top; }
+.tt tbody tr:hover { background: var(--ink-08); }
+.tt th.is-check, .tt td.is-check { width: 34px; padding-right: 0; }
+.tt__task { font-weight: 600; }
+.tt__meta { color: var(--text-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tr--done .tt__task { text-decoration: line-through; opacity: 0.5; }
+.tr--done td { opacity: 0.75; }
+.tt__empty td { text-align: center; color: var(--text-soft); padding: 1.6rem 0.8rem; font-style: italic; }
+
+.chk { width: 22px; height: 22px; border: 2px solid var(--olijf-zwart); background: var(--warm-wit); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; color: var(--olijf-zwart); }
+.chk:hover { background: var(--citroengeel); }
+.chk--on { background: var(--sappie-sage); color: var(--warm-wit); border-color: var(--sappie-sage); }
+.chk svg { width: 14px; height: 14px; display: block; }
+
+.type-tag { display: inline-block; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.6rem; letter-spacing: 0.06em; padding: 0.22rem 0.45rem; border: 1.5px solid var(--ink-40); white-space: nowrap; }
+
+.donebar { border-top: 2px dashed var(--ink-16); }
+.donebar__btn { width: 100%; background: none; border: none; cursor: pointer; text-align: left; padding: 0.7rem clamp(1.1rem, 2.2vw, 1.5rem); font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.68rem; letter-spacing: 0.08em; color: var(--text-soft); display: flex; align-items: center; gap: 0.5rem; }
+.donebar__btn:hover { color: var(--olijf-zwart); }
+.donebar__caret { transition: transform 140ms ease; }
+.donebar__caret--open { transform: rotate(90deg); }
+
+/* ---- Shared add-forms (taken + verkoop-per-relatie) ---- */
+.add { border-top: 2px solid var(--olijf-zwart); padding: clamp(1rem, 2vw, 1.3rem) clamp(1.1rem, 2.2vw, 1.5rem); background: var(--creme); display: grid; gap: 0.6rem; }
+.add__row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.add label { display: flex; flex-direction: column; gap: 0.25rem; }
+.add__lbl { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.6rem; letter-spacing: 0.08em; color: var(--text-soft); }
+.field { border: 2px solid var(--olijf-zwart); background: var(--warm-wit); padding: 0.55rem 0.65rem; font-family: inherit; font-size: 0.9rem; color: var(--olijf-zwart); width: 100%; }
+.field:focus { outline: none; box-shadow: inset 0 0 0 2px var(--citroengeel); }
+.add__btn { justify-self: start; background: var(--citroengeel); color: var(--olijf-zwart); border: 2px solid var(--olijf-zwart); cursor: pointer; padding: 0.6rem 1.2rem; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.74rem; letter-spacing: 0.06em; transition: filter 120ms ease; }
+.add__btn:hover { filter: brightness(0.94); }
+.add__btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.add__type-row { display: flex; align-items: flex-end; gap: 0.6rem; }
+.add__type-row label { flex: 1; }
+.add__newtype { background: var(--warm-wit); border: 2px solid var(--olijf-zwart); cursor: pointer; padding: 0.55rem 0.7rem; font-family: var(--font-display); font-weight: 800; font-size: 0.9rem; line-height: 1; color: var(--olijf-zwart); }
+.add__newtype:hover { background: var(--citroengeel); }
+
+/* ---- Verkoop per relatie ---- */
+.wrap { margin: 0 clamp(1.5rem, 4vw, 3.5rem) clamp(3rem, 6vw, 5rem); }
+.pick { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin: clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.5rem, 4vw, 3.5rem) 0; }
+.pick__label { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.68rem; letter-spacing: 0.1em; color: var(--text-soft); }
+.pick__chip { background: var(--warm-wit); border: 2px solid var(--olijf-zwart); cursor: pointer; padding: 0.45rem 0.9rem; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.05em; color: var(--olijf-zwart); transition: background 120ms ease; }
+.pick__chip:hover { background: var(--citroengeel); }
+.pick__chip--on { background: var(--sappie-sage); color: var(--warm-wit); border-color: var(--sappie-sage); }
+
+.rel { margin: clamp(1.5rem, 3vw, 2.2rem) clamp(1.5rem, 4vw, 3.5rem) clamp(1.5rem, 3vw, 2.2rem); }
+.rel__eyebrow { display: block; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.16em; color: var(--utrecht-rood); margin: 0 0 0.7rem; }
+.rel__name { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; line-height: 1; font-size: clamp(1.89rem, 4.96vw, 3.57rem); margin: 0; }
+.rel__meta { display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; margin: 1.1rem 0 0; }
+.rel__field { display: flex; flex-direction: column; gap: 0.15rem; }
+.rel__field-lbl { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.6rem; letter-spacing: 0.1em; color: var(--text-soft); }
+.rel__field-val { font-weight: 600; }
+
+.grid { display: grid; grid-template-columns: 320px 1fr; gap: clamp(1.25rem, 3vw, 2rem); align-items: start; }
+@media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+
+.total { background: var(--citroengeel); border: 2px solid var(--olijf-zwart); padding: clamp(1.5rem, 3vw, 2rem); text-align: center; margin-bottom: clamp(1.25rem, 3vw, 2rem); }
+.total__value { font-family: var(--font-display); font-weight: 900; letter-spacing: -0.02em; line-height: 0.85; font-size: clamp(3rem, 7vw, 4.6rem); margin: 0; }
+.total__label { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.74rem; letter-spacing: 0.1em; margin: 0.6rem 0 0; }
+.total__sub { font-size: 0.82rem; color: var(--olijf-zwart); opacity: 0.7; margin: 0.35rem 0 0; font-weight: 600; }
+
+.st { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.st thead th { text-align: left; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 0.64rem; letter-spacing: 0.08em; color: var(--text-soft); padding: 0.8rem clamp(1.1rem, 2.2vw, 1.5rem); border-bottom: 2px solid var(--ink-16); }
+.st td { padding: 0.8rem clamp(1.1rem, 2.2vw, 1.5rem); border-bottom: 1px solid var(--ink-08); }
+.st tbody tr:last-child td { border-bottom: none; }
+.st tbody tr:hover { background: var(--ink-08); }
+.st__num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+.st th.is-right, .st td.is-right { text-align: right; }
+.st__empty td { text-align: center; color: var(--text-soft); font-style: italic; padding: 1.6rem; }
+
+.spark { padding: clamp(1rem, 2vw, 1.4rem) clamp(1.1rem, 2.2vw, 1.5rem); border-top: 1px solid var(--ink-08); }
+.spark__svg { width: 100%; height: auto; display: block; overflow: visible; }
+.spark__axis { stroke: var(--ink-40); stroke-width: 1.5; }
+.spark__line { fill: none; stroke: var(--utrecht-rood); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.spark__dot { fill: var(--utrecht-rood); stroke: var(--warm-wit); stroke-width: 1.5; }
+.spark__label { font-family: var(--font-body); font-size: 10px; fill: var(--text-soft); }

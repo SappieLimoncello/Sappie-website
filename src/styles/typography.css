@@ -1,0 +1,69 @@
+/* ============================================================
+   SAPPIE — TYPOGRAPHY
+   One typeface: Montserrat. Headings ride the heaviest cuts
+   (800–900), uppercase, with tight tracking. Body sits at 400–600.
+   The whole range — Thin (100) to Black (900) — is available.
+   ============================================================ */
+
+:root {
+  --font-display: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body:    'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Weights — Montserrat ships the full range */
+  --fw-thin:       100;
+  --fw-extralight: 200;
+  --fw-light:      300;
+  --fw-regular:    400;
+  --fw-medium:     500;
+  --fw-semibold:   600;
+  --fw-bold:       700;
+  --fw-extrabold:  800;
+  --fw-black:      900;
+  --fw-heavy:      900;
+
+  /* Type scale — display is uppercase & tightly tracked */
+  --fs-display:  clamp(3.25rem, 7vw, 6rem);
+  --fs-h1:       clamp(2.5rem, 5vw, 4rem);
+  --fs-h2:       clamp(1.9rem, 3.4vw, 2.75rem);
+  --fs-h3:       1.5rem;
+  --fs-h4:       1.175rem;
+  --fs-lead:     1.25rem;
+  --fs-body:     1.0625rem;
+  --fs-small:    0.9375rem;
+  --fs-eyebrow:  0.8125rem;
+
+  /* Line heights */
+  --lh-tight:    0.96;
+  --lh-snug:     1.12;
+  --lh-normal:   1.55;
+
+  /* Letter spacing */
+  --ls-display: -0.02em;
+  --ls-tight:   -0.01em;
+  --ls-eyebrow:  0.18em;
+}
+
+.sappie-display {
+  font-family: var(--font-display);
+  font-weight: var(--fw-heavy);
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+  color: var(--text);
+}
+.sappie-eyebrow {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+.sappie-lead {
+  font-family: var(--font-body);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-normal);
+  color: var(--text);
+}

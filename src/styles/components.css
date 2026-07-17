@@ -1,0 +1,169 @@
+/* ================================================================
+   SAPPIE — Shared components: nav, footer, page header, dropdown
+   Two nav variants: --home (absolute, white) and --sub (sticky, sage)
+   Two footer variants: --home (4-col grid) and --sub (simple flex)
+   ================================================================ */
+
+/* ---- Base reset (supplements design-system.css) ---- */
+html { scroll-behavior: smooth; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--citroengeel); }
+
+/* ================================================================
+   NAVIGATION — shared base
+   ================================================================ */
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; padding: 0.45rem 1.4rem;
+  box-shadow: 0 4px 20px rgba(58,62,44,0.10);
+}
+.nav__word {
+  font-family: var(--font-display); font-weight: 900; font-size: 1.65rem;
+  letter-spacing: -0.02em; text-transform: uppercase; line-height: 1;
+}
+.nav__word .drop { color: var(--citroengeel); }
+.nav__right { display: flex; align-items: center; gap: 2rem; }
+.nav__link {
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-display); font-weight: 600; font-size: 0.72rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 0.4rem 0; text-decoration: none;
+  transition: color 140ms ease;
+}
+.nav__bestellen {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0.7rem 1.3rem; background: var(--citroengeel); color: var(--olijfgroen);
+  font-family: var(--font-display); font-weight: 700; font-size: 0.82rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  border: none; cursor: pointer; text-decoration: none; transition: filter 140ms ease;
+}
+.nav__bestellen:hover { filter: brightness(0.94); }
+@media (max-width: 760px) { .nav__link { display: none; } }
+
+/* ---- Nav: homepage variant (absolute, white bg) ---- */
+.nav-float--home {
+  position: absolute;
+  top: 26px;
+  left: clamp(1.5rem, 4vw, 3.5rem);
+  right: clamp(1.5rem, 4vw, 3.5rem);
+  z-index: 10;
+}
+.nav-float--home .nav { background: var(--warm-wit); }
+.nav-float--home .nav__word { color: var(--olijf-zwart); }
+.nav-float--home .nav__link { color: var(--olijf-zwart); }
+.nav-float--home .nav__link:hover { color: var(--utrecht-rood); }
+.nav-float--home .nav__link--active {
+  border-bottom: 2px solid var(--olijfgroen);
+  padding-bottom: 0.2rem;
+}
+
+/* ---- Nav: subpage variant (sticky, sage bg) ---- */
+.nav-float--sub {
+  position: sticky; top: 26px; z-index: 20;
+  margin: 26px clamp(1.5rem, 4vw, 3.5rem) 0;
+}
+.nav-float--sub .nav { background: var(--sappie-sage); }
+.nav-float--sub .nav__word { color: var(--warm-wit); }
+.nav-float--sub .nav__link { color: var(--warm-wit); }
+.nav-float--sub .nav__link:hover { color: var(--citroengeel); }
+.nav-float--sub .nav__link--active {
+  border-bottom: 2px solid var(--citroengeel);
+  padding-bottom: 0.2rem;
+}
+
+/* ---- Nav dropdown ---- */
+.nav__item { position: relative; }
+.nav__item--menu > .nav__link::after {
+  content: '\25BE'; font-size: 0.6em; margin-left: 0.4em; vertical-align: middle; opacity: 0.8;
+}
+.nav__menu {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(6px);
+  width: max-content; background: var(--warm-wit); border: 2px solid var(--olijf-zwart);
+  display: flex; flex-direction: column; padding: 0.35rem;
+  opacity: 0; visibility: hidden; transition: opacity 140ms ease, transform 140ms ease; z-index: 30;
+  box-shadow: 0 8px 24px rgba(58,62,44,0.16);
+}
+.nav__item--menu:hover .nav__menu,
+.nav__item--menu:focus-within .nav__menu {
+  opacity: 1; visibility: visible; transform: translateX(-50%) translateY(4px);
+}
+.nav__menu-link {
+  font-family: var(--font-display); font-weight: 600; font-size: 0.72rem;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--olijf-zwart);
+  text-decoration: none; padding: 0.55rem 0.7rem; white-space: nowrap;
+  transition: background 120ms ease, color 120ms ease;
+}
+.nav__menu-link:hover { background: var(--citroengeel); color: var(--olijf-zwart); }
+.nav__menu-link--active { color: var(--utrecht-rood); }
+@media (max-width: 760px) { .nav__item--menu { display: none; } }
+
+/* ================================================================
+   PAGE HEADER — statement style (shared by all subpages)
+   ================================================================ */
+.ph { margin: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3.5rem) 1.25rem; }
+.ph__eyebrow {
+  display: block; font-family: var(--font-display); font-weight: 800;
+  text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.18em;
+  color: var(--utrecht-rood); margin: 0 0 0.9rem;
+}
+.ph__title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.02em; line-height: 0.95;
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem); margin: 0;
+}
+.ph__body { max-width: 62ch; line-height: 1.65; color: var(--text-soft); margin: 1.1rem 0 0; }
+.ph--statement { text-align: center; margin-top: clamp(1.5rem, 3.5vw, 2.5rem); padding-top: 0; }
+.ph--statement .ph__title--big { font-size: clamp(1.89rem, 4.96vw, 3.57rem); line-height: 1.14; }
+.ph--statement .ph__body { max-width: 70%; margin-left: auto; margin-right: auto; font-size: 15px; }
+.ph__mark {
+  background: color-mix(in srgb, var(--citroengeel) 62%, transparent);
+  color: var(--olijf-zwart);
+  padding: 0.04em 0.28em;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+.ph__mark--blue { background: color-mix(in srgb, var(--lucht-blauw) 70%, transparent); }
+
+/* ================================================================
+   FOOTER — homepage variant (4-column grid)
+   ================================================================ */
+.foot--home {
+  background: var(--sappie-sage); color: var(--warm-wit);
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 4vw, 3.5rem);
+}
+.foot--home .foot__in {
+  display: grid; gap: 1.8rem clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: 1.8fr 1fr 1fr 1fr; align-items: start;
+}
+@media (max-width: 720px) {
+  .foot--home .foot__in { grid-template-columns: 1fr 1fr; }
+  .foot--home .foot__brand { grid-column: 1 / -1; }
+}
+.foot--home .foot__word {
+  font-family: var(--font-display); font-weight: 900; font-size: 1.5rem;
+  letter-spacing: -0.02em; text-transform: uppercase; margin: 0;
+}
+.foot--home .foot__word .drop { color: var(--citroengeel); }
+.foot--home .foot__text {
+  font-size: 0.86rem; font-weight: 500; margin: 0; opacity: 0.85; line-height: 1.5;
+}
+.foot--home .foot__kvk {
+  font-size: 0.74rem; letter-spacing: 0.04em; margin: 0.8rem 0 0; opacity: 0.7; font-weight: 600;
+}
+.foot__col { display: flex; flex-direction: column; gap: 0.5rem; }
+.foot__col-title {
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+  font-size: 0.72rem; letter-spacing: 0.14em; margin: 0 0 0.35rem;
+  color: var(--citroengeel);
+}
+.foot__link {
+  color: var(--warm-wit); text-decoration: none; font-size: 0.88rem;
+  font-weight: 600; letter-spacing: 0.01em; width: fit-content;
+  transition: color 140ms ease;
+}
+.foot__link:hover { color: var(--citroengeel); }
+.foot__social {
+  color: var(--warm-wit); width: fit-content; display: inline-flex; align-items: center;
+  transition: color 140ms ease;
+}
+.foot__social:hover { color: var(--citroengeel); }

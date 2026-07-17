@@ -1,0 +1,12 @@
+/* ============================================================
+   SAPPIE DESIGN SYSTEM — global entry point.
+   ============================================================ */
+
+@import './fonts.css';
+@import './colors.css';
+@import './typography.css';
+@import './spacing.css';
+
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+button { font-family: inherit; }

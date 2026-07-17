@@ -1,0 +1,13 @@
+node_modules
+dist
+.DS_Store
+
+# Werkbestanden — geen onderdeel van de website zelf
+.claude
+_extracted
+*.html
+!index.html
+Reviews *.png
+Homepage.pdf
+Omslagfoto homepage.jpg
+Sappie fles (tijdelijk).jpg

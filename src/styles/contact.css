@@ -1,0 +1,229 @@
+/* ============================================================
+   SAPPIE — Contact
+   De Stijl grid system, herbruikt tokens van het design system.
+   ============================================================ */
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--warm-wit);
+  color: var(--olijf-zwart);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { display: block; max-width: 100%; }
+a { color: var(--utrecht-rood); }
+a:hover { color: var(--olijfgroen); }
+::selection { background: var(--citroengeel); }
+
+/* ---- Nav (matches other Sappie templates) ---- */
+.nav-float {
+  position: sticky; top: 26px; z-index: 20;
+  margin: 26px clamp(1.5rem, 4vw, 3.5rem) 0;
+}
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; padding: 0.45rem 1.4rem;
+  background: var(--sappie-sage);
+  box-shadow: 0 4px 20px rgba(58,62,44,0.10);
+}
+.nav__word {
+  font-family: var(--font-display); font-weight: 900; font-size: 1.65rem;
+  letter-spacing: -0.02em; color: var(--warm-wit); text-transform: uppercase; line-height: 1;
+}
+.nav__word .drop { color: var(--citroengeel); }
+.nav__right { display: flex; align-items: center; gap: 2rem; }
+.nav__link {
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-display); font-weight: 600; font-size: 0.72rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--warm-wit); padding: 0.4rem 0; text-decoration: none;
+  transition: color 140ms ease;
+}
+.nav__link:hover { color: var(--citroengeel); }
+.nav__link--active { border-bottom: 2px solid var(--citroengeel); padding-bottom: 0.2rem; }
+.nav__bestellen {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0.7rem 1.3rem; background: var(--citroengeel); color: var(--olijfgroen);
+  font-family: var(--font-display); font-weight: 700; font-size: 0.82rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  border: none; cursor: pointer; text-decoration: none; transition: filter 140ms ease;
+}
+.nav__bestellen:hover { filter: brightness(0.94); }
+@media (max-width: 760px) { .nav__link { display: none; } }
+
+/* ---- Page header (statement) ---- */
+.ph { margin: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3.5rem) 1.25rem; }
+.ph__eyebrow {
+  display: block; font-family: var(--font-display); font-weight: 800;
+  text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.18em;
+  color: var(--utrecht-rood); margin: 0 0 0.9rem;
+}
+.ph__title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.02em; line-height: 0.95;
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem); margin: 0;
+}
+.ph__body { max-width: 62ch; line-height: 1.65; color: var(--text-soft); margin: 1.1rem 0 0; }
+.ph--statement { text-align: center; margin-top: clamp(1.5rem, 3.5vw, 2.5rem); padding-top: 0; }
+.ph--statement .ph__title--big { font-size: clamp(1.89rem, 4.96vw, 3.57rem); line-height: 1; }
+.ph--statement .ph__body { max-width: 70%; margin-left: auto; margin-right: auto; font-size: 15px; }
+.ph__mark {
+  background: color-mix(in srgb, var(--citroengeel) 62%, transparent);
+  color: var(--olijf-zwart);
+  padding: 0.04em 0.28em;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+
+/* ---- Contact wrapper (breedte = menubalk) ---- */
+.contact {
+  margin: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 4vw, 3.5rem) clamp(3rem, 6vw, 5rem);
+}
+.contact--split { display: grid; grid-template-columns: 1.5fr 1fr; column-gap: clamp(1.5rem, 3vw, 2.5rem); align-items: start; }
+.contact--reversed { display: grid; grid-template-columns: 1fr 1.5fr; column-gap: clamp(1.5rem, 3vw, 2.5rem); align-items: start; }
+.contact--centered { max-width: 780px; margin-left: auto; margin-right: auto; }
+
+/* ---- Form ---- */
+.contact--split .contact__form-wrap,
+.contact--reversed .contact__form-wrap { padding: 0; }
+.contact__form-wrap { padding: clamp(1.75rem, 4vw, 3rem); }
+.cform__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+.field--full { grid-column: 1 / -1; }
+.field__label {
+  font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
+  font-size: 0.7rem; letter-spacing: 0.1em; color: var(--olijf-zwart);
+}
+.field__input {
+  font-family: var(--font-body); font-size: 0.95rem; color: var(--olijf-zwart);
+  background: var(--warm-wit); border: 2px solid var(--olijf-zwart); border-radius: 0;
+  padding: 0.7rem 0.85rem; width: 100%; transition: border-color 140ms ease;
+}
+.field__input::placeholder { color: color-mix(in srgb, var(--olijf-zwart) 45%, transparent); }
+.field__input:focus { outline: none; border-color: var(--utrecht-rood); }
+.field__textarea { resize: vertical; min-height: 120px; }
+.cform__submit {
+  margin-top: 1.3rem; display: inline-flex; align-items: center; justify-content: center;
+  padding: 0.85rem 1.6rem; background: var(--citroengeel); color: var(--olijf-zwart);
+  font-family: var(--font-display); font-weight: 800; font-size: 0.82rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  border: 2px solid var(--olijf-zwart); cursor: pointer; transition: filter 140ms ease;
+}
+.cform__submit:hover { filter: brightness(0.94); }
+.cform__note { font-size: 0.76rem; color: var(--text-soft); margin: 0.8rem 0 0; }
+.consent {
+  display: flex; align-items: flex-start; gap: 0.6rem; margin-top: 0.4rem; cursor: pointer;
+}
+.consent__box {
+  appearance: none; -webkit-appearance: none; flex: none; margin: 0;
+  width: 20px; height: 20px; border: 2px solid var(--olijf-zwart); background: var(--warm-wit);
+  border-radius: 0; cursor: pointer; display: grid; place-content: center; transition: background 140ms ease;
+}
+.consent__box::before {
+  content: ''; width: 10px; height: 10px; transform: scale(0);
+  background: var(--olijf-zwart); transition: transform 120ms ease;
+}
+.consent__box:checked { background: var(--citroengeel); }
+.consent__box:checked::before { transform: scale(1); }
+.consent__box:focus-visible { outline: 2px solid var(--utrecht-rood); outline-offset: 2px; }
+.consent__text { font-size: 0.82rem; line-height: 1.5; color: var(--text-soft); }
+
+/* ---- Contact info ---- */
+.contact__aside {
+  background: var(--lucht-blauw); color: var(--olijf-zwart);
+  padding: clamp(1.75rem, 4vw, 3rem);
+  display: flex; flex-direction: column;
+}
+.contact__aside-title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.01em; line-height: 1; font-size: clamp(1.4rem, 2.6vw, 2rem); margin: 0 0 1.4rem;
+}
+.contact__aside-body { line-height: 1.6; margin: 0 0 1.6rem; max-width: 40ch; opacity: 0.92; }
+.cinfo--panel { display: flex; flex-direction: column; gap: 1.1rem; }
+.cinfo__label {
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+  font-size: 0.68rem; letter-spacing: 0.12em; color: var(--utrecht-rood); margin: 0 0 0.35rem;
+}
+.cinfo__link {
+  color: var(--olijf-zwart); text-decoration: none; font-size: 0.95rem; font-weight: 600;
+  display: block; width: fit-content; transition: color 140ms ease;
+}
+.cinfo__link:hover { color: var(--utrecht-rood); }
+.cinfo__socials { display: flex; flex-direction: column; gap: 0.35rem; }
+.cinfo__tel { display: flex; gap: 0.6rem; }
+.cinfo__tel-name { font-weight: 800; min-width: 3.2em; }
+.cinfo__kvk {
+  font-size: 0.72rem; letter-spacing: 0.04em; opacity: 0.6; font-weight: 600;
+  margin: 0; padding-top: 1.1rem;
+}
+
+/* Variant 2 — info als horizontale rij op kleurvlak */
+.contact__strip {
+  margin-top: 1.5rem; background: var(--lucht-blauw); color: var(--olijf-zwart);
+  padding: clamp(1.4rem, 3vw, 2rem);
+}
+.cinfo--row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; align-items: start;
+}
+.cinfo--row .cinfo__kvk { grid-column: 1 / -1; padding-top: 0.4rem; margin: 0; }
+@media (max-width: 620px) { .cinfo--row { grid-template-columns: 1fr 1fr; } }
+
+@media (max-width: 820px) {
+  .contact--split, .contact--reversed { grid-template-columns: 1fr; }
+  .contact--reversed .contact__aside { order: 2; }
+}
+
+/* ---- Footer (matches other Sappie templates) ---- */
+.foot {
+  background: var(--sappie-sage); color: var(--warm-wit);
+  border-top: 2px solid var(--olijf-zwart);
+  padding: clamp(1.8rem, 4vw, 2.8rem) clamp(1.25rem, 4vw, 3.5rem);
+}
+.foot__in {
+  max-width: 1240px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 1.5rem; flex-wrap: wrap;
+}
+.foot__word {
+  font-family: var(--font-display); font-weight: 900; font-size: 1.6rem;
+  letter-spacing: -0.02em; text-transform: uppercase; margin: 0;
+}
+.foot__word .drop { color: var(--citroengeel); }
+.foot__sub {
+  font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+  margin: 0.3rem 0 0; opacity: 0.7; font-weight: 600;
+}
+.foot__legal {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em;
+  opacity: 0.65; text-align: right; max-width: 300px; font-weight: 600;
+}
+
+
+/* ---- Nav dropdown (Contact) ---- */
+.nav__item { position: relative; }
+.nav__item--menu > .nav__link::after {
+  content: '\25BE'; font-size: 0.6em; margin-left: 0.4em; vertical-align: middle; opacity: 0.8;
+}
+.nav__menu {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(6px);
+  min-width: 180px; background: var(--warm-wit); border: 2px solid var(--olijf-zwart);
+  display: flex; flex-direction: column; padding: 0.35rem;
+  opacity: 0; visibility: hidden; transition: opacity 140ms ease, transform 140ms ease; z-index: 30;
+  box-shadow: 0 8px 24px rgba(58,62,44,0.16);
+}
+.nav__item--menu:hover .nav__menu,
+.nav__item--menu:focus-within .nav__menu {
+  opacity: 1; visibility: visible; transform: translateX(-50%) translateY(4px);
+}
+.nav__menu-link {
+  font-family: var(--font-display); font-weight: 600; font-size: 0.72rem;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--olijf-zwart);
+  text-decoration: none; padding: 0.55rem 0.7rem; transition: background 120ms ease, color 120ms ease;
+}
+.nav__menu-link:hover { background: var(--citroengeel); color: var(--olijf-zwart); }
+.nav__menu-link--active { color: var(--utrecht-rood); }
+@media (max-width: 760px) { .nav__item--menu { display: none; } }

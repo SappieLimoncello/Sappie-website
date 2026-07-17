@@ -1,0 +1,66 @@
+/* ============================================================
+   SAPPIE — SPACING, LINES, RADII, SHADOW, LAYOUT
+   The form language: thin 2px lines, a horizontal rhythm that
+   nods to the werfniveaus of Utrecht's canals, generous rust
+   (whitespace), and colour that runs to the very edge.
+   ============================================================ */
+
+:root {
+  /* Spacing scale (8px base) */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.5rem;
+  --space-6:  2rem;
+  --space-7:  3rem;
+  --space-8:  4rem;
+  --space-9:  6rem;
+  --space-10: 8rem;
+
+  /* Lines — De Stijl hairlines are deliberately thin */
+  --line-weight:      2px;
+  --line-weight-thick:4px;
+  --border:           var(--line-weight) solid var(--line);
+  --border-soft:      1px solid var(--line-soft);
+
+  /* Radii — the brand is square. Corners are dead-straight everywhere;
+     no rounding. --radius-pill stays only for the rare true pill. */
+  --radius-none: 0;
+  --radius-sm:   0;
+  --radius-md:   0;
+  --radius-pill: 999px;
+
+  /* Shadow — used sparingly. Paper rarely floats; when it lifts,
+     the shadow is soft, warm and low. */
+  --shadow-sm: 0 1px 2px rgba(58, 62, 44, 0.10);
+  --shadow-md: 0 8px 24px rgba(58, 62, 44, 0.12);
+  --shadow-lg: 0 18px 48px rgba(58, 62, 44, 0.16);
+
+  /* Layout */
+  --container:      1200px;
+  --container-wide: 1440px;
+  --gutter:         clamp(1.25rem, 4vw, 3rem);
+
+  /* Motion — quiet and matter-of-fact (nuchter). No bounces. */
+  --ease:        cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast:    140ms;
+  --dur:         240ms;
+  --dur-slow:    420ms;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  font-weight: var(--fw-regular);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}

@@ -1,0 +1,59 @@
+/* ============================================================
+   SAPPIE — COLORS
+   Limoncello uit Utereg. Palette pulled straight from the brand
+   guide: warm paper, olive ink, lemon-yellow primary, a single
+   Utrecht-red accent (the druppel), and three photo-derived hues
+   (sky / water / brick) that tie the photography to the blocks.
+   Keep colour as narrow bars and accents — never big flat fills.
+   ============================================================ */
+
+:root {
+  /* — Base: paper & ink — */
+  --warm-wit:    #FAF4E6;  /* hoofdachtergrond */
+  --creme:       #F0E7CF;  /* rustige vlakken  */
+  --zand:        #EADCBE;  /* rustige vlakken  */
+  --olijf-zwart: #3A3E2C;  /* alle lijnen en tekst */
+
+  /* — Accents — */
+  --citroengeel: #F0CE4A;  /* hoofdkleur, knoppen, "koop hier" */
+  --utrecht-rood:#C0392B;  /* de druppel, kleine accenten, bestelknop */
+  --olijfgroen:  #5E6A3A;  /* basis, footer */
+  --sappie-sage: #7E8C56;  /* lichter logo-groen, vlakken */
+
+  /* — Uit de foto getrokken (samenhang foto <-> blokken) — */
+  --lucht-blauw: #AFCBDD;
+  --water-groen: #8FA38C;
+  --baksteen:    #B16A45;
+
+  /* — Tints for soft text / hairlines on paper — */
+  --ink-80: rgba(58, 62, 44, 0.80);
+  --ink-64: rgba(58, 62, 44, 0.64);
+  --ink-40: rgba(58, 62, 44, 0.40);
+  --ink-16: rgba(58, 62, 44, 0.16);
+  --ink-08: rgba(58, 62, 44, 0.08);
+
+  /* ---------- Semantic aliases ---------- */
+  --bg:            var(--warm-wit);
+  --surface:       var(--creme);
+  --surface-2:     var(--zand);
+  --surface-dark:  var(--olijfgroen);
+
+  --text:          var(--olijf-zwart);
+  --text-soft:     var(--ink-64);
+  --text-on-dark:  var(--warm-wit);
+  --text-on-yellow:var(--olijf-zwart);
+
+  --line:          var(--olijf-zwart);
+  --line-soft:     var(--ink-16);
+
+  --primary:       var(--citroengeel);
+  --primary-text:  var(--olijf-zwart);
+  --accent:        var(--utrecht-rood);
+  --footer-bg:     var(--olijfgroen);
+
+  /* Highlight-marker swatches (the label's coloured underline behind words) */
+  --mark-yellow:   var(--citroengeel);
+  --mark-blue:     var(--lucht-blauw);
+  --mark-green:    var(--sappie-sage);
+  --mark-red:      var(--utrecht-rood);
+}

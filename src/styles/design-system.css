@@ -1,0 +1,254 @@
+/* ============================================================
+   SAPPIE DESIGN SYSTEM — global entry point.
+   Consumers link THIS one file. Keep it a list of @imports only.
+   ============================================================ */
+
+/* Sappie webfonts — Montserrat (the brand typeface, free via Google Fonts).
+   The full weight range is loaded — from Thin (100) through Black (900) — so
+   headings can ride the heaviest cuts and fine print the lightest. If you
+   self-host, drop the .woff2 files in assets/fonts/ and swap this @import for
+   @font-face rules. */
+
+/* cyrillic-ext */
+/* cyrillic */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* ============================================================
+   SAPPIE — COLORS
+   Limoncello uit Utereg. Palette pulled straight from the brand
+   guide: warm paper, olive ink, lemon-yellow primary, a single
+   Utrecht-red accent (the druppel), and three photo-derived hues
+   (sky / water / brick) that tie the photography to the blocks.
+   Keep colour as narrow bars and accents — never big flat fills.
+   ============================================================ */
+
+:root {
+  /* — Base: paper & ink — */
+  --warm-wit:    #FAF4E6;  /* hoofdachtergrond */
+  --creme:       #F0E7CF;  /* rustige vlakken  */
+  --zand:        #EADCBE;  /* rustige vlakken  */
+  --olijf-zwart: #3A3E2C;  /* alle lijnen en tekst */
+
+  /* — Accents — */
+  --citroengeel: #F0CE4A;  /* hoofdkleur, knoppen, "koop hier" */
+  --utrecht-rood:#C0392B;  /* de druppel, kleine accenten, bestelknop */
+  --olijfgroen:  #5E6A3A;  /* basis, footer */
+  --sappie-sage: #7E8C56;  /* lichter logo-groen, vlakken */
+
+  /* — Uit de foto getrokken (samenhang foto <-> blokken) — */
+  --lucht-blauw: #AFCBDD;
+  --water-groen: #8FA38C;
+  --baksteen:    #B16A45;
+
+  /* — Tints for soft text / hairlines on paper — */
+  --ink-80: rgba(58, 62, 44, 0.80);
+  --ink-64: rgba(58, 62, 44, 0.64);
+  --ink-40: rgba(58, 62, 44, 0.40);
+  --ink-16: rgba(58, 62, 44, 0.16);
+  --ink-08: rgba(58, 62, 44, 0.08);
+
+  /* ---------- Semantic aliases ---------- */
+  --bg:            var(--warm-wit);
+  --surface:       var(--creme);
+  --surface-2:     var(--zand);
+  --surface-dark:  var(--olijfgroen);
+
+  --text:          var(--olijf-zwart);
+  --text-soft:     var(--ink-64);
+  --text-on-dark:  var(--warm-wit);
+  --text-on-yellow:var(--olijf-zwart);
+
+  --line:          var(--olijf-zwart);
+  --line-soft:     var(--ink-16);
+
+  --primary:       var(--citroengeel);
+  --primary-text:  var(--olijf-zwart);
+  --accent:        var(--utrecht-rood);
+  --footer-bg:     var(--olijfgroen);
+
+  /* Highlight-marker swatches (the label's coloured underline behind words) */
+  --mark-yellow:   var(--citroengeel);
+  --mark-blue:     var(--lucht-blauw);
+  --mark-green:    var(--sappie-sage);
+  --mark-red:      var(--utrecht-rood);
+}
+
+/* ============================================================
+   SAPPIE — TYPOGRAPHY
+   One typeface: Montserrat. Headings ride the heaviest cuts
+   (800–900), uppercase, with tight tracking. Body sits at 400–600.
+   The whole range — Thin (100) to Black (900) — is available.
+   ============================================================ */
+
+:root {
+  --font-display: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body:    'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Weights — Montserrat ships the full range */
+  --fw-thin:       100; /* @kind font */
+  --fw-extralight: 200; /* @kind font */
+  --fw-light:      300; /* @kind font */
+  --fw-regular:    400; /* @kind font */
+  --fw-medium:     500; /* @kind font */
+  --fw-semibold:   600; /* @kind font */
+  --fw-bold:       700; /* @kind font */
+  --fw-extrabold:  800; /* @kind font */
+  --fw-black:      900; /* @kind font */
+  --fw-heavy:      900; /* @kind font */
+
+  /* Type scale — display is uppercase & tightly tracked */
+  --fs-display:  clamp(3.25rem, 7vw, 6rem); /* @kind font */
+  --fs-h1:       clamp(2.5rem, 5vw, 4rem); /* @kind font */
+  --fs-h2:       clamp(1.9rem, 3.4vw, 2.75rem); /* @kind font */
+  --fs-h3:       1.5rem; /* @kind font */
+  --fs-h4:       1.175rem; /* @kind font */
+  --fs-lead:     1.25rem; /* @kind font */
+  --fs-body:     1.0625rem; /* @kind font */
+  --fs-small:    0.9375rem; /* @kind font */
+  --fs-eyebrow:  0.8125rem; /* @kind font */
+
+  /* Line heights */
+  --lh-tight:    0.96; /* @kind font */
+  --lh-snug:     1.12; /* @kind font */
+  --lh-normal:   1.55; /* @kind font */
+
+  /* Letter spacing */
+  --ls-display: -0.02em; /* @kind font */
+  --ls-tight:   -0.01em; /* @kind font */
+  --ls-eyebrow:  0.18em; /* @kind font */
+}
+
+/* Convenience helper classes (optional — tokens are the source of truth) */
+.sappie-display {
+  font-family: var(--font-display);
+  font-weight: var(--fw-heavy);
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+  color: var(--text);
+}
+.sappie-eyebrow {
+  font-family: var(--font-body);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+.sappie-lead {
+  font-family: var(--font-body);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-normal);
+  color: var(--text);
+}
+
+/* ============================================================
+   SAPPIE — SPACING, LINES, RADII, SHADOW, LAYOUT
+   The form language: thin 2px lines, a horizontal rhythm that
+   nods to the werfniveaus of Utrecht's canals, generous rust
+   (whitespace), and colour that runs to the very edge.
+   ============================================================ */
+
+:root {
+  /* Spacing scale (8px base) */
+  --space-1:  0.25rem;   /*  4 */
+  --space-2:  0.5rem;    /*  8 */
+  --space-3:  0.75rem;   /* 12 */
+  --space-4:  1rem;      /* 16 */
+  --space-5:  1.5rem;    /* 24 */
+  --space-6:  2rem;      /* 32 */
+  --space-7:  3rem;      /* 48 */
+  --space-8:  4rem;      /* 64 */
+  --space-9:  6rem;      /* 96 */
+  --space-10: 8rem;      /* 128 */
+
+  /* Lines — De Stijl hairlines are deliberately thin */
+  --line-weight:      2px;
+  --line-weight-thick:4px;
+  --border:           var(--line-weight) solid var(--line);
+  --border-soft:      1px solid var(--line-soft);
+
+  /* Radii — the brand is square. Corners are dead-straight everywhere;
+     no rounding. --radius-pill stays only for the rare true pill. */
+  --radius-none: 0;
+  --radius-sm:   0;
+  --radius-md:   0;
+  --radius-pill: 999px;
+
+  /* Shadow — used sparingly. Paper rarely floats; when it lifts,
+     the shadow is soft, warm and low. */
+  --shadow-sm: 0 1px 2px rgba(58, 62, 44, 0.10);
+  --shadow-md: 0 8px 24px rgba(58, 62, 44, 0.12);
+  --shadow-lg: 0 18px 48px rgba(58, 62, 44, 0.16);
+
+  /* Layout */
+  --container:      1200px;
+  --container-wide: 1440px;
+  --gutter:         clamp(1.25rem, 4vw, 3rem); /* @kind spacing */
+
+  /* Motion — quiet and matter-of-fact (nuchter). No bounces. */
+  --ease:        cubic-bezier(0.22, 0.61, 0.36, 1); /* @kind other */
+  --dur-fast:    140ms; /* @kind other */
+  --dur:         240ms; /* @kind other */
+  --dur-slow:    420ms; /* @kind other */
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  font-weight: var(--fw-regular);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
