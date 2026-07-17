@@ -124,13 +124,19 @@
   padding: calc(clamp(2.6rem, 6vw, 4.2rem) + 20px) clamp(1.25rem, 4vw, 3.5rem) calc(clamp(2.2rem, 4.8vw, 3.6rem) - 20px);
 }
 .hl-red {
-  color: var(--warm-wit);
-  background-image: linear-gradient(var(--utrecht-rood), var(--utrecht-rood));
-  background-repeat: no-repeat;
-  background-size: 100% 0.85em;
-  background-position: 0 55%;
-  padding: 0 0.24em;
+  background: var(--utrecht-rood); color: var(--warm-wit);
+  padding: 0.02em 0.24em;
   box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+@media (max-width: 760px) {
+  .hl-red {
+    background: none;
+    background-image: linear-gradient(var(--utrecht-rood), var(--utrecht-rood));
+    background-repeat: no-repeat;
+    background-size: 100% 0.87em;
+    background-position: 0 55%;
+    padding: 0 0.24em;
+  }
 }
 .intro__title {
   font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
@@ -245,12 +251,18 @@
   padding: clamp(1.4rem, 3vw, 2.4rem) clamp(1.25rem, 4vw, 3.5rem) clamp(2.6rem, 6vw, 4.5rem);
 }
 .hl-blauw {
-  color: var(--olijf-zwart);
-  background-image: linear-gradient(var(--lucht-blauw), var(--lucht-blauw));
-  background-repeat: no-repeat;
-  background-size: 100% 0.85em;
-  background-position: 0 55%;
-  padding: 0 0.24em; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+  background: var(--lucht-blauw); color: var(--olijf-zwart);
+  padding: 0.02em 0.24em; box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+@media (max-width: 760px) {
+  .hl-blauw {
+    background: none;
+    background-image: linear-gradient(var(--lucht-blauw), var(--lucht-blauw));
+    background-repeat: no-repeat;
+    background-size: 100% 0.87em;
+    background-position: 0 55%;
+    padding: 0 0.24em;
+  }
 }
 .shop__title {
   font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
