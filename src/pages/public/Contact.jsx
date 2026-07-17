@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Instagram } from 'lucide-react';
+import { Instagram, Menu, X } from 'lucide-react';
 import '../../styles/forms.css';
 
 const navLinkClass = ({ isActive }) =>
@@ -21,10 +21,12 @@ const FIELDS = [
 ];
 
 function Nav() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = () => setMenuOpen(false);
   return (
     <div className="nav-float nav-float--sub">
       <nav className="nav">
-        <NavLink to="/" className="nav__word">Sappie Limoncello<span className="drop">.</span></NavLink>
+        <NavLink to="/" className="nav__word" onClick={closeMenu}>Sappie Limoncello<span className="drop">.</span></NavLink>
         <div className="nav__right">
           <NavLink to="/" end className={navLinkClass}>Home</NavLink>
           <NavLink to="/productie" className={navLinkClass}>Productie</NavLink>
@@ -36,9 +38,28 @@ function Nav() {
               <NavLink to="/bestellen" className="nav__menu-link">Bestelformulier</NavLink>
             </div>
           </div>
+          <button
+            type="button"
+            className="nav__burger"
+            aria-label={menuOpen ? 'Sluit menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
           <NavLink to="/bestellen" className="nav__bestellen">Bestellen</NavLink>
         </div>
       </nav>
+      {menuOpen && (
+        <div className="nav__mobile">
+          <NavLink to="/" end className="nav__mobile-link" onClick={closeMenu}>Home</NavLink>
+          <NavLink to="/productie" className="nav__mobile-link" onClick={closeMenu}>Productie</NavLink>
+          <NavLink to="/winkels-en-restaurants" className="nav__mobile-link" onClick={closeMenu}>Verkoop</NavLink>
+          <NavLink to="/reviews" className="nav__mobile-link" onClick={closeMenu}>Reviews</NavLink>
+          <NavLink to="/contact" className="nav__mobile-link" onClick={closeMenu}>Contact</NavLink>
+          <NavLink to="/bestellen" className="nav__mobile-link" onClick={closeMenu}>Bestelformulier</NavLink>
+        </div>
+      )}
     </div>
   );
 }

@@ -41,6 +41,37 @@ a { color: inherit; text-decoration: none; }
 .nav__bestellen:hover { filter: brightness(0.94); }
 @media (max-width: 760px) { .nav__link { display: none; } }
 
+/* ---- Nav: mobile hamburger ---- */
+.nav__burger {
+  display: none; align-items: center; justify-content: center;
+  width: 2.1rem; height: 2.1rem; flex: none;
+  background: none; border: none; cursor: pointer; color: inherit; padding: 0;
+}
+@media (max-width: 760px) { .nav__burger { display: inline-flex; } }
+.nav__mobile { display: none; }
+@media (max-width: 760px) {
+  .nav {
+    padding: 0.4rem 0.9rem; gap: 0.6rem;
+  }
+  .nav__word { font-size: 1.05rem; }
+  .nav__right { gap: 0.5rem; }
+  .nav__bestellen { display: none; }
+  .nav__mobile {
+    display: flex; flex-direction: column;
+    margin-top: 0.5rem;
+    background: var(--warm-wit); border: 2px solid var(--olijf-zwart);
+    box-shadow: 0 8px 24px rgba(58,62,44,0.16);
+  }
+  .nav__mobile-link {
+    font-family: var(--font-display); font-weight: 700; font-size: 0.85rem;
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--olijf-zwart);
+    text-decoration: none; padding: 0.85rem 1.2rem;
+    border-top: 1px solid var(--ink-16);
+  }
+  .nav__mobile-link:first-child { border-top: none; }
+  .nav__mobile-link:hover, .nav__mobile-link--active { background: var(--citroengeel); }
+}
+
 /* ---- Nav: homepage variant (absolute, white bg) ---- */
 .nav-float--home {
   position: absolute;
@@ -117,12 +148,16 @@ a { color: inherit; text-decoration: none; }
 .ph--statement .ph__title--big { font-size: clamp(1.89rem, 4.96vw, 3.57rem); line-height: 1.14; }
 .ph--statement .ph__body { max-width: 70%; margin-left: auto; margin-right: auto; font-size: 15px; }
 .ph__mark {
-  background: color-mix(in srgb, var(--citroengeel) 62%, transparent);
+  --mark-color: color-mix(in srgb, var(--citroengeel) 62%, transparent);
   color: var(--olijf-zwart);
-  padding: 0.04em 0.28em;
+  background-image: linear-gradient(var(--mark-color), var(--mark-color));
+  background-repeat: no-repeat;
+  background-size: 100% 0.85em;
+  background-position: 0 55%;
+  padding: 0 0.28em;
   box-decoration-break: clone; -webkit-box-decoration-break: clone;
 }
-.ph__mark--blue { background: color-mix(in srgb, var(--lucht-blauw) 70%, transparent); }
+.ph__mark--blue { --mark-color: color-mix(in srgb, var(--lucht-blauw) 70%, transparent); }
 
 /* ================================================================
    FOOTER — homepage variant (4-column grid)
@@ -133,7 +168,7 @@ a { color: inherit; text-decoration: none; }
 }
 .foot--home .foot__in {
   display: grid; gap: 1.8rem clamp(1.5rem, 4vw, 3rem);
-  grid-template-columns: 1.8fr 1fr 1fr 1fr; align-items: start;
+  grid-template-columns: 1.9fr 1.3fr 1fr 0.6fr; align-items: start;
 }
 @media (max-width: 720px) {
   .foot--home .foot__in { grid-template-columns: 1fr 1fr; }

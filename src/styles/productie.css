@@ -20,6 +20,7 @@
 .tlstep__title {
   font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
   letter-spacing: -0.01em; line-height: 1; font-size: clamp(1.4rem, 2.6vw, 2rem); margin: 0;
+  overflow-wrap: break-word; min-width: 0;
 }
 .tlstep__num {
   font-family: var(--font-display); font-weight: 900; color: var(--olijf-zwart);
@@ -40,10 +41,11 @@
 .prodtl--zigzag .tlstep__marker { display: none; }
 .prodtl--zigzag .tlstep__card { display: contents; }
 .prodtl--zigzag .tlstep__head {
-  grid-area: head; background: var(--acc);
+  grid-area: head; background: var(--acc); min-width: 0;
   display: flex; align-items: center; gap: clamp(0.75rem, 2vw, 1.5rem);
   padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.5rem, 3.5vw, 2.5rem) 0;
 }
+.prodtl--zigzag .tlstep__headtext { min-width: 0; }
 .prodtl--zigzag .tlstep__headnum {
   display: block; font-family: var(--font-display); font-weight: 900; line-height: 0.8;
   font-size: clamp(2.6rem, 5vw, 4rem); letter-spacing: -0.03em;
@@ -53,7 +55,7 @@
 .prodtl--zigzag .tlstep__eyebrow { display: none; }
 .prodtl--zigzag .tlstep__title { font-size: clamp(1.5rem, 3vw, 2.2rem); }
 .prodtl--zigzag .tlstep__body {
-  grid-area: body; background: var(--acc);
+  grid-area: body; background: var(--acc); min-width: 0;
   padding: clamp(0.9rem, 2vw, 1.25rem) clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.5rem, 3vw, 2.25rem);
 }
 .prodtl--zigzag .tlstep.is-dark .tlstep__head,
