@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Instagram, Menu, X } from 'lucide-react';
+import { useRandomMark } from '../../hooks/useRandomMark';
 import oscarEnJesseFoto from '../../assets/photos/oscar-en-jesse.jpg';
 import '../../styles/welkom.css';
 
@@ -50,28 +51,17 @@ function Nav() {
   );
 }
 
-function Hero() {
+function PageHead() {
+  const markColor = useRandomMark();
   return (
-    <section className="wc-hero">
-      <div className="wc-hero__in">
-        <h1 className="wc-hero__title">
-          Klaar voor<br />je eerste<br /><span className="hl-geel">slok</span><span className="drop">?</span>
-        </h1>
-        <p className="wc-hero__body">
-          Wij (Oscar &amp; Jesse) zijn superblij dat jij een Sappie hebt gekocht!
-          Op deze pagina vind je alles wat bij jouw mooie flesje hoort.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-function Score() {
-  return (
-    <section className="wc-score">
-      <p className="wc-score__num">93/100</p>
-      <p className="wc-score__label">Bekroond bij de International Wine &amp; Spirit Competition 2026</p>
-    </section>
+    <header className="ph ph--statement">
+      <span className="ph__eyebrow">Welkom bij Sappie</span>
+      <h1 className="ph__title ph__title--big">Hoe zorg je het beste voor jouw <span className={`ph__mark ${markColor}`}>Sappie?</span></h1>
+      <p className="ph__body">
+        Wij (Oscar &amp; Jesse) zijn superblij dat jij een Sappie hebt gekocht!
+        Op deze pagina vind je alles wat bij jouw mooie flesje hoort.
+      </p>
+    </header>
   );
 }
 
@@ -84,15 +74,15 @@ const TIPS = [
 function ZorgSectie() {
   return (
     <section className="wc-care">
-      <span className="eyebrow">Zorg goed voor je Sappie</span>
-      <h2 className="wc-care__title">Hoe zorg je het beste voor je <span className="hl-geel">Sappie?</span></h2>
       <p className="wc-care__lead">Je Sappie is binnen! Nu mag z&rsquo;n beschermjasje (de papieren wikkel) eraf. Maar let op:</p>
       <div className="wc-tips">
         {TIPS.map((t) => (
           <div key={t.nr} className="wc-tip" style={{ background: t.bg, color: t.fg }}>
             <span className="wc-tip__nr">{t.nr}</span>
-            <p className="wc-tip__title">{t.titel}</p>
-            <p className="wc-tip__text">{t.tekst}</p>
+            <div className="wc-tip__body">
+              <p className="wc-tip__title">{t.titel}</p>
+              <p className="wc-tip__text">{t.tekst}</p>
+            </div>
           </div>
         ))}
       </div>
@@ -103,7 +93,6 @@ function ZorgSectie() {
 function Verhaal() {
   return (
     <section className="wc-story">
-      <span className="eyebrow">Achter de fles</span>
       <h2 className="wc-story__title">Wie heeft jouw <span className="hl-blauw">Sappie</span> gemaakt?</h2>
       <div className="wc-story__photo">
         <img src={oscarEnJesseFoto} alt="Oscar en Jesse van Sappie" className="wc-story__img" />
@@ -172,8 +161,7 @@ export default function Welkom() {
   return (
     <>
       <Nav />
-      <Hero />
-      <Score />
+      <PageHead />
       <ZorgSectie />
       <Verhaal />
       <ReviewCta />
