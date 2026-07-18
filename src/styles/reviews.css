@@ -42,15 +42,29 @@
 .rev__star--on svg  { fill: var(--ink); }
 .rev__star--off svg { fill: color-mix(in srgb, var(--ink) 22%, transparent); }
 
+.rev__text {
+  align-self: stretch;
+  text-align: left;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  line-height: 1.45;
+  opacity: 0.88;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--lines, 3);
+  overflow: hidden;
+}
+
 .rev__foot { display: flex; justify-content: center; }
 .rev__name {
   font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
   letter-spacing: -0.01em; line-height: 1; font-size: clamp(1rem, 1.5vw, 1.25rem);
 }
 
-.rev--tall   { min-height: 164px; }
-.rev--normal { min-height: 122px; }
-.rev--short  { min-height: 92px; }
+.rev--tall   { min-height: 164px; --lines: 5; }
+.rev--normal { min-height: 122px; --lines: 3; }
+.rev--short  { min-height: 92px;  --lines: 2; }
 
 @media (max-width: 1080px) { .wall { --cols: 3; } }
 @media (max-width: 760px)  { .wall { --cols: 2; } .rev { grid-column: span 1 !important; } }

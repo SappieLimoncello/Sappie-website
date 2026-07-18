@@ -172,6 +172,7 @@ function ReviewCard({ r, onOpen }) {
       <div className="rev__stars" aria-label={`${r.stars} van 5 sterren`}>
         {[1, 2, 3, 4, 5].map((n) => <Star key={n} on={n <= r.stars} />)}
       </div>
+      <p className="rev__text">{r.text}</p>
       <div className="rev__foot">
         <span className="rev__name">{r.name}</span>
       </div>
