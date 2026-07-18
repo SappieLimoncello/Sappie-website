@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Instagram, Menu, X } from 'lucide-react';
 import '../../styles/homepage.css';
+import sappieMark from '../../assets/marks/sappie-mark.png';
 
 const heroImg = '/images/hero-gracht.jpg';
 const beeldmerk9 = '/images/beeldmerk-9.png';
@@ -91,11 +92,11 @@ function Hero() {
               {lines.map((line, i) => (
                 <React.Fragment key={i}>
                   {line.text}
-                  {line.dot && <span style={{ color: 'var(--citroengeel)' }}>.</span>}
+                  {line.dot && <img src={sappieMark} alt="" className="hero__dot-logo" />}
                   {line.accentMark && (
                     <span className="qmark">
                       {line.accentMark}
-                      <span className="qmark__dot" aria-hidden="true">.</span>
+                      <img src={sappieMark} alt="" className="qmark__dot" />
                     </span>
                   )}
                   {i < lines.length - 1 && <br />}
