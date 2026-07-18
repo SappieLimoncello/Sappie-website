@@ -148,9 +148,11 @@ function ReviewCard({ r, onOpen }) {
       const grid = el.parentElement;
       const rowH = parseFloat(getComputedStyle(grid).gridAutoRows) || 6;
       const gap = parseFloat(getComputedStyle(grid).rowGap) || 0;
+      el.style.alignSelf = 'start';
       el.style.gridRowEnd = 'auto';
       const h = el.getBoundingClientRect().height;
       el.style.gridRowEnd = 'span ' + Math.ceil((h + gap) / (rowH + gap));
+      el.style.alignSelf = '';
     });
   };
 
