@@ -31,6 +31,7 @@ function Nav() {
           <NavLink to="/productie" className={navLinkClass}>Productie</NavLink>
           <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkoop</NavLink>
           <NavLink to="/reviews" className={navLinkClass}>Reviews</NavLink>
+          <NavLink to="/welkom" className={navLinkClass}>Welkom</NavLink>
           <div className="nav__item nav__item--menu">
             <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
             <div className="nav__menu">
@@ -55,6 +56,7 @@ function Nav() {
           <NavLink to="/productie" className="nav__mobile-link" onClick={closeMenu}>Productie</NavLink>
           <NavLink to="/winkels-en-restaurants" className="nav__mobile-link" onClick={closeMenu}>Verkoop</NavLink>
           <NavLink to="/reviews" className="nav__mobile-link" onClick={closeMenu}>Reviews</NavLink>
+          <NavLink to="/welkom" className="nav__mobile-link" onClick={closeMenu}>Welkom</NavLink>
           <NavLink to="/contact" className="nav__mobile-link" onClick={closeMenu}>Contact</NavLink>
           <NavLink to="/bestellen" className="nav__mobile-link" onClick={closeMenu}>Bestelformulier</NavLink>
         </div>
