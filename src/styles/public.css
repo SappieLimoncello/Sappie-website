@@ -151,6 +151,16 @@ a:hover { color: var(--olijfgroen); }
   padding: 0.02em 0.24em;
   box-decoration-break: clone; -webkit-box-decoration-break: clone;
 }
+.hl-geel {
+  background: var(--citroengeel); color: var(--olijf-zwart);
+  padding: 0.02em 0.24em;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+.hl-sage {
+  background: var(--sappie-sage); color: var(--warm-wit);
+  padding: 0.02em 0.24em;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
 .intro__title {
   font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
   letter-spacing: -0.02em; line-height: 0.94;

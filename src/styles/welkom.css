@@ -1,0 +1,55 @@
+/* ================================================================
+   SAPPIE — Welkom-bij-Sappie (QR-code landingspagina)
+   Mobile-first, met desktop-overrides vanaf 760px (zelfde breakpoint
+   als de rest van de site). Geen eigen nav-item: alleen bereikbaar
+   via directe link/QR-code.
+   ================================================================ */
+
+.wc-hero { background: var(--olijfgroen); color: var(--warm-wit); padding: clamp(2.2rem, 8vw, 3rem) clamp(1.25rem, 4vw, 3.5rem); }
+.wc-hero__in { max-width: var(--container-wide); margin: 0 auto; }
+.wc-hero__title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.02em; line-height: 0.95; font-size: clamp(2.2rem, 8vw, 3.4rem); margin: 0 0 1rem;
+}
+.wc-hero__title .drop { color: var(--utrecht-rood); }
+.wc-hero__body { max-width: 42ch; line-height: 1.6; margin: 0; opacity: 0.92; }
+
+.wc-score {
+  background: var(--citroengeel); color: var(--olijf-zwart);
+  border-top: 2px solid var(--olijf-zwart); border-bottom: 2px solid var(--olijf-zwart);
+  padding: clamp(1.5rem, 4vw, 2rem) clamp(1.25rem, 4vw, 3.5rem);
+}
+.wc-score__num { font-family: var(--font-display); font-weight: 900; font-size: clamp(2.4rem, 7vw, 3.4rem); line-height: 1; margin: 0; letter-spacing: -0.02em; }
+.wc-score__label { margin: 0.4rem 0 0; font-weight: 600; font-size: 0.92rem; max-width: 40ch; }
+
+.wc-care, .wc-story, .wc-cta { padding: clamp(2.2rem, 6vw, 3.5rem) clamp(1.25rem, 4vw, 3.5rem); }
+.wc-care__title, .wc-story__title, .wc-cta__title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.02em; line-height: 0.98; font-size: clamp(1.8rem, 5vw, 2.6rem); margin: 0.6rem 0 1rem;
+}
+.wc-care__lead, .wc-cta__lead { max-width: 56ch; line-height: 1.6; color: var(--text-soft); margin: 0 0 1.5rem; }
+
+.wc-tips { display: flex; flex-direction: column; gap: 2px; background: var(--olijf-zwart); border: 2px solid var(--olijf-zwart); }
+.wc-tip { padding: clamp(1.5rem, 3vw, 2rem); }
+.wc-tip__nr { font-family: var(--font-display); font-weight: 900; font-size: 0.85rem; opacity: 0.65; }
+.wc-tip__title { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; font-size: 1.05rem; margin: 0.3rem 0 0.5rem; }
+.wc-tip__text { margin: 0; line-height: 1.55; font-size: 0.92rem; }
+
+.wc-story__text p { line-height: 1.65; margin: 0 0 1rem; }
+.wc-story__text p:last-child { margin-bottom: 0; }
+.wc-story__photo { margin: 1.5rem 0; }
+.wc-story__img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: var(--line-weight) solid var(--line); display: block; }
+
+.wc-cta .btn { width: 100%; justify-content: center; }
+
+@media (min-width: 760px) {
+  .wc-hero__in { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(2rem, 5vw, 3.5rem); align-items: center; }
+  .wc-score { text-align: center; }
+  .wc-score__label { margin-left: auto; margin-right: auto; }
+  .wc-tips { flex-direction: row; }
+  .wc-tip { flex: 1; }
+  .wc-story { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .wc-story__title { grid-column: 1 / -1; }
+  .wc-story__photo { margin: 0; }
+  .wc-cta .btn { width: auto; }
+}

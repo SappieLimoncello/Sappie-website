@@ -8,6 +8,7 @@ import Contact from './pages/public/Contact.jsx';
 import Bestelformulier from './pages/public/Bestelformulier.jsx';
 import WinkelsEnRestaurants from './pages/public/WinkelsEnRestaurants.jsx';
 import Reviews from './pages/public/Reviews.jsx';
+import Welkom from './pages/public/Welkom.jsx';
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/bestellen" element={<Bestelformulier />} />
+          <Route path="/welkom" element={<Welkom />} />
         </Route>
       </Routes>
     </BrowserRouter>
