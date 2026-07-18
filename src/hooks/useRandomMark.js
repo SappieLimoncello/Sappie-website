@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const MARK_VARIANTS = ['', 'blue', 'green-light', 'green-dark'];
+const MARK_VARIANTS = ['', 'blue', 'green-dark'];
 
 /** Random ph__mark modifier class, rolled once per mount (so every page load gets a fresh color). */
 export function useRandomMark() {
