@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Instagram, Menu, X } from 'lucide-react';
+import { useRandomMark } from '../../hooks/useRandomMark';
 import '../../styles/winkels.css';
 
 const navLinkClass = ({ isActive }) =>
@@ -145,10 +146,11 @@ function Nav() {
 }
 
 function PageHead() {
+  const markColor = useRandomMark();
   return (
     <header className="ph ph--statement">
       <span className="ph__eyebrow">Verkooppunten</span>
-      <h1 className="ph__title ph__title--big">Waar vind je ons <span className="ph__mark">sappie?</span></h1>
+      <h1 className="ph__title ph__title--big">Waar vind je ons <span className={`ph__mark ${markColor}`}>sappie?</span></h1>
       <p className="ph__body">
         Onze limoncello is verkrijgbaar bij winkels, slijterijen en caf&eacute;s in en rondom Utrecht.
         Hieronder staan alle plekken op de kaart. Ben je een bedrijf? Bestel dan rechtstreeks bij

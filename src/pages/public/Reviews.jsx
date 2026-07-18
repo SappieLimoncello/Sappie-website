@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Instagram, Menu, X } from 'lucide-react';
+import { useRandomMark } from '../../hooks/useRandomMark';
 import '../../styles/reviews.css';
 
 const navLinkClass = ({ isActive }) =>
@@ -122,10 +123,11 @@ function Nav() {
 }
 
 function PageHead() {
+  const markColor = useRandomMark();
   return (
     <header className="ph ph--statement">
       <span className="ph__eyebrow">Reviews</span>
-      <h1 className="ph__title ph__title--big">Wat vindt men van <span className="ph__mark">Sappie?</span></h1>
+      <h1 className="ph__title ph__title--big">Wat vindt men van <span className={`ph__mark ${markColor}`}>Sappie?</span></h1>
       <p className="ph__body">
         Alles wat je hier leest komt van onze Google-reviews. Klik op een blokje
         om de volledige review te lezen.

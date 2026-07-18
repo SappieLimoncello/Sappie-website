@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Instagram, Menu, X } from 'lucide-react';
+import { useRandomMark } from '../../hooks/useRandomMark';
 import '../../styles/productie.css';
 
 const navLinkClass = ({ isActive }) =>
@@ -108,10 +109,11 @@ function Nav() {
 }
 
 function PageHead() {
+  const markColor = useRandomMark();
   return (
     <header className="ph ph--statement">
       <span className="ph__eyebrow">Productie</span>
-      <h1 className="ph__title ph__title--big">Hoe wordt <span className="ph__mark">Sappie</span> gemaakt?</h1>
+      <h1 className="ph__title ph__title--big">Hoe wordt <span className={`ph__mark ${markColor}`}>Sappie</span> gemaakt?</h1>
       <p className="ph__body">
         Onze ambachtelijke limoncello wordt gewoon hier in Utrecht geproduceerd.
         Ons Sappie is een handgemaakt product, zonder poespas. Gewoon, goed, Sappie!

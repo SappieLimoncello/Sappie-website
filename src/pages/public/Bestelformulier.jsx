@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Instagram, Menu, X } from 'lucide-react';
+import { useRandomMark } from '../../hooks/useRandomMark';
 import '../../styles/forms.css';
 
 const navLinkClass = ({ isActive }) =>
@@ -59,11 +60,12 @@ function Nav() {
 }
 
 function PageHead() {
+  const markColor = useRandomMark();
   return (
     <header className="ph ph--statement">
       <span className="ph__eyebrow">Bestelformulier</span>
       <h1 className="ph__title ph__title--big">
-        Hoeveel <span className="ph__mark ph__mark--blue">Sappies</span> mogen we bij je langsbrengen?
+        Hoeveel <span className={`ph__mark ${markColor}`}>Sappies</span> mogen we bij je langsbrengen?
       </h1>
       <p className="ph__body">
         Vul hieronder je bestelling in. We nemen daarna persoonlijk contact met je op
