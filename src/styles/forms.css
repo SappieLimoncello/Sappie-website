@@ -96,3 +96,15 @@
   .contact--split, .contact--reversed { grid-template-columns: 1fr; }
   .contact--reversed .contact__aside { order: 2; }
 }
+
+@media (max-width: 760px) {
+  .contact.contact--tight { margin-top: 1rem; margin-bottom: 2rem; }
+  header.ph--contact .ph__title--big { font-size: 1.6875rem; }
+  .cform--contact .cform__grid { gap: 0.6rem; }
+  .cform--contact .consent { align-items: center; }
+  .cform--contact .cform__submit { border: none; }
+  .cform--contact .cform__note { display: none; }
+  .contact__aside.contact__aside--contact { padding: 1.25rem; margin-top: 1.5rem; }
+  .contact__aside--contact .contact__aside-title { font-size: 19px; margin-bottom: 1rem; }
+  .contact__aside--contact .cinfo--panel { gap: 0.85rem; }
+}

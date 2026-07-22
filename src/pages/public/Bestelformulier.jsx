@@ -25,15 +25,11 @@ function Nav() {
         <div className="nav__right">
           <NavLink to="/" end className={navLinkClass}>Home</NavLink>
           <NavLink to="/productie" className={navLinkClass}>Productie</NavLink>
-          <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkoop</NavLink>
+          <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkooppunten</NavLink>
           <NavLink to="/reviews" className={navLinkClass}>Reviews</NavLink>
           <NavLink to="/welkom" className={navLinkClass}>Welkom</NavLink>
-          <div className="nav__item nav__item--menu">
-            <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
-            <div className="nav__menu">
-              <NavLink to="/bestellen" className="nav__menu-link nav__menu-link--active">Bestelformulier</NavLink>
-            </div>
-          </div>
+          <NavLink to="/siroop-bestellen" className={navLinkClass}>Siroop</NavLink>
+          <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
           <button
             type="button"
             className="nav__burger"
@@ -50,9 +46,10 @@ function Nav() {
         <div className="nav__mobile">
           <NavLink to="/" end className="nav__mobile-link" onClick={closeMenu}>Home</NavLink>
           <NavLink to="/productie" className="nav__mobile-link" onClick={closeMenu}>Productie</NavLink>
-          <NavLink to="/winkels-en-restaurants" className="nav__mobile-link" onClick={closeMenu}>Verkoop</NavLink>
+          <NavLink to="/winkels-en-restaurants" className="nav__mobile-link" onClick={closeMenu}>Verkooppunten</NavLink>
           <NavLink to="/reviews" className="nav__mobile-link" onClick={closeMenu}>Reviews</NavLink>
           <NavLink to="/welkom" className="nav__mobile-link" onClick={closeMenu}>Welkom</NavLink>
+          <NavLink to="/siroop-bestellen" className="nav__mobile-link" onClick={closeMenu}>Siroop</NavLink>
           <NavLink to="/contact" className="nav__mobile-link" onClick={closeMenu}>Contact</NavLink>
           <NavLink to="/bestellen" className="nav__mobile-link nav__mobile-link--active" onClick={closeMenu}>Bestelformulier</NavLink>
         </div>
@@ -79,7 +76,7 @@ function PageHead() {
 
 function OrderForm() {
   return (
-    <form className="cform" onSubmit={(e) => e.preventDefault()}>
+    <form className="cform cform--contact" onSubmit={(e) => e.preventDefault()}>
       <div className="cform__grid">
         <label className="field field--full">
           <span className="field__label">Voor- &amp; achternaam *</span>
@@ -153,33 +150,35 @@ function SiteFooter() {
       <div className="foot__in">
         <div className="foot__brand">
           <p className="foot__word">Sappie Limoncello<span className="drop">.</span></p>
-          <p className="foot__text foot__kvk">KVK 98649167<br />BTW NL868584344B01</p>
+          <p className="foot__text foot__kvk">KVK 98649167<br className="foot__kvk-break" /><span className="foot__dot"> &bull; </span>BTW NL868584344B01</p>
         </div>
-        <div className="foot__col">
+        <div className="foot__col foot__col--contact">
           <p className="foot__col-title">Contact</p>
           <a href="mailto:info@sappie-limoncello.nl" className="foot__link">info@sappie-limoncello.nl</a>
           <a href="tel:+31657966718" className="foot__link">Jesse: 06 57 96 67 18</a>
           <a href="tel:+31619365416" className="foot__link">Oscar: 06 19 36 54 16</a>
         </div>
-        <div className="foot__col">
+        <div className="foot__col foot__col--menu">
           <p className="foot__col-title">Menu</p>
           <Link to="/" className="foot__link">Home</Link>
           <Link to="/productie" className="foot__link">Productie</Link>
-          <Link to="/winkels-en-restaurants" className="foot__link">Verkoop</Link>
+          <Link to="/winkels-en-restaurants" className="foot__link">Verkooppunten</Link>
           <Link to="/reviews" className="foot__link">Reviews</Link>
           <Link to="/contact" className="foot__link">Contact</Link>
         </div>
-        <div className="foot__col">
-          <p className="foot__col-title">Volg ons</p>
-          <a
-            href="https://www.instagram.com/sappie_limoncello/"
-            className="foot__social"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Instagram"
-          >
-            <Instagram size={44} strokeWidth={1.75} />
-          </a>
+        <div className="foot__col foot__col--social">
+          <div className="foot__social-wrap">
+            <p className="foot__col-title">Volg ons</p>
+            <a
+              href="https://www.instagram.com/sappie_limoncello/"
+              className="foot__social"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+            >
+              <Instagram size={44} strokeWidth={1.75} />
+            </a>
+          </div>
         </div>
       </div>
     </footer>
@@ -191,11 +190,11 @@ export default function Bestelformulier() {
     <>
       <Nav />
       <PageHead />
-      <div className="contact contact--split">
+      <div className="contact contact--split contact--tight">
         <div className="contact__form-wrap">
           <OrderForm />
         </div>
-        <aside className="contact__aside">
+        <aside className="contact__aside contact__aside--contact">
           <h2 className="contact__aside-title">Liever direct contact?</h2>
           <ContactInfo />
         </aside>

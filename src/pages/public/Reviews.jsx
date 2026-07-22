@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Instagram, Menu, X } from 'lucide-react';
+import { ChevronDown, Instagram, Menu, X } from 'lucide-react';
 import { useRandomMark } from '../../hooks/useRandomMark';
 import '../../styles/reviews.css';
 
@@ -68,6 +68,18 @@ const REVIEWS = RAW_REVIEWS.map((r, i) => ({
   size: SIZES[i % SIZES.length],
 }));
 
+function useIsMobile(breakpoint) {
+  const query = `(max-width: ${breakpoint}px)`;
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia(query).matches);
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    const onChange = () => setIsMobile(mql.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, [query]);
+  return isMobile;
+}
+
 function Star({ on }) {
   return (
     <span className={`rev__star rev__star--${on ? 'on' : 'off'}`}>
@@ -88,15 +100,11 @@ function Nav() {
         <div className="nav__right">
           <NavLink to="/" end className={navLinkClass}>Home</NavLink>
           <NavLink to="/productie" className={navLinkClass}>Productie</NavLink>
-          <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkoop</NavLink>
+          <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkooppunten</NavLink>
           <NavLink to="/reviews" className={navLinkClass}>Reviews</NavLink>
           <NavLink to="/welkom" className={navLinkClass}>Welkom</NavLink>
-          <div className="nav__item nav__item--menu">
-            <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
-            <div className="nav__menu">
-              <NavLink to="/bestellen" className="nav__menu-link">Bestelformulier</NavLink>
-            </div>
-          </div>
+          <NavLink to="/siroop-bestellen" className={navLinkClass}>Siroop</NavLink>
+          <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
           <button
             type="button"
             className="nav__burger"
@@ -113,9 +121,10 @@ function Nav() {
         <div className="nav__mobile">
           <NavLink to="/" end className="nav__mobile-link" onClick={closeMenu}>Home</NavLink>
           <NavLink to="/productie" className="nav__mobile-link" onClick={closeMenu}>Productie</NavLink>
-          <NavLink to="/winkels-en-restaurants" className="nav__mobile-link" onClick={closeMenu}>Verkoop</NavLink>
+          <NavLink to="/winkels-en-restaurants" className="nav__mobile-link" onClick={closeMenu}>Verkooppunten</NavLink>
           <NavLink to="/reviews" className="nav__mobile-link nav__mobile-link--active" onClick={closeMenu}>Reviews</NavLink>
           <NavLink to="/welkom" className="nav__mobile-link" onClick={closeMenu}>Welkom</NavLink>
+          <NavLink to="/siroop-bestellen" className="nav__mobile-link" onClick={closeMenu}>Siroop</NavLink>
           <NavLink to="/contact" className="nav__mobile-link" onClick={closeMenu}>Contact</NavLink>
           <NavLink to="/bestellen" className="nav__mobile-link" onClick={closeMenu}>Bestelformulier</NavLink>
         </div>
@@ -224,51 +233,67 @@ function SiteFooter() {
       <div className="foot__in">
         <div className="foot__brand">
           <p className="foot__word">Sappie Limoncello<span className="drop">.</span></p>
-          <p className="foot__text foot__kvk">KVK 98649167<br />BTW NL868584344B01</p>
+          <p className="foot__text foot__kvk">KVK 98649167<br className="foot__kvk-break" /><span className="foot__dot"> &bull; </span>BTW NL868584344B01</p>
         </div>
-        <div className="foot__col">
+        <div className="foot__col foot__col--contact">
           <p className="foot__col-title">Contact</p>
           <a href="mailto:info@sappie-limoncello.nl" className="foot__link">info@sappie-limoncello.nl</a>
           <a href="tel:+31657966718" className="foot__link">Jesse: 06 57 96 67 18</a>
           <a href="tel:+31619365416" className="foot__link">Oscar: 06 19 36 54 16</a>
         </div>
-        <div className="foot__col">
+        <div className="foot__col foot__col--menu">
           <p className="foot__col-title">Menu</p>
           <Link to="/" className="foot__link">Home</Link>
           <Link to="/productie" className="foot__link">Productie</Link>
-          <Link to="/winkels-en-restaurants" className="foot__link">Verkoop</Link>
+          <Link to="/winkels-en-restaurants" className="foot__link">Verkooppunten</Link>
           <Link to="/reviews" className="foot__link">Reviews</Link>
           <Link to="/contact" className="foot__link">Contact</Link>
         </div>
-        <div className="foot__col">
-          <p className="foot__col-title">Volg ons</p>
-          <a
-            href="https://www.instagram.com/sappie_limoncello/"
-            className="foot__social"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Instagram"
-          >
-            <Instagram size={44} strokeWidth={1.75} />
-          </a>
+        <div className="foot__col foot__col--social">
+          <div className="foot__social-wrap">
+            <p className="foot__col-title">Volg ons</p>
+            <a
+              href="https://www.instagram.com/sappie_limoncello/"
+              className="foot__social"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+            >
+              <Instagram size={44} strokeWidth={1.75} />
+            </a>
+          </div>
         </div>
       </div>
     </footer>
   );
 }
 
+const PAGE_SIZE = 10;
+
 export default function Reviews() {
   const [open, setOpen] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const list = REVIEWS;
   const go = (d) => setOpen((i) => (i == null ? i : (i + d + list.length) % list.length));
+
+  const isMobile = useIsMobile(760);
+  const visibleList = isMobile ? list.slice(0, visibleCount) : list;
+  const remaining = list.length - visibleCount;
+  const hasMore = isMobile && remaining > 0;
+  const nextBatch = Math.min(PAGE_SIZE, remaining);
 
   return (
     <>
       <Nav />
       <PageHead />
       <div className="wall">
-        {list.map((r, i) => <ReviewCard key={i} r={r} onOpen={() => setOpen(i)} />)}
+        {visibleList.map((r, i) => <ReviewCard key={i} r={r} onOpen={() => setOpen(i)} />)}
       </div>
+      {hasMore && (
+        <button type="button" className="wall__more" onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}>
+          Nog {nextBatch} weergeven <ChevronDown size={18} />
+        </button>
+      )}
       <SiteFooter />
       <ReviewModal list={list} index={open} onClose={() => setOpen(null)} onPrev={() => go(-1)} onNext={() => go(1)} />
     </>

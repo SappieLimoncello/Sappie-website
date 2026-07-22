@@ -2,5 +2,9 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 export default function PublicLayout() {
-  return <Outlet />;
+  return (
+    <div className="site-shell">
+      <Outlet />
+    </div>
+  );
 }

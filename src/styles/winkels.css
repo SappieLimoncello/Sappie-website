@@ -29,6 +29,9 @@
   position: relative; background: var(--creme); overflow: hidden;
   border-radius: 4px; min-height: 560px;
 }
+.mapbox-container { position: absolute; inset: 0; }
+.mapbox-container .mapboxgl-ctrl-attrib { background: rgba(250,244,230,0.85); font-size: 0.68rem; }
+.mapbox-container .mapboxgl-ctrl-logo { opacity: 0.75; }
 .locator__legend {
   position: absolute; top: 1rem; left: 1rem; z-index: 3;
   display: flex; gap: 0.9rem; background: rgba(250,244,230,0.9);
@@ -37,59 +40,33 @@
 .legend__item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 600; }
 .legend__dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
 
-.mapgrid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(var(--ink-16) 1px, transparent 1px),
-    linear-gradient(90deg, var(--ink-16) 1px, transparent 1px);
-  background-size: 12.5% 12.5%;
-  opacity: 0.6;
+/* ---- Pins (custom Mapbox-marker elementen; Mapbox regelt zelf de plaatsing) ---- */
+.pin { cursor: pointer; }
+.pin__marker {
+  display: block; width: 26px; height: auto;
+  filter: drop-shadow(0 2px 2px rgba(58,62,44,0.35));
+  transition: transform 140ms ease;
 }
-.mapriver {
-  position: absolute; left: -10%; top: 38%; width: 130%; height: 15%;
-  background: var(--lucht-blauw); transform: rotate(-7deg); opacity: 0.85;
-}
-.mapriver--b {
-  position: absolute; left: 20%; top: 55%; width: 60%; height: 9%;
-  background: var(--lucht-blauw); transform: rotate(18deg); opacity: 0.6;
-}
-
-/* ---- Pins ---- */
-.pin {
-  position: absolute; transform: translate(-50%, -100%);
-  display: flex; flex-direction: column; align-items: center; cursor: default;
-  transition: transform 140ms ease, z-index 0s; z-index: 2;
-}
-.pin__dot {
-  width: 26px; height: 26px; border-radius: 50%;
-  border: 2px solid var(--olijf-zwart);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display); font-weight: 900; font-size: 11px;
-  box-shadow: 0 3px 0 rgba(58,62,44,0.18);
-}
-.pin__stem { width: 2px; height: 9px; background: var(--olijf-zwart); }
-.pin--slijterij .pin__dot { background: var(--citroengeel); color: var(--olijf-zwart); }
-.pin--restaurant .pin__dot { background: var(--lucht-blauw); color: var(--olijf-zwart); }
-.pin--active { transform: translate(-50%, -100%) scale(1.28); z-index: 5; }
-.pin--active .pin__dot { box-shadow: 0 0 0 6px rgba(58,62,44,0.12), 0 3px 0 rgba(58,62,44,0.18); }
+.pin--active .pin__marker { transform: scale(1.22); }
 .mapnote {
-  position: absolute; bottom: 0.8rem; right: 1rem; z-index: 3;
-  font-family: 'Courier New', monospace; font-size: 0.68rem;
-  color: rgba(58,62,44,0.45); text-transform: uppercase; letter-spacing: 0.08em;
-  max-width: 220px; text-align: right;
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 1rem;
+  font-family: 'Courier New', monospace; font-size: 0.78rem;
+  color: rgba(58,62,44,0.6); text-transform: uppercase; letter-spacing: 0.06em;
 }
 
 /* ---- Location list ---- */
 .locator__list {
   background: var(--warm-wit); display: flex; flex-direction: column;
   max-height: 560px; overflow-y: auto;
-  border-top: 2px solid var(--olijf-zwart);
 }
 .list__group-title {
   font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
-  font-size: 0.78rem; letter-spacing: 0.1em; color: var(--text-soft);
-  padding: 1rem 1.25rem 0.5rem; position: sticky; top: 0; background: var(--warm-wit);
+  font-size: 0.95rem; letter-spacing: 0.08em; color: var(--olijf-zwart);
+  padding: 0.6rem 1.25rem; position: sticky; top: 0; margin: 0;
 }
+.list__group-title--slijterij { background: var(--citroengeel); }
+.list__group-title--restaurant { background: var(--lucht-blauw); }
 .list__item {
   display: grid; grid-template-columns: 14px 1fr; gap: 0.8rem;
   padding: 0.85rem 1.25rem; border-top: 1px solid var(--ink-16);

@@ -1,6 +1,7 @@
 node_modules
 dist
 .DS_Store
+.env.local
 
 # Werkbestanden — geen onderdeel van de website zelf
 .claude
@@ -13,3 +14,8 @@ Omslagfoto homepage.jpg
 Sappie fles (tijdelijk).jpg
 Jesse & Oscar.jpg
 Sappie logo, zonder tekst - groot-01.png
+Aanduiding kaart.png
+Aanduiding geel.png
+Aanduiding blauw.png
+Amalfi lemons.jpg
+IWSC 93.png

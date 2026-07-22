@@ -148,7 +148,7 @@
   letter-spacing: -0.02em; line-height: 0.94;
   font-size: clamp(2rem, 4.5vw, 3.2rem); margin: 0 0 1.2rem;
 }
-.intro__body { max-width: 68ch; margin: 0 auto; line-height: 1.65; color: var(--text-soft); }
+.intro__body { max-width: 67%; margin: 0 auto; line-height: 1.65; color: var(--text-soft); font-weight: 500; }
 
 /* ================================================================
    CELL — generic content block inside .bg grid
@@ -219,22 +219,25 @@
 }
 .panel {
   display: grid; grid-template-columns: clamp(60px, 7vw, 90px) 1fr;
-  align-items: start; gap: clamp(1.2rem, 2.5vw, 2rem);
-  padding: clamp(1.8rem, 4vw, 2.75rem) clamp(1.5rem, 3vw, 2.25rem);
+  grid-template-areas: "num title" "num body";
+  align-items: start; column-gap: clamp(1.2rem, 2.5vw, 2rem); row-gap: 0.9rem;
+  padding: clamp(1.8rem, 4vw, 2.75rem) clamp(1.5rem, 3vw, 2.25rem) clamp(1.2rem, 2.8vw, 1.9rem);
 }
 .panel__num {
+  grid-area: num;
   font-family: var(--font-display); font-weight: 900; line-height: 1;
   font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: -0.02em;
   opacity: 0.55;
 }
-.panel__body { max-width: 900px; }
+.panel__body { grid-area: body; max-width: 900px; }
 .panel__body--wide { max-width: 640px; }
 .panel__title {
+  grid-area: title;
   font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
-  letter-spacing: -0.01em; line-height: 0.98; margin: 0 0 0.9rem;
+  letter-spacing: -0.01em; line-height: 0.98; margin: 0;
   font-size: clamp(1.15rem, 2.2vw, 1.6rem);
 }
-.panel__text { margin: 0 0 1.2rem; max-width: 44ch; line-height: 1.6; }
+.panel__text { margin: 0 0 1.2rem; line-height: 1.6; }
 .panel--sage  { background: var(--sappie-sage); color: var(--warm-wit); }
 .panel--olijf { background: var(--olijfgroen);  color: var(--warm-wit); }
 .panel--blauw { background: var(--lucht-blauw); color: var(--olijf-zwart); }
@@ -246,7 +249,10 @@
 
 @media (max-width: 700px) {
   .stack { grid-template-columns: 1fr; }
-  .panel { grid-template-columns: 1fr; }
+  .intro__body { max-width: 640px; font-size: 0.9375rem; }
+  .panel { grid-template-areas: "num title" "body body"; align-items: center; }
+  .panel__title { font-size: 1.25rem; }
+  .panel__text { font-size: 0.9375rem; text-align: justify; }
 }
 
 /* ================================================================
@@ -281,11 +287,18 @@
 @media (max-width: 760px) { .shop__grid { grid-template-columns: 1fr; } }
 .prod { display: flex; flex-direction: column; overflow: hidden; }
 .prod__photo {
+  position: relative;
   aspect-ratio: 4 / 3; background: #d8d4c9;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
 .prod__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.prod__badge {
+  position: absolute; top: 26px; right: 26px;
+  width: clamp(98px, 21%, 133px); height: auto;
+  transform: rotate(10deg);
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.4));
+}
 .prod__body {
   flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center;
   gap: 0.55rem; padding: clamp(1.25rem, 2.5vw, 1.6rem);

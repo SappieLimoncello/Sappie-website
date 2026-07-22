@@ -9,7 +9,7 @@
 /* ============ Verticale tijdlijn ============ */
 .prodtl {
   list-style: none; padding: 0;
-  margin: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 3.5rem) clamp(3rem, 6vw, 5rem);
+  margin: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 11vw, 9.375rem) clamp(3rem, 6vw, 5rem);
   display: flex; flex-direction: column;
 }
 .tlstep__eyebrow {
@@ -27,42 +27,111 @@
 }
 .tlstep__p { margin: 0 0 0.9rem; line-height: 1.65; max-width: 62ch; }
 .tlstep__p:last-child { margin-bottom: 0; }
-.tlstep__media { display: flex; }
-.tlstep__photo { flex: 1; }
 .tlstep__headnum { display: none; }
 
-/* ============ Zigzag variant ============ */
+/* ============ Zigzag variant ============
+   Flexbox i.p.v. CSS-grid met rij-omvattende media: bij een grid dwingt
+   een hoge foto de kortere tekstkolom om mee te rekken (en andersom).
+   Met align-items:flex-start krijgen tekstkolom en foto allebei gewoon
+   hun eigen natuurlijke hoogte — ze hoeven niet gelijk te zijn.
+   ================================================================ */
 .prodtl--zigzag { gap: clamp(1.5rem, 3vw, 2.5rem); }
-.prodtl--zigzag .tlstep {
-  display: grid; grid-template-columns: 1fr 1fr;
-  grid-template-areas: "head media" "body media";
-}
-.prodtl--zigzag .tlstep.is-odd { grid-template-areas: "media head" "media body"; }
+.prodtl--zigzag .tlstep { display: flex; align-items: flex-start; gap: clamp(1.5rem, 3vw, 2.5rem); }
+.prodtl--zigzag .tlstep.is-odd { flex-direction: row-reverse; }
 .prodtl--zigzag .tlstep__marker { display: none; }
 .prodtl--zigzag .tlstep__card { display: contents; }
+.prodtl--zigzag .tlstep__textcol { flex: 1 1 0; min-width: 0; }
 .prodtl--zigzag .tlstep__head {
-  grid-area: head; background: var(--acc); min-width: 0;
-  display: flex; align-items: center; gap: clamp(0.75rem, 2vw, 1.5rem);
-  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.5rem, 3.5vw, 2.5rem) 0;
+  background: var(--acc); min-width: 0;
+  display: flex; align-items: flex-start; gap: clamp(0.75rem, 2vw, 1.5rem);
+  padding: clamp(1.1rem, 2.4vw, 1.6rem) clamp(1.5rem, 3.5vw, 2.5rem) 0;
 }
 .prodtl--zigzag .tlstep__headtext { min-width: 0; }
 .prodtl--zigzag .tlstep__headnum {
   display: block; font-family: var(--font-display); font-weight: 900; line-height: 0.8;
-  font-size: clamp(2.6rem, 5vw, 4rem); letter-spacing: -0.03em;
+  font-size: clamp(1.9rem, 3.6vw, 2.6rem); letter-spacing: -0.03em;
   color: color-mix(in srgb, var(--olijf-zwart) 30%, transparent); flex: none;
 }
 .prodtl--zigzag .tlstep.is-dark .tlstep__headnum { color: color-mix(in srgb, var(--warm-wit) 35%, transparent); }
 .prodtl--zigzag .tlstep__eyebrow { display: none; }
 .prodtl--zigzag .tlstep__title { font-size: clamp(1.5rem, 3vw, 2.2rem); }
 .prodtl--zigzag .tlstep__body {
-  grid-area: body; background: var(--acc); min-width: 0;
-  padding: clamp(0.9rem, 2vw, 1.25rem) clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.5rem, 3vw, 2.25rem);
+  background: var(--acc); min-width: 0;
+  padding: 0.5rem clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.1rem, 2.4vw, 1.6rem);
 }
 .prodtl--zigzag .tlstep.is-dark .tlstep__head,
 .prodtl--zigzag .tlstep.is-dark .tlstep__body { color: var(--warm-wit); }
-.prodtl--zigzag .tlstep__media { grid-area: media; min-height: clamp(300px, 32vw, 440px); }
+.prodtl--zigzag .tlstep__media { flex: 1 1 0; min-width: 0; display: flex; align-items: center; justify-content: center; }
+.prodtl--zigzag .tlstep__photo { width: 100%; aspect-ratio: 4 / 3; }
+
+/* ---- Bare variant: kaal, tekstkolom verticaal gecentreerd t.o.v. de foto ---- */
+.prodtl--zigzag .tlstep.tlstep--bare { align-items: center; }
+.tlstep--bare .tlstep__head { padding: 0 0 0.4rem; }
+.prodtl--zigzag .tlstep.tlstep--bare.is-dark .tlstep__head,
+.prodtl--zigzag .tlstep.tlstep--bare.is-dark .tlstep__body,
+.tlstep--bare .tlstep__head,
+.tlstep--bare .tlstep__body { background: none; color: var(--olijf-zwart); }
+.tlstep--bare .tlstep__body { padding: 0; }
+.prodtl--zigzag .tlstep.tlstep--bare.is-dark .tlstep__headnum,
+.tlstep--bare .tlstep__headnum { color: var(--olijf-zwart); }
+
+/* ---- Polaroidfoto binnen de tijdlijn (zelfde stijl als Welkom) ---- */
+.prodpolaroid { width: 100%; max-width: 480px; margin: 0 auto; }
+.tlstep--bare .prodpolaroid { max-width: 624px; }
+.prodpolaroid.wc-story__photo--polaroid .wc-story__img { aspect-ratio: 16 / 9; }
+.prodpolaroid--rechts.wc-story__photo--polaroid { transform: rotate(2.5deg); }
+.prodpolaroid .wc-story__cap { min-height: 50px; }
+.prodpolaroid__placeholder {
+  width: 100%; aspect-ratio: 16 / 9; background: var(--zand);
+  display: flex; align-items: center; justify-content: center;
+}
+.prodpolaroid__label {
+  font-family: 'Courier New', monospace; font-size: 0.75rem;
+  color: rgba(58,62,44,0.35); text-transform: uppercase; letter-spacing: 0.12em;
+}
+.prodpolaroid__videowrap { position: relative; }
+.prodpolaroid__videowrap video {
+  cursor: pointer; outline: none;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+}
+.prodpolaroid__videowrap video:focus-visible { outline: 3px solid var(--utrecht-rood); outline-offset: 3px; }
+.prodpolaroid__play {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 56px; height: 56px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--citroengeel); color: var(--olijf-zwart);
+  border: none; cursor: pointer; padding: 0; padding-left: 3px;
+  box-shadow: 0 4px 14px rgba(58,62,44,0.3);
+  transition: filter 140ms ease, transform 140ms ease;
+}
+.prodpolaroid__play:hover { filter: brightness(0.94); transform: translate(-50%, -50%) scale(1.06); }
+.wc-story__photo--geel  .prodpolaroid__play { background: var(--citroengeel); color: var(--olijf-zwart); }
+.wc-story__photo--blauw .prodpolaroid__play { background: var(--lucht-blauw); color: var(--olijf-zwart); }
+.wc-story__photo--sage  .prodpolaroid__play { background: var(--sappie-sage); color: var(--warm-wit); }
+.wc-story__photo--donkergroen .prodpolaroid__play { background: var(--olijfgroen); color: var(--warm-wit); }
+
+.prodpolaroid__pause {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 56px; height: 56px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--citroengeel); color: var(--olijf-zwart);
+  box-shadow: 0 4px 14px rgba(58,62,44,0.3);
+  opacity: 0; pointer-events: none;
+  transition: opacity 140ms ease;
+}
+.prodpolaroid__videowrap:hover .prodpolaroid__pause { opacity: 0.6; }
+.wc-story__photo--geel  .prodpolaroid__pause { background: var(--citroengeel); color: var(--olijf-zwart); }
+.wc-story__photo--blauw .prodpolaroid__pause { background: var(--lucht-blauw); color: var(--olijf-zwart); }
+.wc-story__photo--sage  .prodpolaroid__pause { background: var(--sappie-sage); color: var(--warm-wit); }
+.wc-story__photo--donkergroen .prodpolaroid__pause { background: var(--olijfgroen); color: var(--warm-wit); }
 @media (max-width: 760px) {
   .prodtl--zigzag .tlstep,
-  .prodtl--zigzag .tlstep.is-odd { grid-template-columns: 1fr; grid-template-areas: "media" "head" "body"; }
-  .prodtl--zigzag .tlstep__media { min-height: 220px; }
+  .prodtl--zigzag .tlstep.is-odd { flex-direction: column-reverse; align-items: stretch; }
+  .prodtl--zigzag li.tlstep.tlstep--bare { align-items: stretch; }
+  header.ph--statement .ph__body { max-width: 100%; }
+  .tlstep__p { font-size: 0.9375rem; line-height: 1.5; text-align: justify; }
+  .prodtl--zigzag h2.tlstep__title { font-size: 1.05rem; }
+  .prodtl--zigzag div.tlstep__head { align-items: flex-end; }
+  figure.prodpolaroid .wc-story__cap { padding: 0.3rem 0 0.4rem; min-height: 0; }
 }

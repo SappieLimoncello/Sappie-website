@@ -10,6 +10,11 @@ img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 ::selection { background: var(--citroengeel); }
 
+/* ---- Site shell: houdt de footer onderaan de pagina, ook als de
+   inhoud te kort is om het venster te vullen ---- */
+.site-shell { display: flex; flex-direction: column; min-height: 100vh; }
+.site-shell > footer { margin-top: auto; }
+
 /* ================================================================
    NAVIGATION — shared base
    ================================================================ */
@@ -144,6 +149,7 @@ a { color: inherit; text-decoration: none; }
   font-size: clamp(2.2rem, 5.5vw, 3.8rem); margin: 0;
 }
 .ph__body { max-width: 62ch; line-height: 1.65; color: var(--text-soft); margin: 1.1rem 0 0; }
+.ph__body--medium { font-weight: 500; }
 .ph--statement { text-align: center; margin-top: clamp(1.5rem, 3.5vw, 2.5rem); padding-top: 0; }
 .ph--statement .ph__title--big { font-size: clamp(1.89rem, 4.96vw, 3.57rem); line-height: 1.14; }
 .ph--statement .ph__body { max-width: 70%; margin-left: auto; margin-right: auto; font-size: 15px; }
@@ -180,9 +186,20 @@ a { color: inherit; text-decoration: none; }
   display: grid; gap: 1.8rem clamp(1.5rem, 4vw, 3rem);
   grid-template-columns: 1.9fr 1.3fr 1fr 0.6fr; align-items: start;
 }
+.foot__kvk-break { display: block; }
+.foot__dot { display: none; }
 @media (max-width: 720px) {
-  .foot--home .foot__in { grid-template-columns: 1fr 1fr; }
-  .foot--home .foot__brand { grid-column: 1 / -1; }
+  .foot--home .foot__in {
+    grid-template-columns: 1.8fr 1fr;
+    grid-template-areas: "brand brand" "contact menu" "social menu";
+  }
+  .foot--home .foot__brand { grid-area: brand; }
+  .foot--home .foot__col--contact { grid-area: contact; }
+  .foot--home .foot__col--menu { grid-area: menu; }
+  .foot--home .foot__col--social { grid-area: social; }
+  .foot__kvk-break { display: none; }
+  .foot__dot { display: inline-block; color: var(--citroengeel); vertical-align: middle; margin: 0 0.05em; }
+  .foot--home .foot__social-wrap { display: inline-flex; flex-direction: column; align-items: center; align-self: flex-start; }
 }
 .foot--home .foot__word {
   font-family: var(--font-display); font-weight: 900; font-size: 1.5rem;

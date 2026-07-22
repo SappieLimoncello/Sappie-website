@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { Instagram, Menu, X } from 'lucide-react';
 import '../../styles/homepage.css';
 import sappieMark from '../../assets/marks/sappie-mark.png';
+import iwsc93 from '../../assets/badges/iwsc-93.png';
 
 const heroImg = '/images/hero-gracht.jpg';
 const beeldmerk9 = '/images/beeldmerk-9.png';
@@ -30,15 +31,11 @@ function Nav() {
         <div className="nav__right">
           <NavLink to="/" end className={navLinkClass}>Home</NavLink>
           <NavLink to="/productie" className={navLinkClass}>Productie</NavLink>
-          <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkoop</NavLink>
+          <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkooppunten</NavLink>
           <NavLink to="/reviews" className={navLinkClass}>Reviews</NavLink>
           <NavLink to="/welkom" className={navLinkClass}>Welkom</NavLink>
-          <div className="nav__item nav__item--menu">
-            <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
-            <div className="nav__menu">
-              <NavLink to="/bestellen" className="nav__menu-link">Bestelformulier</NavLink>
-            </div>
-          </div>
+          <NavLink to="/siroop-bestellen" className={navLinkClass}>Siroop</NavLink>
+          <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
           <button
             type="button"
             className="nav__burger"
@@ -55,9 +52,10 @@ function Nav() {
         <div className="nav__mobile">
           <NavLink to="/" end className="nav__mobile-link" onClick={closeMenu}>Home</NavLink>
           <NavLink to="/productie" className="nav__mobile-link" onClick={closeMenu}>Productie</NavLink>
-          <NavLink to="/winkels-en-restaurants" className="nav__mobile-link" onClick={closeMenu}>Verkoop</NavLink>
+          <NavLink to="/winkels-en-restaurants" className="nav__mobile-link" onClick={closeMenu}>Verkooppunten</NavLink>
           <NavLink to="/reviews" className="nav__mobile-link" onClick={closeMenu}>Reviews</NavLink>
           <NavLink to="/welkom" className="nav__mobile-link" onClick={closeMenu}>Welkom</NavLink>
+          <NavLink to="/siroop-bestellen" className="nav__mobile-link" onClick={closeMenu}>Siroop</NavLink>
           <NavLink to="/contact" className="nav__mobile-link" onClick={closeMenu}>Contact</NavLink>
           <NavLink to="/bestellen" className="nav__mobile-link" onClick={closeMenu}>Bestelformulier</NavLink>
         </div>
@@ -140,7 +138,7 @@ function VariantWerf() {
       <section className="intro">
         <h2 className="intro__title">De beste van <span className="hl-red">Utereg</span> en omstreken.</h2>
         <p className="intro__body">
-          In 2026 behaalde Sappie maar liefst 93/100 punten bij de International
+          In 2026 behaalde Sappie maar liefst <a href="https://www.iwsc.net/results/detail/173259/limoncello" target="_blank" rel="noreferrer">93/100 punten</a> bij de International
           Wine &amp; Spirit Competition. Hiermee zijn we niet alleen de beste van
           Utrecht en omstreken, maar de twee na beste van Nederland!
         </p>
@@ -149,8 +147,8 @@ function VariantWerf() {
       <div className="stack">
         <div className="panel panel--sage">
           <span className="panel__num">01</span>
+          <h3 className="panel__title">Bereiding</h3>
           <div className="panel__body panel__body--wide">
-            <h3 className="panel__title">Bereiding</h3>
             <p className="panel__text">
               Sappie Limoncello wordt volledig met de hand gemaakt, wij schillen,
               bottelen, labelen &amp; bezorgen alles zelf! Zo garanderen we kwaliteit
@@ -160,8 +158,8 @@ function VariantWerf() {
         </div>
         <div className="panel panel--blauw">
           <span className="panel__num">02</span>
+          <h3 className="panel__title">Ingredi&euml;nten</h3>
           <div className="panel__body panel__body--wide">
-            <h3 className="panel__title">Ingredi&euml;nten</h3>
             <p className="panel__text">
               Voor ons Sappie gebruiken wij slechts vier ingredi&euml;nten, zo houden we
               het zo natuurlijk mogelijk! Amalficitroenen, suiker, alcohol &amp; water.
@@ -170,8 +168,8 @@ function VariantWerf() {
         </div>
         <div className="panel panel--olijf">
           <span className="panel__num">03</span>
+          <h3 className="panel__title">Duurzaamheid</h3>
           <div className="panel__body panel__body--wide">
-            <h3 className="panel__title">Duurzaamheid</h3>
             <p className="panel__text">
               We proberen zo veel mogelijk van onze grondstoffen te gebruiken, zo
               maken we van het citroensap heerlijke limonade! Ook leveren wij alle
@@ -181,8 +179,8 @@ function VariantWerf() {
         </div>
         <div className="panel panel--geel">
           <span className="panel__num">04</span>
+          <h3 className="panel__title">Waarom kiezen voor Sappie?</h3>
           <div className="panel__body panel__body--wide">
-            <h3 className="panel__title">Waarom kiezen voor Sappie?</h3>
             <p className="panel__text">
               Omdat je kiest voor lokale Uteregse ondernemers! Elke fles wordt
               door ons (Jesse &amp; Oscar) gemaakt, zonder fabriek of tussenpersonen.
@@ -208,6 +206,7 @@ function VariantWerf() {
           <article className="prod">
             <div className="prod__photo">
               <img src={productBottle} alt="Klassiek Sappie" className="prod__img" />
+              <img src={iwsc93} alt="IWSC 93 punten, iwsc.net 2026" className="prod__badge" />
             </div>
             <div className="prod__body prod__body--blauw">
               <h3 className="prod__name">Klassiek Sappie <span className="prod__ml">500 ml</span></h3>
@@ -237,33 +236,35 @@ function SiteFooter() {
       <div className="foot__in">
         <div className="foot__brand">
           <p className="foot__word">Sappie Limoncello<span className="drop">.</span></p>
-          <p className="foot__text foot__kvk">KVK 98649167<br />BTW NL868584344B01</p>
+          <p className="foot__text foot__kvk">KVK 98649167<br className="foot__kvk-break" /><span className="foot__dot"> &bull; </span>BTW NL868584344B01</p>
         </div>
-        <div className="foot__col">
+        <div className="foot__col foot__col--contact">
           <p className="foot__col-title">Contact</p>
           <a href="mailto:info@sappie-limoncello.nl" className="foot__link">info@sappie-limoncello.nl</a>
           <a href="tel:+31657966718" className="foot__link">Jesse: 06 57 96 67 18</a>
           <a href="tel:+31619365416" className="foot__link">Oscar: 06 19 36 54 16</a>
         </div>
-        <div className="foot__col">
+        <div className="foot__col foot__col--menu">
           <p className="foot__col-title">Menu</p>
           <Link to="/" className="foot__link">Home</Link>
           <Link to="/productie" className="foot__link">Productie</Link>
-          <Link to="/winkels-en-restaurants" className="foot__link">Verkoop</Link>
+          <Link to="/winkels-en-restaurants" className="foot__link">Verkooppunten</Link>
           <Link to="/reviews" className="foot__link">Reviews</Link>
           <Link to="/contact" className="foot__link">Contact</Link>
         </div>
-        <div className="foot__col">
-          <p className="foot__col-title">Volg ons</p>
-          <a
-            href="https://www.instagram.com/sappie_limoncello/"
-            className="foot__social"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Instagram"
-          >
-            <Instagram size={44} strokeWidth={1.75} />
-          </a>
+        <div className="foot__col foot__col--social">
+          <div className="foot__social-wrap">
+            <p className="foot__col-title">Volg ons</p>
+            <a
+              href="https://www.instagram.com/sappie_limoncello/"
+              className="foot__social"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+            >
+              <Instagram size={44} strokeWidth={1.75} />
+            </a>
+          </div>
         </div>
       </div>
     </footer>
