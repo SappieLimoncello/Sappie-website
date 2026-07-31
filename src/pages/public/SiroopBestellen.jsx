@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Instagram, Menu, X } from 'lucide-react';
+import { ChevronDown, Instagram, Menu, X } from 'lucide-react';
 import { useRandomMark } from '../../hooks/useRandomMark';
 import '../../styles/siroop.css';
+
+const siroopFles = '/images/siroop-fles.jpg';
+const lekkerBootjeVaren = '/images/lekker-bootje-varen.png';
 
 const PRIJS_PER_FLES = 8.99;
 
@@ -26,7 +29,6 @@ function Nav() {
           <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkooppunten</NavLink>
           <NavLink to="/reviews" className={navLinkClass}>Reviews</NavLink>
           <NavLink to="/welkom" className={navLinkClass}>Welkom</NavLink>
-          <NavLink to="/siroop-bestellen" className={navLinkClass}>Siroop</NavLink>
           <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
           <button
             type="button"
@@ -37,7 +39,15 @@ function Nav() {
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
-          <NavLink to="/bestellen" className="nav__bestellen">Bestellen</NavLink>
+          <div className="nav__order">
+            <button type="button" className="nav__bestellen">
+              Bestellen <ChevronDown size={14} className="nav__order-chevron" />
+            </button>
+            <div className="nav__order-menu">
+              <NavLink to="/bestellen" className="nav__order-link">Limoncello</NavLink>
+              <NavLink to="/siroop-bestellen" className="nav__order-link">Siroop</NavLink>
+            </div>
+          </div>
         </div>
       </nav>
       {menuOpen && (
@@ -72,37 +82,65 @@ function PageHead() {
   );
 }
 
-function SiroopCard() {
-  const [aantal, setAantal] = useState(1);
-  const minder = () => setAantal((n) => Math.max(1, n - 1));
-  const meer = () => setAantal((n) => Math.min(24, n + 1));
-  const totaal = PRIJS_PER_FLES * aantal;
-
+function SiroopCard({ aantal, onMinder, onMeer }) {
   return (
-    <div className="siroop">
-      <div className="siroop__card">
-        <div className="siroop__info">
-          <h2 className="siroop__title">Sappie Siroop</h2>
-          <p className="siroop__desc">
-            Eén fles maakt zeven liter frisse limonade van echte Utrechtse citroenen.
-          </p>
-          <p className="siroop__price">
-            <span className="siroop__price-amount">&euro; {euro(PRIJS_PER_FLES)}</span>
-            <span className="siroop__price-unit">per fles</span>
-          </p>
-          <div className="siroop__stepper" role="group" aria-label="Aantal flessen">
-            <button type="button" className="siroop__step-btn" onClick={minder} aria-label="Minder">&minus;</button>
-            <span className="siroop__qty">{aantal}</span>
-            <button type="button" className="siroop__step-btn" onClick={meer} aria-label="Meer">+</button>
-          </div>
-          <button type="button" className="siroop__cart-btn">
-            In mandje <span className="siroop__cart-dot">&middot;</span> &euro; {euro(totaal)}
-          </button>
-        </div>
-        <div className="siroop__photo">
-          <span className="siroop__photo-label">Foto siroopfles</span>
+    <div className="siroop__prod">
+      <div className="siroop__prod-photo">
+        <img src={siroopFles} alt="Sappie Siroop" className="siroop__prod-img" />
+      </div>
+      <div className="siroop__prod-body">
+        <h2 className="siroop__prod-name">Sappie Siroop <span className="siroop__prod-ml">- 700ml</span></h2>
+        <p className="siroop__prod-text">
+          Onze huisgemaakte limonadesiroop, gemaakt met het citroensap van onze Amalficitroenen.
+        </p>
+        <div className="siroop__prod-pricerow">
+          <button type="button" className="siroop__prod-qtybtn" onClick={onMinder} disabled={aantal === 0} aria-label="Minder">&minus;</button>
+          <p className="siroop__prod-price">&euro;{euro(PRIJS_PER_FLES)}</p>
+          <button type="button" className="siroop__prod-qtybtn" onClick={onMeer} aria-label="Meer">+</button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function SiroopInfo() {
+  return (
+    <div className="siroop__info">
+      <h3 className="siroop__info-title">Belangrijk om te weten</h3>
+      <ul className="siroop__info-list">
+        <li>Let op! Sappie siroop bezorgen we niet thuis.</li>
+        <li>
+          Na bestellen krijg je een unieke afhaalcode. Hiermee kun je de siroop afhalen bij Lekkerbootjevaren
+          (<a href="https://www.google.com/maps/search/?api=1&query=Wittevrouwensingel+95%2C+3514+AL+Utrecht" target="_blank" rel="noreferrer" className="siroop__info-link">Wittevrouwensingel 95, 3514 AL Utrecht</a>).
+        </li>
+        <li>Ophalen kan op maandag tussen xx:xx en xx:xx, en op woensdag tussen xx:xx en xx:xx.</li>
+      </ul>
+      <img src={lekkerBootjeVaren} alt="" className="siroop__info-boat" />
+    </div>
+  );
+}
+
+function SiroopKassabon({ aantal, totaal }) {
+  return (
+    <div className="siroop__cart-col">
+      <aside className="siroop__cart">
+        <h3 className="siroop__cart-title">Jouw kassabon</h3>
+        {aantal === 0 ? (
+          <p className="siroop__cart-empty">Nog niets geselecteerd.</p>
+        ) : (
+          <ul className="siroop__cart-list">
+            <li className="siroop__cart-item">
+              <span className="siroop__cart-item-name">{aantal}&times; Sappie Siroop</span>
+              <span>&euro;{euro(totaal)}</span>
+            </li>
+          </ul>
+        )}
+        <div className="siroop__cart-subtotal">
+          <span>Totaal excl. btw</span>
+          <span>&euro;{euro(totaal)}</span>
+        </div>
+      </aside>
+      <button type="button" className="siroop__cart-cta">Verder met bestellen</button>
     </div>
   );
 }
@@ -149,11 +187,22 @@ function SiteFooter() {
 }
 
 export default function SiroopBestellen() {
+  const [aantal, setAantal] = useState(0);
+  const minder = () => setAantal((n) => Math.max(0, n - 1));
+  const meer = () => setAantal((n) => Math.min(24, n + 1));
+  const totaal = PRIJS_PER_FLES * aantal;
+
   return (
     <>
       <Nav />
       <PageHead />
-      <SiroopCard />
+      <div className="siroop">
+        <div className="siroop__row">
+          <SiroopCard aantal={aantal} onMinder={minder} onMeer={meer} />
+          <SiroopInfo />
+          <SiroopKassabon aantal={aantal} totaal={totaal} />
+        </div>
+      </div>
       <SiteFooter />
     </>
   );

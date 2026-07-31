@@ -1,64 +1,111 @@
 /* ============================================================
    SAPPIE — Siroop bestellen
-   Eén productkaart: infoblok (lucht-blauw) + fotoblok (zand).
+   Productkaart (foto boven, prijs+stepper onder) + leeg kleurvlak
+   + kassabon, alle drie los naast elkaar.
    ============================================================ */
 
 .siroop {
   margin: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 4vw, 3.5rem) clamp(3rem, 6vw, 5rem);
 }
-.siroop__card {
-  display: grid; grid-template-columns: 1.1fr 1fr;
-  min-height: 360px;
+.siroop__row {
+  display: grid; grid-template-columns: repeat(3, 1fr) minmax(230px, 322px);
+  align-items: stretch; gap: clamp(1.25rem, 2.5vw, 2rem);
 }
-.siroop__info {
-  background: var(--lucht-blauw); color: var(--olijf-zwart);
-  padding: clamp(1.75rem, 4vw, 2.75rem);
-  display: flex; flex-direction: column;
+.siroop__info { grid-column: span 2; }
+.siroop__prod {
+  display: flex; flex-direction: column; overflow: hidden;
+  padding: clamp(0.4rem, 1.2vw, 0.6rem); background: var(--lucht-blauw);
 }
-.siroop__title {
+.siroop__prod-photo {
+  aspect-ratio: 4 / 3; background: #d8d4c9; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.siroop__prod-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.siroop__prod-body {
+  flex: 1; background: var(--lucht-blauw); color: var(--olijf-zwart);
+  padding: clamp(1.25rem, 2.5vw, 1.6rem) 0.75rem;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.55rem;
+  container-type: inline-size;
+}
+.siroop__prod-name {
   font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
-  letter-spacing: -0.01em; line-height: 1; font-size: clamp(1.4rem, 2.6vw, 2rem); margin: 0 0 0.9rem;
+  letter-spacing: -0.01em; font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: 0;
 }
-.siroop__desc { line-height: 1.6; margin: 0 0 1.4rem; max-width: 32ch; }
-.siroop__price { display: flex; align-items: baseline; gap: 0.5rem; margin: 0 0 1.3rem; }
-.siroop__price-amount { font-family: var(--font-display); font-weight: 900; font-size: 1.9rem; }
-.siroop__price-unit {
-  font-family: var(--font-display); font-weight: 700; text-transform: uppercase;
-  font-size: 0.68rem; letter-spacing: 0.1em; opacity: 0.7;
+.siroop__prod-ml { letter-spacing: 0.06em; }
+.siroop__prod-text {
+  max-width: 100%; margin: 0 auto; line-height: 1.55; font-weight: 500;
+  font-size: 0.92rem; opacity: 0.9; text-wrap: balance;
 }
-.siroop__stepper {
-  display: inline-flex; align-items: center; gap: 0.9rem; margin: 0 0 1.3rem;
+.siroop__prod-pricerow {
+  display: flex; align-items: center; justify-content: center; gap: 0.9rem; margin-top: auto;
 }
-.siroop__step-btn {
-  width: 2.3rem; height: 2.3rem; flex: none;
-  background: var(--warm-wit); color: var(--olijf-zwart); border: 2px solid var(--olijf-zwart);
-  font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; line-height: 1;
-  cursor: pointer; transition: filter 140ms ease;
+.siroop__prod-price {
+  font-family: var(--font-display); font-weight: 900; font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 0;
 }
-.siroop__step-btn:hover { filter: brightness(0.94); }
-.siroop__qty {
-  font-family: var(--font-display); font-weight: 800; font-size: 1.1rem;
-  min-width: 1.5ch; text-align: center;
+.siroop__prod-qtybtn {
+  width: 24px; height: 24px; flex: none; border-radius: 50%;
+  background: transparent; color: inherit; border: 2px solid currentColor;
+  font-family: var(--font-display); font-weight: 900; font-size: 0.9rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: filter 200ms ease, transform 200ms ease;
 }
-.siroop__cart-btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.4em;
-  margin-top: auto; align-self: flex-start;
-  padding: 0.85rem 1.6rem; background: var(--utrecht-rood); color: var(--warm-wit);
+.siroop__prod-qtybtn:hover { filter: brightness(0.92); }
+.siroop__prod-qtybtn:active {
+  filter: brightness(0.55); transform: scale(0.86);
+  transition: filter 0s, transform 0s;
+}
+.siroop__prod-qtybtn:disabled { opacity: 0.35; cursor: not-allowed; }
+.siroop__info {
+  position: relative; overflow: hidden;
+  background: var(--zand); padding: clamp(1.5rem, 3vw, 2.25rem);
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 1.1rem;
+}
+.siroop__info-boat {
+  position: absolute; right: 1.5rem; bottom: 4px;
+  width: clamp(300px, 40vw, 475px); height: auto; pointer-events: none;
+}
+.siroop__info-title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.01em; font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: 0;
+}
+.siroop__info-list {
+  margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 0.75rem;
+  line-height: 1.55; font-size: 0.95rem;
+}
+.siroop__info-list li::marker { color: var(--utrecht-rood); }
+.siroop__info-link { color: inherit; text-decoration: underline; }
+
+/* ---- Kassabon ---- */
+.siroop__cart-col {
+  display: flex; flex-direction: column; gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+.siroop__cart {
+  flex: 1; background: var(--zand); padding: clamp(1.1rem, 2vw, 1.5rem);
+  display: flex; flex-direction: column; gap: 0.9rem;
+}
+.siroop__cart-title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.01em; font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: 0;
+}
+.siroop__cart-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+.siroop__cart-empty { flex: 1; font-size: 0.86rem; color: var(--text-soft); margin: 0; }
+.siroop__cart-item { display: flex; justify-content: space-between; gap: 0.6rem; font-size: 0.88rem; }
+.siroop__cart-item-name { font-weight: 600; }
+.siroop__cart-subtotal {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem;
+  border-top: 2px solid var(--olijf-zwart); padding-top: 0.75rem;
+  font-family: var(--font-display); font-weight: 800; font-size: 0.8rem;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.siroop__cart-cta {
+  border: none; background: var(--citroengeel); color: var(--olijf-zwart);
   font-family: var(--font-display); font-weight: 800; font-size: 0.82rem;
   letter-spacing: 0.06em; text-transform: uppercase;
-  border: none; cursor: pointer; transition: filter 140ms ease;
+  padding: 0.85rem 1rem; cursor: pointer; transition: filter 140ms ease;
 }
-.siroop__cart-btn:hover { filter: brightness(0.94); }
-.siroop__cart-dot { opacity: 0.75; }
-.siroop__photo {
-  background: var(--zand); display: flex; align-items: center; justify-content: center;
-}
-.siroop__photo-label {
-  font-family: 'Courier New', monospace; font-size: 0.75rem;
-  color: rgba(58,62,44,0.35); text-transform: uppercase; letter-spacing: 0.12em;
-}
+.siroop__cart-cta:hover { filter: brightness(0.94); }
 
-@media (max-width: 700px) {
-  .siroop__card { grid-template-columns: 1fr; }
-  .siroop__photo { min-height: 220px; order: -1; }
+@media (max-width: 900px) {
+  .siroop__row { grid-template-columns: 1fr; }
+  .siroop__info-boat { display: none; }
 }

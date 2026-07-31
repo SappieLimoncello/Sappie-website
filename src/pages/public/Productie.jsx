@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Instagram, Menu, Pause, Play, X } from 'lucide-react';
+import { ChevronDown, Instagram, Menu, Pause, Play, X } from 'lucide-react';
 import { useRandomMark } from '../../hooks/useRandomMark';
 import '../../styles/welkom.css';
 import '../../styles/productie.css';
@@ -135,7 +135,6 @@ function Nav() {
           <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkooppunten</NavLink>
           <NavLink to="/reviews" className={navLinkClass}>Reviews</NavLink>
           <NavLink to="/welkom" className={navLinkClass}>Welkom</NavLink>
-          <NavLink to="/siroop-bestellen" className={navLinkClass}>Siroop</NavLink>
           <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
           <button
             type="button"
@@ -146,7 +145,15 @@ function Nav() {
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
-          <NavLink to="/bestellen" className="nav__bestellen">Bestellen</NavLink>
+          <div className="nav__order">
+            <button type="button" className="nav__bestellen">
+              Bestellen <ChevronDown size={14} className="nav__order-chevron" />
+            </button>
+            <div className="nav__order-menu">
+              <NavLink to="/bestellen" className="nav__order-link">Limoncello</NavLink>
+              <NavLink to="/siroop-bestellen" className="nav__order-link">Siroop</NavLink>
+            </div>
+          </div>
         </div>
       </nav>
       {menuOpen && (

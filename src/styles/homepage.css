@@ -258,7 +258,7 @@
 /* ================================================================
    SHOP — product cards
    ================================================================ */
-.shop {
+.shop.shop--home {
   padding: clamp(1.4rem, 3vw, 2.4rem) clamp(1.25rem, 4vw, 3.5rem) clamp(2.6rem, 6vw, 4.5rem);
 }
 .hl-blauw {
@@ -278,14 +278,24 @@
 .shop__title {
   font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
   letter-spacing: -0.02em; line-height: 0.95; text-align: center;
-  font-size: clamp(2rem, 5vw, 3.4rem); margin: 0 0 clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2rem, 5vw, 3.4rem); margin: 0 0 1.1rem;
 }
+.shop__intro {
+  max-width: 74ch; margin: 0 auto clamp(2rem, 4vw, 3rem); text-align: center;
+  line-height: 1.62; color: var(--text-soft); font-weight: 500;
+}
+.shop__intro a { text-decoration: underline; }
 .shop__grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: clamp(1rem, 2.5vw, 1.75rem);
 }
 @media (max-width: 760px) { .shop__grid { grid-template-columns: 1fr; } }
-.prod { display: flex; flex-direction: column; overflow: hidden; }
+.prod {
+  display: flex; flex-direction: column; overflow: hidden;
+  color: inherit; text-decoration: none; cursor: pointer;
+  min-width: 0;
+}
+.prod:visited { color: inherit; }
 .prod__photo {
   position: relative;
   aspect-ratio: 4 / 3; background: #d8d4c9;
@@ -300,7 +310,7 @@
   filter: drop-shadow(0 2px 5px rgba(0,0,0,0.4));
 }
 .prod__body {
-  flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center;
+  flex: 1; display: flex; flex-direction: column; align-items: stretch; text-align: center;
   gap: 0.55rem; padding: clamp(1.25rem, 2.5vw, 1.6rem);
 }
 .prod__body--geel { background: var(--citroengeel); color: var(--olijf-zwart); }
@@ -310,8 +320,11 @@
   font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
   letter-spacing: -0.01em; font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: 0;
 }
-.prod__ml { display: block; font-size: 0.62em; letter-spacing: 0.06em; opacity: 0.75; margin-top: 0.2rem; }
-.prod__text { margin: 0; line-height: 1.55; font-weight: 500; font-size: 0.92rem; opacity: 0.9; }
+.prod__ml { letter-spacing: 0.06em; }
+.prod__text { max-width: 100%; margin: 0 auto; line-height: 1.55; font-weight: 500; font-size: 0.92rem; opacity: 0.9; text-wrap: balance; }
+.prod__body--geel .prod__text { max-width: 78%; }
+.prod__body--blauw .prod__text { max-width: 92%; }
+.prod__body--sage .prod__text { max-width: 88%; }
 .prod__price {
   font-family: var(--font-display); font-weight: 900;
   font-size: clamp(1.6rem, 3vw, 2.1rem); margin: auto 0 0;

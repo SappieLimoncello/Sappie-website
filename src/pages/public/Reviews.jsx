@@ -103,7 +103,6 @@ function Nav() {
           <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkooppunten</NavLink>
           <NavLink to="/reviews" className={navLinkClass}>Reviews</NavLink>
           <NavLink to="/welkom" className={navLinkClass}>Welkom</NavLink>
-          <NavLink to="/siroop-bestellen" className={navLinkClass}>Siroop</NavLink>
           <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
           <button
             type="button"
@@ -114,7 +113,15 @@ function Nav() {
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
-          <NavLink to="/bestellen" className="nav__bestellen">Bestellen</NavLink>
+          <div className="nav__order">
+            <button type="button" className="nav__bestellen">
+              Bestellen <ChevronDown size={14} className="nav__order-chevron" />
+            </button>
+            <div className="nav__order-menu">
+              <NavLink to="/bestellen" className="nav__order-link">Limoncello</NavLink>
+              <NavLink to="/siroop-bestellen" className="nav__order-link">Siroop</NavLink>
+            </div>
+          </div>
         </div>
       </nav>
       {menuOpen && (
@@ -147,7 +154,7 @@ function PageHead() {
   );
 }
 
-function ReviewCard({ r, onOpen }) {
+function ReviewCard({ r, index, onOpen }) {
   const ref = useRef(null);
   const raf = useRef(0);
 
@@ -180,6 +187,7 @@ function ReviewCard({ r, onOpen }) {
     <button
       ref={ref}
       type="button"
+      data-idx={index}
       className={`rev rev--${r.theme} rev--${r.size}`}
       onClick={onOpen}
       aria-label={`Lees de review van ${r.name}`}
@@ -270,6 +278,64 @@ function SiteFooter() {
 
 const PAGE_SIZE = 10;
 
+// De muur is een CSS-grid-masonry: de hoogte van elke kaart bepaalt in welke
+// rij/kolom de volgende kaart terechtkomt, dus vooraf is niet te berekenen
+// welke kaart onder welke komt. Daarom meten we na het echte renderen de
+// werkelijke positie van elke kaart en herstellen we alleen kleuren die
+// toevallig direct onder elkaar in dezelfde kolom zijn beland.
+function useWallThemeFix(wallRef, visibleList) {
+  const [themes, setThemes] = useState(() => visibleList.map((r) => r.theme));
+
+  useEffect(() => {
+    setThemes((prev) => {
+      if (prev.length === visibleList.length) return prev;
+      return visibleList.map((r, i) => prev[i] ?? r.theme);
+    });
+  }, [visibleList.length]);
+
+  useEffect(() => {
+    const wall = wallRef.current;
+    if (!wall) return;
+    let raf = 0;
+    const fix = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const cards = Array.from(wall.querySelectorAll('[data-idx]'));
+        if (cards.length < 2) return;
+        const cols = new Map();
+        cards.forEach((el) => {
+          const idx = Number(el.dataset.idx);
+          const left = Math.round(el.getBoundingClientRect().left);
+          if (!cols.has(left)) cols.set(left, []);
+          cols.get(left).push(idx);
+        });
+        setThemes((prev) => {
+          const next = [...prev];
+          let changed = false;
+          cols.forEach((indices) => {
+            for (let k = 1; k < indices.length; k++) {
+              const cur = indices[k];
+              const above = indices[k - 1];
+              if (next[cur] === next[above]) {
+                const avoid = new Set([next[above], next[indices[k - 2]]]);
+                next[cur] = THEMES.find((t) => !avoid.has(t)) || THEMES.find((t) => t !== next[above]);
+                changed = true;
+              }
+            }
+          });
+          return changed ? next : prev;
+        });
+      });
+    };
+    fix();
+    const ro = new ResizeObserver(fix);
+    ro.observe(wall);
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+  }, [visibleList.length]);
+
+  return themes;
+}
+
 export default function Reviews() {
   const [open, setOpen] = useState(null);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
@@ -282,12 +348,17 @@ export default function Reviews() {
   const hasMore = isMobile && remaining > 0;
   const nextBatch = Math.min(PAGE_SIZE, remaining);
 
+  const wallRef = useRef(null);
+  const wallThemes = useWallThemeFix(wallRef, visibleList);
+
   return (
     <>
       <Nav />
       <PageHead />
-      <div className="wall">
-        {visibleList.map((r, i) => <ReviewCard key={i} r={r} onOpen={() => setOpen(i)} />)}
+      <div className="wall" ref={wallRef}>
+        {visibleList.map((r, i) => (
+          <ReviewCard key={i} r={{ ...r, theme: wallThemes[i] ?? r.theme }} index={i} onOpen={() => setOpen(i)} />
+        ))}
       </div>
       {hasMore && (
         <button type="button" className="wall__more" onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}>

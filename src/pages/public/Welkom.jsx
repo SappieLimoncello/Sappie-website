@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Instagram, Menu, X } from 'lucide-react';
+import { ChevronDown, Instagram, Menu, X } from 'lucide-react';
 import { useRandomMark } from '../../hooks/useRandomMark';
 import oscarEnJesseFoto from '../../assets/photos/oscar-en-jesse.jpg';
 import iwsc93 from '../../assets/badges/iwsc-93.png';
+import '../../styles/reviews.css';
 import '../../styles/welkom.css';
 
 const navLinkClass = ({ isActive }) => `nav__link${isActive ? ' nav__link--active' : ''}`;
@@ -20,7 +21,6 @@ function Nav() {
           <NavLink to="/productie" className={navLinkClass}>Productie</NavLink>
           <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkooppunten</NavLink>
           <NavLink to="/reviews" className={navLinkClass}>Reviews</NavLink>
-          <NavLink to="/siroop-bestellen" className={navLinkClass}>Siroop</NavLink>
           <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
           <button
             type="button"
@@ -31,7 +31,15 @@ function Nav() {
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
-          <NavLink to="/bestellen" className="nav__bestellen">Bestellen</NavLink>
+          <div className="nav__order">
+            <button type="button" className="nav__bestellen">
+              Bestellen <ChevronDown size={14} className="nav__order-chevron" />
+            </button>
+            <div className="nav__order-menu">
+              <NavLink to="/bestellen" className="nav__order-link">Limoncello</NavLink>
+              <NavLink to="/siroop-bestellen" className="nav__order-link">Siroop</NavLink>
+            </div>
+          </div>
         </div>
       </nav>
       {menuOpen && (
@@ -75,7 +83,7 @@ function Verhaal() {
           een flesje te stoppen. Samen zijn we op zoek gegaan naar de beste ingredi&euml;nten
           en de perfecte balans in smaak. Ook viel ons Sappie in smaak bij de jury van de
           IWSC (International Wine &amp; Spirit competition), in 2026 hebben we hier maar
-          liefst <a href="https://www.iwsc.net/results/detail/173259/limoncello" target="_blank" rel="noreferrer">93/100 punten</a> behaald!
+          liefst <a href="https://www.iwsc.net/results/detail/173259/limoncello" target="_blank" rel="noreferrer" className="wc-link">93/100 punten</a> behaald!
         </p>
         <p>
           Hiermee zijn we niet alleen de beste van Utrecht en omstreken, maar de twee na
@@ -96,6 +104,10 @@ function PageHead() {
   return (
     <header className="ph ph--statement ph--welkom">
       <h1 className="ph__title ph__title--big">Hoe zorg je het beste voor je <span className={`ph__mark ${markColor}`}>Sappie?</span></h1>
+      <p className="ph__body ph__body--medium">
+        Hieronder vind je tips om zo goed en lang mogelijk van jouw Sappie te kunnen genieten,
+        voor de uitgebreide tip kun je op de blokken klikken! Namens Oscar &amp; Jesse, proost!
+      </p>
     </header>
   );
 }
@@ -109,17 +121,26 @@ const TIPS = [
     tekst: (
       <>
         Vind jij jouw Sappie nou écht lekker, dan waarderen wij het enorm als je voor ons een{' '}
-        <a href="https://g.page/r/CbZKNCG-3TEgEBE/review" target="_blank" rel="noreferrer">review</a> achter laat!
+        <a href="https://g.page/r/CbZKNCG-3TEgEBE/review" target="_blank" rel="noreferrer" className="wc-link" onClick={(e) => e.stopPropagation()}>review</a> achter laat!
       </>
     ),
   },
 ];
 
-function ZorgSectie() {
+function ZorgSectie({ onOpenTip }) {
   return (
     <div className="stack stack--tips">
       {TIPS.map((t) => (
-        <div key={t.nr} className={`panel panel--${t.variant}`}>
+        <div
+          key={t.nr}
+          role="button"
+          tabIndex={0}
+          className={`panel panel--${t.variant}`}
+          onClick={() => onOpenTip(t)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpenTip(t); }
+          }}
+        >
           <span className="panel__num">{t.nr}</span>
           <h3 className="panel__title">{t.titel}</h3>
           <div className="panel__body panel__body--wide">
@@ -127,6 +148,25 @@ function ZorgSectie() {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+function TipModal({ tip, onClose }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  if (!tip) return null;
+  return (
+    <div className="modal" onClick={onClose}>
+      <div className={`modal__card modal__card--${tip.variant}`} role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
+        <button type="button" className="modal__close" onClick={onClose} aria-label="Sluiten">&times;</button>
+        <h3 className="modal__title">{tip.titel}</h3>
+        <p className="modal__text">{tip.tekst}</p>
+      </div>
     </div>
   );
 }
@@ -173,13 +213,15 @@ function SiteFooter() {
 }
 
 export default function Welkom() {
+  const [openTip, setOpenTip] = useState(null);
   return (
     <>
       <Nav />
       <Verhaal />
       <PageHead />
-      <ZorgSectie />
+      <ZorgSectie onOpenTip={setOpenTip} />
       <SiteFooter />
+      <TipModal tip={openTip} onClose={() => setOpenTip(null)} />
     </>
   );
 }

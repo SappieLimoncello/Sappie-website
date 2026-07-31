@@ -44,6 +44,29 @@ a { color: inherit; text-decoration: none; }
   border: none; cursor: pointer; text-decoration: none; transition: filter 140ms ease;
 }
 .nav__bestellen:hover { filter: brightness(0.94); }
+.nav__bestellen .nav__order-chevron { margin-left: 0.35rem; transition: transform 140ms ease; }
+.nav__order { position: relative; display: inline-flex; }
+.nav__order-menu {
+  position: absolute; top: 100%; right: 0; margin-top: 0;
+  min-width: 100%; padding-top: 0.6rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+  opacity: 0; visibility: hidden; transform: translateY(-4px); pointer-events: none;
+  transition: opacity 140ms ease, transform 140ms ease, visibility 140ms ease;
+  z-index: 20;
+}
+.nav__order:hover .nav__order-menu,
+.nav__order:focus-within .nav__order-menu {
+  opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
+}
+.nav__order:hover .nav__order-chevron { transform: rotate(180deg); }
+.nav__order-link {
+  display: block; padding: 0.65rem 1.3rem; white-space: nowrap; text-align: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 0.78rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--olijf-zwart); text-decoration: none; transition: filter 140ms ease;
+  background: var(--citroengeel); border-radius: 4px; box-shadow: 0 2px 6px rgba(58,62,44,0.22);
+}
+.nav__order-link:hover { filter: brightness(0.94); }
 @media (max-width: 760px) { .nav__link { display: none; } }
 
 /* ---- Nav: mobile hamburger ---- */
@@ -148,8 +171,9 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: -0.02em; line-height: 0.95;
   font-size: clamp(2.2rem, 5.5vw, 3.8rem); margin: 0;
 }
-.ph__body { max-width: 62ch; line-height: 1.65; color: var(--text-soft); margin: 1.1rem 0 0; }
+.ph__body { max-width: 62ch; line-height: 1.65; color: var(--text-soft); margin: 1.1rem 0 0; font-weight: 500; }
 .ph__body--medium { font-weight: 500; }
+.ph__link { color: inherit; text-decoration: underline; }
 .ph--statement { text-align: center; margin-top: clamp(1.5rem, 3.5vw, 2.5rem); padding-top: 0; }
 .ph--statement .ph__title--big { font-size: clamp(1.89rem, 4.96vw, 3.57rem); line-height: 1.14; }
 .ph--statement .ph__body { max-width: 70%; margin-left: auto; margin-right: auto; font-size: 15px; }

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Instagram, Menu, X } from 'lucide-react';
+import { ChevronDown, Instagram, Menu, X } from 'lucide-react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useRandomMark } from '../../hooks/useRandomMark';
@@ -129,10 +129,22 @@ const LOCATIONS = [
     lat: 52.09527, lng: 5.128329,
   },
   {
+    id: 'bottles-booze', category: 'slijterij', name: 'Bottles & Booze',
+    addr: 'Vinkenburgstraat 6, 3512 AB Utrecht', tel: '030 633 18 00',
+    hours: null, comingSoon: true, availableFrom: '21 augustus',
+    lat: 52.0921054, lng: 5.1175336,
+  },
+  {
     id: 'hygge', category: 'restaurant', name: 'Hygge Utrecht',
     addr: 'Goeman Borgesiuslaan 77, 3515 ET Utrecht', tel: '030 755 15 50',
     hours: { ma: null, di: ['10:30', '22:00'], wo: ['10:30', '22:00'], do: ['10:30', '22:00'], vr: ['10:30', '23:00'], za: ['10:30', '23:00'], zo: ['10:30', '22:00'] },
     lat: 52.103055, lng: 5.114158,
+  },
+  {
+    id: 'rooie-nel', category: 'restaurant', name: 'Rooie Nel',
+    addr: 'Jagerskade 13, 3552 TL Utrecht', tel: '030 721 00 04',
+    hours: { ma: null, di: ['11:00', '23:00'], wo: ['11:00', '23:00'], do: ['11:00', '01:00'], vr: ['11:00', '01:00'], za: ['11:00', '01:00'], zo: ['11:00', '23:00'] },
+    lat: 52.10702498, lng: 5.10717921,
   },
 ];
 
@@ -144,12 +156,26 @@ function toMinutes(time) {
 function getOpenStatus(hours) {
   const now = new Date();
   const todayKey = JS_DAY_TO_KEY[now.getDay()];
-  const range = hours[todayKey];
+  const yesterdayKey = JS_DAY_TO_KEY[(now.getDay() + 6) % 7];
   const nowMinutes = now.getHours() * 60 + now.getMinutes();
+
+  // Sluitingstijd na middernacht (bv. 01:00): dan loopt de openingstijd van
+  // gisteren door tot in vandaag, dus die check gaat voor de tijden van
+  // vandaag zelf.
+  const yRange = hours[yesterdayKey];
+  if (yRange) {
+    const [yStart, yEnd] = yRange;
+    if (toMinutes(yEnd) <= toMinutes(yStart) && nowMinutes < toMinutes(yEnd)) {
+      return { isOpen: true, text: `Nu open · sluit om ${yEnd}`, todayKey };
+    }
+  }
+
+  const range = hours[todayKey];
 
   if (range) {
     const [start, end] = range;
-    if (nowMinutes >= toMinutes(start) && nowMinutes < toMinutes(end)) {
+    const endMinutes = toMinutes(end) <= toMinutes(start) ? toMinutes(end) + 24 * 60 : toMinutes(end);
+    if (nowMinutes >= toMinutes(start) && nowMinutes < endMinutes) {
       return { isOpen: true, text: `Nu open · sluit om ${end}`, todayKey };
     }
     if (nowMinutes < toMinutes(start)) {
@@ -172,7 +198,6 @@ function Nav() {
           <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkooppunten</NavLink>
           <NavLink to="/reviews" className={navLinkClass}>Reviews</NavLink>
           <NavLink to="/welkom" className={navLinkClass}>Welkom</NavLink>
-          <NavLink to="/siroop-bestellen" className={navLinkClass}>Siroop</NavLink>
           <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
           <button
             type="button"
@@ -183,7 +208,15 @@ function Nav() {
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
-          <NavLink to="/bestellen" className="nav__bestellen">Bestellen</NavLink>
+          <div className="nav__order">
+            <button type="button" className="nav__bestellen">
+              Bestellen <ChevronDown size={14} className="nav__order-chevron" />
+            </button>
+            <div className="nav__order-menu">
+              <NavLink to="/bestellen" className="nav__order-link">Limoncello</NavLink>
+              <NavLink to="/siroop-bestellen" className="nav__order-link">Siroop</NavLink>
+            </div>
+          </div>
         </div>
       </nav>
       {menuOpen && (
@@ -225,11 +258,16 @@ function MapPanel({ activeId, setActiveId, setExpandedId }) {
   useEffect(() => {
     if (!containerRef.current || mapRef.current || !mapboxgl.accessToken) return;
 
+    const bounds = LOCATIONS.reduce(
+      (b, loc) => b.extend([loc.lng, loc.lat]),
+      new mapboxgl.LngLatBounds()
+    );
+
     const map = new mapboxgl.Map({
       container: containerRef.current,
       style: 'mapbox://styles/mapbox/light-v11',
-      center: [5.108, 52.093],
-      zoom: 11.3,
+      bounds,
+      fitBoundsOptions: { padding: 100, maxZoom: 14 },
     });
     mapRef.current = map;
 
@@ -304,9 +342,10 @@ function MapPanel({ activeId, setActiveId, setExpandedId }) {
 }
 
 function LocationList({ activeId, setActiveId, expandedId, setExpandedId }) {
+  const byName = (a, b) => a.name.localeCompare(b.name, 'nl');
   const groups = [
-    { label: 'Slijterijen', key: 'slijterij', items: LOCATIONS.filter((l) => l.category === 'slijterij') },
-    { label: 'Restaurants', key: 'restaurant', items: LOCATIONS.filter((l) => l.category === 'restaurant') },
+    { label: 'Slijterijen', key: 'slijterij', items: LOCATIONS.filter((l) => l.category === 'slijterij').sort(byName) },
+    { label: 'Restaurants', key: 'restaurant', items: LOCATIONS.filter((l) => l.category === 'restaurant').sort(byName) },
   ];
 
   return (
@@ -316,7 +355,7 @@ function LocationList({ activeId, setActiveId, expandedId, setExpandedId }) {
           <p className={`list__group-title list__group-title--${g.key}`}>{g.label}</p>
           {g.items.map((loc) => {
             const open = expandedId === loc.id;
-            const status = open ? getOpenStatus(loc.hours) : null;
+            const status = open && !loc.comingSoon ? getOpenStatus(loc.hours) : null;
             return (
               <div
                 key={loc.id}
@@ -328,24 +367,36 @@ function LocationList({ activeId, setActiveId, expandedId, setExpandedId }) {
               >
                 <span className={`list__dot list__dot--${loc.category}`}></span>
                 <div className="list__body">
-                  <p className="list__name">{loc.name}<span className="list__chev" aria-hidden="true">{open ? '–' : '+'}</span></p>
+                  <p className="list__name">
+                    <span className="list__name-text">
+                      {loc.name}
+                      {loc.comingSoon && <span className="list__soon">Vanaf {loc.availableFrom}.</span>}
+                    </span>
+                    <span className="list__chev" aria-hidden="true">{open ? '–' : '+'}</span>
+                  </p>
                   <p className="list__addr">{loc.addr}</p>
                   <p className="list__tel">{loc.tel}</p>
                   {open && (
                     <div className="list__detail">
-                      <p className={`list__status ${status.isOpen ? 'list__status--open' : 'list__status--closed'}`}>
-                        {status.text}
-                      </p>
-                      <ul className="list__hours">
-                        {DAY_ORDER.map((key) => (
-                          <li key={key} className={key === status.todayKey ? 'is-today' : ''}>
-                            <span className="list__hours-day">{DAY_LABELS[key]}</span>
-                            <span className="list__hours-range">
-                              {loc.hours[key] ? `${loc.hours[key][0]}–${loc.hours[key][1]}` : 'Gesloten'}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
+                      {loc.comingSoon ? (
+                        <p className="list__soon-note">Sappie ligt hier vanaf {loc.availableFrom}.</p>
+                      ) : (
+                        <>
+                          <p className={`list__status ${status.isOpen ? 'list__status--open' : 'list__status--closed'}`}>
+                            {status.text}
+                          </p>
+                          <ul className="list__hours">
+                            {DAY_ORDER.map((key) => (
+                              <li key={key} className={key === status.todayKey ? 'is-today' : ''}>
+                                <span className="list__hours-day">{DAY_LABELS[key]}</span>
+                                <span className="list__hours-range">
+                                  {loc.hours[key] ? `${loc.hours[key][0]}–${loc.hours[key][1]}` : 'Gesloten'}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        </>
+                      )}
                       <div className="list__actions">
                         <a href={`https://maps.google.com/?q=${encodeURIComponent(loc.addr)}`} className="list__btn" target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>Route</a>
                         <a href={`tel:${loc.tel.replace(/\s/g, '')}`} className="list__btn list__btn--ghost" onClick={(e) => e.stopPropagation()}>Bel</a>

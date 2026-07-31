@@ -51,12 +51,32 @@
   .wc-story__body { max-width: 599px; }
 }
 
+/* ---- Tips: blokken zijn klikbaar, popup met uitgebreide tekst ---- */
+.stack--tips .panel {
+  cursor: pointer;
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+.stack--tips .panel:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(58,62,44,0.16); }
+.stack--tips .panel:focus-visible { outline: 3px solid var(--utrecht-rood); outline-offset: 3px; }
+
+.modal__card--olijf { background: var(--olijfgroen); color: var(--warm-wit); --ink: var(--warm-wit); }
+
+.wc-link { text-decoration: underline; }
+.modal__title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.01em; line-height: 1; margin: 0; font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+}
+
 @media (max-width: 700px) {
   .stack--tips .panel {
     padding-top: 1rem; padding-bottom: 0.75rem;
     column-gap: 0.5rem; align-items: baseline;
   }
   .stack--tips .panel__text { margin-bottom: 0; }
+}
+
+header.ph--welkom .ph__body {
+  font-size: 1rem; line-height: 1.62; color: var(--text-soft); font-weight: 500;
 }
 
 @media (max-width: 759px) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Instagram, Menu, X } from 'lucide-react';
+import { ChevronDown, Instagram, Menu, X } from 'lucide-react';
 import '../../styles/homepage.css';
 import sappieMark from '../../assets/marks/sappie-mark.png';
 import iwsc93 from '../../assets/badges/iwsc-93.png';
@@ -34,7 +34,6 @@ function Nav() {
           <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkooppunten</NavLink>
           <NavLink to="/reviews" className={navLinkClass}>Reviews</NavLink>
           <NavLink to="/welkom" className={navLinkClass}>Welkom</NavLink>
-          <NavLink to="/siroop-bestellen" className={navLinkClass}>Siroop</NavLink>
           <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
           <button
             type="button"
@@ -45,7 +44,15 @@ function Nav() {
           >
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
-          <NavLink to="/bestellen" className="nav__bestellen">Bestellen</NavLink>
+          <div className="nav__order">
+            <button type="button" className="nav__bestellen">
+              Bestellen <ChevronDown size={14} className="nav__order-chevron" />
+            </button>
+            <div className="nav__order-menu">
+              <NavLink to="/bestellen" className="nav__order-link">Limoncello</NavLink>
+              <NavLink to="/siroop-bestellen" className="nav__order-link">Siroop</NavLink>
+            </div>
+          </div>
         </div>
       </nav>
       {menuOpen && (
@@ -190,40 +197,45 @@ function VariantWerf() {
         </div>
       </div>
 
-      <section className="shop">
+      <section className="shop shop--home">
         <h2 className="shop__title">Welke <span className="hl-blauw">Sappies</span> kan ik kopen?</h2>
+        <p className="shop__intro">
+          Als ondernemer kun je direct bij ons bestellen via ons bestelformulier door op één
+          van de onderstaande producten te klikken. Particulieren kunnen ons Sappie vinden bij
+          een van onze verschillende <Link to="/winkels-en-restaurants">verkooppunten</Link> in Utrecht.
+        </p>
         <div className="shop__grid">
-          <article className="prod">
+          <Link to="/bestellen" className="prod">
             <div className="prod__photo">
               <img src={productBottle} alt="Klein Sappie" className="prod__img" />
             </div>
             <div className="prod__body prod__body--geel">
-              <h3 className="prod__name">Klein Sappie <span className="prod__ml">100 ml</span></h3>
+              <h3 className="prod__name">Klein Sappie <span className="prod__ml">- 100ml</span></h3>
               <p className="prod__text">De kleinste van onze flesjes, ideaal voor in cadeau- of kerstpakketten.</p>
               <p className="prod__price">&euro;5,50</p>
             </div>
-          </article>
-          <article className="prod">
+          </Link>
+          <Link to="/bestellen" className="prod">
             <div className="prod__photo">
               <img src={productBottle} alt="Klassiek Sappie" className="prod__img" />
               <img src={iwsc93} alt="IWSC 93 punten, iwsc.net 2026" className="prod__badge" />
             </div>
             <div className="prod__body prod__body--blauw">
-              <h3 className="prod__name">Klassiek Sappie <span className="prod__ml">500 ml</span></h3>
+              <h3 className="prod__name">Klassiek Sappie <span className="prod__ml">- 500ml</span></h3>
               <p className="prod__text">Onze klassieke halve liter fles, zoals verkrijgbaar bij de winkels en slijterijen.</p>
               <p className="prod__price">&euro;18,50</p>
             </div>
-          </article>
-          <article className="prod">
+          </Link>
+          <Link to="/bestellen" className="prod">
             <div className="prod__photo">
               <img src={productBottle} alt="Groot Sappie" className="prod__img" />
             </div>
             <div className="prod__body prod__body--sage">
-              <h3 className="prod__name">Groot Sappie <span className="prod__ml">1000 ml</span></h3>
+              <h3 className="prod__name">Groot Sappie <span className="prod__ml">- 1000ml</span></h3>
               <p className="prod__text">Een liter Sappie, voor jezelf of om uit te delen aan vrienden en familie.</p>
               <p className="prod__price">&euro;32,95</p>
             </div>
-          </article>
+          </Link>
         </div>
       </section>
     </>
