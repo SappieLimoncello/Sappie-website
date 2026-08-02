@@ -5,6 +5,7 @@ import { useRandomMark } from '../../hooks/useRandomMark';
 import '../../styles/forms.css';
 
 const productBottle = '/images/product-bottle.jpg';
+const productBottleKlassiek = '/images/product-bottle-klassiek.jpg';
 import iwsc93 from '../../assets/badges/iwsc-93.png';
 
 const PRODUCTS = [
@@ -24,6 +25,7 @@ const PRODUCTS = [
     text: 'Onze klassieke halve liter fles, zoals verkrijgbaar bij de winkels en slijterijen.',
     price: '18,50',
     badge: true,
+    img: productBottleKlassiek,
   },
   {
     key: 'groot',
@@ -134,7 +136,7 @@ function ProductGrid({ qty, onChange }) {
       {PRODUCTS.map((p) => (
         <div key={p.key} className={`prod prod--${p.variant}`}>
           <div className="prod__photo">
-            <img src={productBottle} alt={p.name} className="prod__img" />
+            <img src={p.img || productBottle} alt={p.name} className="prod__img" />
             {p.badge && <img src={iwsc93} alt="IWSC 93 punten, iwsc.net 2026" className="prod__badge" />}
           </div>
           <div className={`prod__body prod__body--${p.variant}`}>
@@ -160,6 +162,7 @@ function ProductGrid({ qty, onChange }) {
                 +
               </button>
             </div>
+            <p className="prod__vat">(exclusief BTW)</p>
           </div>
         </div>
       ))}
@@ -231,9 +234,15 @@ function Kassabon({ qty, cartItems, subtotal, onContinue, showSubmit, canReview,
             ))}
           </ul>
         )}
-        <div className="cart__subtotal">
-          <span>Totaal excl. btw</span>
-          <span>&euro;{formatPrice(subtotal)}</span>
+        <div className="reviewmodal__totals">
+          <div className="reviewmodal__total-row">
+            <span>Totaal excl. btw</span>
+            <span>&euro;{formatPrice(subtotal)}</span>
+          </div>
+          <div className="reviewmodal__total-row reviewmodal__total-row--incl">
+            <span>Totaal incl. btw</span>
+            <span>&euro;{formatPrice(subtotal * (1 + BTW_RATE))}</span>
+          </div>
         </div>
       </aside>
       {onContinue && (
@@ -388,11 +397,18 @@ function OrderFormFields({ values, onChange, errors, consent, onConsentChange })
         <span className="field__label cform__consent-spacer" aria-hidden="true">&nbsp;</span>
         <label className="consent">
           <input type="checkbox" className="consent__box" checked={consent.terms} onChange={(e) => onConsentChange('terms', e.target.checked)} />
-          <span className="consent__text">Ik ga akkoord met de algemene voorwaarden van Sappie Limoncello*</span>
+          <span className="consent__text">
+            Ik ga akkoord met de{' '}
+            <Link to="/algemene-voorwaarden" target="_blank" rel="noreferrer" className="consent__link" onClick={(e) => e.stopPropagation()}>algemene voorwaarden</Link>{' '}
+            van Sappie Limoncello*
+          </span>
         </label>
         <label className="consent">
           <input type="checkbox" className="consent__box" checked={consent.dataUse} onChange={(e) => onConsentChange('dataUse', e.target.checked)} />
-          <span className="consent__text">Ik ga akkoord met het gebruiken van mijn gegevens voor het verwerken van de bestelling*</span>
+          <span className="consent__text">
+            Ik ga akkoord met het{' '}
+            <Link to="/privacy-statement" target="_blank" rel="noreferrer" className="consent__link" onClick={(e) => e.stopPropagation()}>privacy statement</Link>*
+          </span>
         </label>
       </div>
     </div>
@@ -406,6 +422,11 @@ function SiteFooter() {
         <div className="foot__brand">
           <p className="foot__word">Sappie Limoncello<span className="drop">.</span></p>
           <p className="foot__text foot__kvk">KVK 98649167<br className="foot__kvk-break" /><span className="foot__dot"> &bull; </span>BTW NL868584344B01</p>
+          <div className="foot__legal">
+            <Link to="/algemene-voorwaarden" className="foot__legal-link">Algemene voorwaarden</Link>
+            <span className="foot__legal-sep">&bull;</span>
+            <Link to="/privacy-statement" className="foot__legal-link">Privacy statement</Link>
+          </div>
         </div>
         <div className="foot__col foot__col--contact">
           <p className="foot__col-title">Contact</p>

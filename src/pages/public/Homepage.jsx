@@ -4,11 +4,13 @@ import { ChevronDown, Instagram, Menu, X } from 'lucide-react';
 import '../../styles/homepage.css';
 import sappieMark from '../../assets/marks/sappie-mark.png';
 import iwsc93 from '../../assets/badges/iwsc-93.png';
+import oscarEnJesseDomtuin from '../../assets/photos/oscar-en-jesse-domtuin.jpg';
 
 const heroImg = '/images/hero-gracht.jpg';
 const beeldmerk9 = '/images/beeldmerk-9.png';
 const beeldmerk8 = '/images/beeldmerk-8.png';
 const productBottle = '/images/product-bottle.jpg';
+const productBottleKlassiek = '/images/product-bottle-klassiek.jpg';
 
 const HEADLINES = [
   [{ text: 'Jochie' }, { text: 'Wijfie' }, { text: 'Sappie', dot: true }],
@@ -110,14 +112,14 @@ function Hero() {
             </h1>
           </div>
           <div className="tiles">
-            <Link to="/winkels-en-restaurants" className="tile tile--mark tile--mark-geel">
+            <Link to="/bestellen" className="tile tile--mark tile--mark-geel">
               <img src={beeldmerk9} alt="" className="tile__bg" />
-              <span className="tile__text">Koop<br />hier</span>
+              <span className="tile__text">Bestel<br />hier</span>
               <span className="arr">&rarr;</span>
             </Link>
             <Link to="/productie" className="tile tile--mark tile--mark-blauw">
               <img src={beeldmerk8} alt="" className="tile__bg" />
-              <span className="tile__text">Ontdek</span>
+              <span className="tile__text">Ontdek<br />Sappie</span>
               <span className="arr">&rarr;</span>
             </Link>
           </div>
@@ -200,45 +202,88 @@ function VariantWerf() {
       <section className="shop shop--home">
         <h2 className="shop__title">Welke <span className="hl-blauw">Sappies</span> kan ik kopen?</h2>
         <p className="shop__intro">
-          Als ondernemer kun je direct bij ons bestellen via ons bestelformulier door op één
-          van de onderstaande producten te klikken. Particulieren kunnen ons Sappie vinden bij
-          een van onze verschillende <Link to="/winkels-en-restaurants">verkooppunten</Link> in Utrecht.
+          Als ondernemer kun je onze limoncello direct kopen vanaf onze website. Klik op één
+          van de onderstaande producten om naar de bestelpagina te gaan. Als particulier kun je
+          ons Sappie vinden bij een van onze verschillende <Link to="/winkels-en-restaurants">verkooppunten</Link> in Utrecht.
         </p>
         <div className="shop__grid">
-          <Link to="/bestellen" className="prod">
+          <Link to="/bestellen" className="prod prod--geel">
             <div className="prod__photo">
               <img src={productBottle} alt="Klein Sappie" className="prod__img" />
             </div>
             <div className="prod__body prod__body--geel">
               <h3 className="prod__name">Klein Sappie <span className="prod__ml">- 100ml</span></h3>
               <p className="prod__text">De kleinste van onze flesjes, ideaal voor in cadeau- of kerstpakketten.</p>
-              <p className="prod__price">&euro;5,50</p>
-            </div>
+              <p className="prod__price">&euro;5,50</p>            </div>
           </Link>
-          <Link to="/bestellen" className="prod">
+          <Link to="/bestellen" className="prod prod--blauw">
             <div className="prod__photo">
-              <img src={productBottle} alt="Klassiek Sappie" className="prod__img" />
+              <img src={productBottleKlassiek} alt="Klassiek Sappie" className="prod__img" />
               <img src={iwsc93} alt="IWSC 93 punten, iwsc.net 2026" className="prod__badge" />
             </div>
             <div className="prod__body prod__body--blauw">
               <h3 className="prod__name">Klassiek Sappie <span className="prod__ml">- 500ml</span></h3>
               <p className="prod__text">Onze klassieke halve liter fles, zoals verkrijgbaar bij de winkels en slijterijen.</p>
-              <p className="prod__price">&euro;18,50</p>
-            </div>
+              <p className="prod__price">&euro;18,50</p>            </div>
           </Link>
-          <Link to="/bestellen" className="prod">
+          <Link to="/bestellen" className="prod prod--sage">
             <div className="prod__photo">
               <img src={productBottle} alt="Groot Sappie" className="prod__img" />
             </div>
             <div className="prod__body prod__body--sage">
               <h3 className="prod__name">Groot Sappie <span className="prod__ml">- 1000ml</span></h3>
               <p className="prod__text">Een liter Sappie, voor jezelf of om uit te delen aan vrienden en familie.</p>
-              <p className="prod__price">&euro;32,95</p>
-            </div>
+              <p className="prod__price">&euro;32,95</p>            </div>
           </Link>
         </div>
       </section>
     </>
+  );
+}
+
+function MakersFoto() {
+  return (
+    <figure className="hp-story__photo">
+      <img src={iwsc93} alt="IWSC 93 punten, iwsc.net 2026" className="hp-story__badge" />
+      <img src={oscarEnJesseDomtuin} alt="Oscar &amp; Jesse in de Domtuin" className="hp-story__img" />
+      <figcaption className="hp-story__cap">Oscar &amp; Jesse</figcaption>
+    </figure>
+  );
+}
+
+function MakersVerhaal() {
+  return (
+    <section className="hp-story">
+      <h2 className="hp-story__title">Wie maakt mijn <span className="hl-geel">Sappie</span> eigenlijk?</h2>
+      <MakersFoto />
+      <div className="hp-story__body">
+        <p className="hp-story__name">Jesse van de Veen</p>
+        <p>
+          Ciao! Ik ben Jesse, medeoprichter van Sappie. Ik werk al meer dan 3 jaar in de wondere
+          wereld van de slijterij, bij de Una M&aacute;s in Utrecht. In deze tijd heb ik de nodige
+          limoncello&rsquo;s geproefd om te weten wat er nodig is om een citroen &eacute;cht tot
+          leven te brengen. Naast mijn liefde voor smaak heb ik een passie voor taal. Bij Sappie
+          houd ik me daarom veel bezig met marketing, communicatie en eigenlijk alles wat er om
+          het goudgele flesje heen draait voor de verkoop.
+        </p>
+        <p>
+          Ik ben ambitieus en fiets als fijnproever door het leven. Elke dag moet smaken alsof je
+          verse citroenrasp aan je vingers ruikt. Niets minder! Ook gezelligheid vertaal ik maar al
+          te graag naar een goede borrel; misschien dat Oscar en ik daarom vaak in de gelegenheid
+          zijn om over onze limoncello te praten&hellip; Proost!
+        </p>
+        <p className="hp-story__name">Oscar den Uijl</p>
+        <p>
+          Hoi! Ik ben Oscar, tevens medeoprichter van Sappie. Overdag werk ik als adviseur
+          ruimtelijke ordening bij Oranje Uil en binnen Sappie houd ik me bezig met alles achter
+          de schermen: van de inkoop en administratie tot de website en de dagelijkse organisatie.
+        </p>
+        <p>
+          Ik hou ervan om dingen goed te regelen en hoop Sappie zo verder te kunnen laten groeien.
+          In mijn vrije tijd sport ik graag, maar nog liever sluit ik aan bij een goeie borrel.
+        </p>
+      </div>
+    </section>
   );
 }
 
@@ -249,6 +294,11 @@ function SiteFooter() {
         <div className="foot__brand">
           <p className="foot__word">Sappie Limoncello<span className="drop">.</span></p>
           <p className="foot__text foot__kvk">KVK 98649167<br className="foot__kvk-break" /><span className="foot__dot"> &bull; </span>BTW NL868584344B01</p>
+          <div className="foot__legal">
+            <Link to="/algemene-voorwaarden" className="foot__legal-link">Algemene voorwaarden</Link>
+            <span className="foot__legal-sep">&bull;</span>
+            <Link to="/privacy-statement" className="foot__legal-link">Privacy statement</Link>
+          </div>
         </div>
         <div className="foot__col foot__col--contact">
           <p className="foot__col-title">Contact</p>
@@ -290,6 +340,7 @@ export default function Homepage() {
       <Hero />
       <Waterline />
       <VariantWerf />
+      <MakersVerhaal />
       <SiteFooter />
     </>
   );

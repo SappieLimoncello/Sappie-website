@@ -9,6 +9,8 @@ import Bestelformulier from './pages/public/Bestelformulier.jsx';
 import Reviews from './pages/public/Reviews.jsx';
 import Welkom from './pages/public/Welkom.jsx';
 import SiroopBestellen from './pages/public/SiroopBestellen.jsx';
+import AlgemeneVoorwaarden from './pages/public/AlgemeneVoorwaarden.jsx';
+import PrivacyStatement from './pages/public/PrivacyStatement.jsx';
 
 // Lazy geladen: bevat mapbox-gl, een zware library die alleen nodig is
 // op deze ene pagina — niet meesturen in het hoofdbundle van de site.
@@ -27,6 +29,8 @@ export default function App() {
           <Route path="/bestellen" element={<Bestelformulier />} />
           <Route path="/welkom" element={<Welkom />} />
           <Route path="/siroop-bestellen" element={<SiroopBestellen />} />
+          <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
+          <Route path="/privacy-statement" element={<PrivacyStatement />} />
         </Route>
       </Routes>
     </BrowserRouter>

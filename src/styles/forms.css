@@ -68,6 +68,7 @@
   font-family: var(--font-display); font-weight: 900;
   font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 0;
 }
+.prod__vat { font-size: 0.7rem; font-weight: 600; opacity: 0.65; margin: -0.55rem 0 0; text-align: center; }
 .qty { display: flex; align-items: center; justify-content: center; gap: 1rem; }
 .qty__btn {
   width: 34px; height: 34px; border-radius: 50%;
@@ -111,12 +112,6 @@
 .cart__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 0.6rem; flex: 1; }
 .cart__item { display: flex; justify-content: space-between; gap: 0.6rem; font-size: 0.88rem; }
 .cart__item-name { font-weight: 600; }
-.cart__subtotal {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem;
-  border-top: 2px solid var(--olijf-zwart); padding-top: 0.75rem;
-  font-family: var(--font-display); font-weight: 800; font-size: 0.8rem;
-  text-transform: uppercase; letter-spacing: 0.04em;
-}
 .cart__cta {
   border: none; background: var(--citroengeel); color: var(--olijf-zwart);
   font-family: var(--font-display); font-weight: 800; font-size: 0.82rem;
@@ -255,6 +250,8 @@
 .consent__box:checked::before { transform: scale(1); }
 .consent__box:focus-visible { outline: 2px solid var(--utrecht-rood); outline-offset: 2px; }
 .consent__text { font-size: 0.82rem; line-height: 1.5; color: var(--text-soft); }
+.consent__link { color: var(--text); text-decoration: underline; font-weight: 600; }
+.consent__link:hover { color: var(--utrecht-rood); }
 
 /* ---- Contact info aside ---- */
 .contact__aside {

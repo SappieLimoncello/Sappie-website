@@ -98,6 +98,7 @@ function SiroopCard({ aantal, onMinder, onMeer }) {
           <p className="siroop__prod-price">&euro;{euro(PRIJS_PER_FLES)}</p>
           <button type="button" className="siroop__prod-qtybtn" onClick={onMeer} aria-label="Meer">+</button>
         </div>
+        <p className="siroop__prod-vat">(Inclusief BTW)</p>
       </div>
     </div>
   );
@@ -136,7 +137,7 @@ function SiroopKassabon({ aantal, totaal }) {
           </ul>
         )}
         <div className="siroop__cart-subtotal">
-          <span>Totaal excl. btw</span>
+          <span>Totaal incl. btw</span>
           <span>&euro;{euro(totaal)}</span>
         </div>
       </aside>
@@ -152,6 +153,11 @@ function SiteFooter() {
         <div className="foot__brand">
           <p className="foot__word">Sappie Limoncello<span className="drop">.</span></p>
           <p className="foot__text foot__kvk">KVK 98649167<br className="foot__kvk-break" /><span className="foot__dot"> &bull; </span>BTW NL868584344B01</p>
+          <div className="foot__legal">
+            <Link to="/algemene-voorwaarden" className="foot__legal-link">Algemene voorwaarden</Link>
+            <span className="foot__legal-sep">&bull;</span>
+            <Link to="/privacy-statement" className="foot__legal-link">Privacy statement</Link>
+          </div>
         </div>
         <div className="foot__col foot__col--contact">
           <p className="foot__col-title">Contact</p>

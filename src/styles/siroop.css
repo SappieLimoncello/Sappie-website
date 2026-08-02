@@ -29,7 +29,10 @@
 }
 .siroop__prod-name {
   font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
-  letter-spacing: -0.01em; font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: 0;
+  letter-spacing: -0.01em; font-size: clamp(1.1rem, 2vw, 1.35rem); margin: 0;
+}
+@media (min-width: 1280px) {
+  .siroop__prod-name { white-space: nowrap; font-size: clamp(0.8125rem, 6.8cqw, 1.7rem); }
 }
 .siroop__prod-ml { letter-spacing: 0.06em; }
 .siroop__prod-text {
@@ -41,6 +44,9 @@
 }
 .siroop__prod-price {
   font-family: var(--font-display); font-weight: 900; font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 0;
+}
+.siroop__prod-vat {
+  font-size: 0.7rem; font-weight: 600; opacity: 0.65; margin: -0.55rem 0 0; text-align: center;
 }
 .siroop__prod-qtybtn {
   width: 24px; height: 24px; flex: none; border-radius: 50%;
