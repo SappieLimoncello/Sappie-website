@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { ChevronDown, Instagram, Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Instagram } from 'lucide-react';
+import { SiteNav } from '../../components/SiteNav.jsx';
 import { useRandomMark } from '../../hooks/useRandomMark';
 import '../../styles/siroop.css';
 
@@ -9,61 +10,8 @@ const lekkerBootjeVaren = '/images/lekker-bootje-varen.png';
 
 const PRIJS_PER_FLES = 8.99;
 
-const navLinkClass = ({ isActive }) =>
-  `nav__link${isActive ? ' nav__link--active' : ''}`;
-
 function euro(bedrag) {
   return bedrag.toFixed(2).replace('.', ',');
-}
-
-function Nav() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const closeMenu = () => setMenuOpen(false);
-  return (
-    <div className="nav-float nav-float--sub">
-      <nav className="nav">
-        <NavLink to="/" className="nav__word" onClick={closeMenu}>Sappie Limoncello<span className="drop">.</span></NavLink>
-        <div className="nav__right">
-          <NavLink to="/" end className={navLinkClass}>Home</NavLink>
-          <NavLink to="/productie" className={navLinkClass}>Productie</NavLink>
-          <NavLink to="/winkels-en-restaurants" className={navLinkClass}>Verkooppunten</NavLink>
-          <NavLink to="/reviews" className={navLinkClass}>Reviews</NavLink>
-          <NavLink to="/welkom" className={navLinkClass}>Welkom</NavLink>
-          <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
-          <button
-            type="button"
-            className="nav__burger"
-            aria-label={menuOpen ? 'Sluit menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((v) => !v)}
-          >
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-          <div className="nav__order">
-            <button type="button" className="nav__bestellen">
-              Bestellen <ChevronDown size={14} className="nav__order-chevron" />
-            </button>
-            <div className="nav__order-menu">
-              <NavLink to="/bestellen" className="nav__order-link">Limoncello</NavLink>
-              <NavLink to="/siroop-bestellen" className="nav__order-link">Siroop</NavLink>
-            </div>
-          </div>
-        </div>
-      </nav>
-      {menuOpen && (
-        <div className="nav__mobile">
-          <NavLink to="/" end className="nav__mobile-link" onClick={closeMenu}>Home</NavLink>
-          <NavLink to="/productie" className="nav__mobile-link" onClick={closeMenu}>Productie</NavLink>
-          <NavLink to="/winkels-en-restaurants" className="nav__mobile-link" onClick={closeMenu}>Verkooppunten</NavLink>
-          <NavLink to="/reviews" className="nav__mobile-link" onClick={closeMenu}>Reviews</NavLink>
-          <NavLink to="/welkom" className="nav__mobile-link" onClick={closeMenu}>Welkom</NavLink>
-          <NavLink to="/siroop-bestellen" className="nav__mobile-link" onClick={closeMenu}>Siroop</NavLink>
-          <NavLink to="/contact" className="nav__mobile-link" onClick={closeMenu}>Contact</NavLink>
-          <NavLink to="/bestellen" className="nav__mobile-link" onClick={closeMenu}>Bestelformulier</NavLink>
-        </div>
-      )}
-    </div>
-  );
 }
 
 function PageHead() {
@@ -200,7 +148,7 @@ export default function SiroopBestellen() {
 
   return (
     <>
-      <Nav />
+      <SiteNav />
       <PageHead />
       <div className="siroop">
         <div className="siroop__row">

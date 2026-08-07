@@ -130,7 +130,7 @@
   .prodtl--zigzag .tlstep.is-odd { flex-direction: column-reverse; align-items: stretch; }
   .prodtl--zigzag li.tlstep.tlstep--bare { align-items: stretch; }
   header.ph--statement .ph__body { max-width: 100%; }
-  .tlstep__p { font-size: 0.9375rem; line-height: 1.5; text-align: justify; }
+  .tlstep__p { font-size: 0.9375rem; line-height: 1.5; }
   .prodtl--zigzag h2.tlstep__title { font-size: 1.05rem; }
   .prodtl--zigzag div.tlstep__head { align-items: flex-end; }
   figure.prodpolaroid .wc-story__cap { padding: 0.3rem 0 0.4rem; min-height: 0; }

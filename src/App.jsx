@@ -16,6 +16,32 @@ import PrivacyStatement from './pages/public/PrivacyStatement.jsx';
 // op deze ene pagina — niet meesturen in het hoofdbundle van de site.
 const WinkelsEnRestaurants = lazy(() => import('./pages/public/WinkelsEnRestaurants.jsx'));
 
+// Fallback tijdens het laden van die mapbox-gl-chunk: zonder dit voelt de
+// pagina aan alsof de site vastloopt (leeg wit scherm terwijl er wordt gewacht).
+function RouteLoading() {
+  return (
+    <div style={{
+      minHeight: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      backgroundColor: 'var(--warm-wit)', color: 'var(--olijf-zwart)',
+    }}>
+      <style>{'@keyframes sappie-spin { to { transform: rotate(360deg); } }'}</style>
+      <div style={{ textAlign: 'center' }}>
+        <div style={{
+          width: 32, height: 32, margin: '0 auto 16px',
+          border: '3px solid var(--ink-16)', borderTopColor: 'var(--citroengeel)',
+          borderRadius: '50%', animation: 'sappie-spin 0.8s linear infinite',
+        }} />
+        <p style={{
+          fontFamily: 'var(--font-display)', fontSize: '0.8125rem', fontWeight: 700,
+          letterSpacing: '0.14em', textTransform: 'uppercase', margin: 0,
+        }}>
+          Even geduld&hellip;
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
