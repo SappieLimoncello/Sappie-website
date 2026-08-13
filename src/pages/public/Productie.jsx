@@ -5,7 +5,6 @@ import { SiteNav } from '../../components/SiteNav.jsx';
 import { useRandomMark } from '../../hooks/useRandomMark';
 import '../../styles/welkom.css';
 import '../../styles/productie.css';
-import amalfiLemons from '../../assets/photos/amalfi-lemons.jpg';
 
 const SECTIONS = [
   {
@@ -112,7 +111,7 @@ function PolaroidPhoto({ data, src, video, kleur = 'geel', richting = 'links' })
         <img src={src} alt={data.photo} className="wc-story__img" />
       ) : (
         <div className="prodpolaroid__placeholder">
-          <span className="prodpolaroid__label">{data.photo}</span>
+          <span className="prodpolaroid__label">Video coming soon.</span>
         </div>
       )}
       <figcaption className="wc-story__cap"></figcaption>
@@ -164,7 +163,7 @@ function LayoutTimeline() {
               </div>
             </div>
             <div className="tlstep__media">
-              {i === 0 && <PolaroidPhoto data={s} src={amalfiLemons} video="/videos/Video%20test%201.mp4" kleur="geel" richting="links" />}
+              {i === 0 && <PolaroidPhoto data={s} kleur="geel" richting="links" />}
               {i === 1 && <PolaroidPhoto data={s} kleur="blauw" richting="rechts" />}
               {i === 2 && <PolaroidPhoto data={s} kleur="sage" richting="links" />}
               {i === 3 && <PolaroidPhoto data={s} kleur="donkergroen" richting="rechts" />}
