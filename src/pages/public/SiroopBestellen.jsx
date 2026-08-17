@@ -10,12 +10,26 @@ const lekkerBootjeVaren = '/images/lekker-bootje-varen.png';
 
 const PRIJS_PER_FLES = 8.99;
 
+// Tijdelijk: siroop-bestellen staat on hold terwijl deze pagina wordt
+// bijgewerkt. Op false zetten herstelt meteen de volledige bestelflow.
+const SIROOP_COMING_SOON = true;
+
 function euro(bedrag) {
   return bedrag.toFixed(2).replace('.', ',');
 }
 
 function PageHead() {
   const markColor = useRandomMark();
+  if (SIROOP_COMING_SOON) {
+    return (
+      <header className="ph ph--statement">
+        <span className="ph__eyebrow">Bestellen</span>
+        <h1 className="ph__title ph__title--big">
+          Sappie <span className={`ph__mark ${markColor}`}>siroop</span>
+        </h1>
+      </header>
+    );
+  }
   return (
     <header className="ph ph--statement">
       <span className="ph__eyebrow">Bestellen</span>
@@ -27,6 +41,36 @@ function PageHead() {
         voordat er iets verzonden wordt.
       </p>
     </header>
+  );
+}
+
+function ComingSoon() {
+  return (
+    <div style={{ maxWidth: 840, margin: '0 auto', padding: '1rem 1.5rem 6rem', textAlign: 'center' }}>
+      <div style={{
+        border: '2px solid var(--olijf-zwart)', backgroundColor: 'var(--creme)',
+        padding: '2.5rem 2rem',
+      }}>
+        <p style={{
+          fontFamily: 'var(--font-display)', fontWeight: 800, textTransform: 'uppercase',
+          letterSpacing: '0.06em', fontSize: '1.1rem', margin: '0 0 0.75rem', color: 'var(--olijf-zwart)',
+        }}>
+          Binnenkort beschikbaar
+        </p>
+        <p style={{ margin: 0, color: 'var(--olijf-zwart)', lineHeight: 1.6 }}>
+          Binnenkort kun je Sappie limonade siroop bestellen bij ons op de website. Hou de{' '}
+          <a
+            href="https://www.instagram.com/sappie_limoncello/"
+            target="_blank"
+            rel="noreferrer"
+            className="ph__link"
+          >
+            Instagram
+          </a>{' '}
+          in de gaten voor meer informatie.
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -150,13 +194,17 @@ export default function SiroopBestellen() {
     <>
       <SiteNav />
       <PageHead />
-      <div className="siroop">
-        <div className="siroop__row">
-          <SiroopCard aantal={aantal} onMinder={minder} onMeer={meer} />
-          <SiroopInfo />
-          <SiroopKassabon aantal={aantal} totaal={totaal} />
+      {SIROOP_COMING_SOON ? (
+        <ComingSoon />
+      ) : (
+        <div className="siroop">
+          <div className="siroop__row">
+            <SiroopCard aantal={aantal} onMinder={minder} onMeer={meer} />
+            <SiroopInfo />
+            <SiroopKassabon aantal={aantal} totaal={totaal} />
+          </div>
         </div>
-      </div>
+      )}
       <SiteFooter />
     </>
   );

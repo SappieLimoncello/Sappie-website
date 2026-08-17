@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import PublicLayout from './pages/public/PublicLayout.jsx';
 import Homepage from './pages/public/Homepage.jsx';
@@ -53,7 +53,10 @@ export default function App() {
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/bestellen" element={<Bestelformulier />} />
-          <Route path="/welkom" element={<Welkom />} />
+          {/* Deze URL staat op een fysieke QR-code van de oude website — moet exact kloppen. */}
+          <Route path="/welkom-bij-sappie" element={<Welkom />} />
+          {/* Vorige interne route: laten doorverwijzen i.p.v. verwijderen. */}
+          <Route path="/welkom" element={<Navigate to="/welkom-bij-sappie" replace />} />
           <Route path="/siroop-bestellen" element={<SiroopBestellen />} />
           <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
           <Route path="/privacy-statement" element={<PrivacyStatement />} />
