@@ -72,7 +72,7 @@ export default async (req) => {
 
   const resend = new Resend(resendApiKey);
   const notifyEmail = process.env.ORDER_NOTIFY_EMAIL || 'info@sappie-limoncello.nl';
-  const fromEmail = process.env.ORDER_FROM_EMAIL || 'bestellingen@sappie-limoncello.nl';
+  const fromEmail = process.env.ORDER_FROM_EMAIL || 'info@sappie-limoncello.nl';
 
   const [notificationHtml, confirmationHtml] = await Promise.all([
     render(React.createElement(OrderNotificationEmail, { order })),

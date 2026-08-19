@@ -434,13 +434,11 @@ export default function Bestelformulier() {
     kvk: form.kvk.trim() && !isValidKvk(form.kvk) ? 'Een KVK-nummer bestaat uit 8 cijfers.' : '',
   };
 
-  // TIJDELIJK: check uitgeschakeld om te testen. Origineel staat hieronder in commentaar.
-  const canReview = true;
-  // const canReview = Boolean(
-  //   form.naam.trim() && form.email.trim() && form.bedrijf.trim() && form.kvk.trim()
-  //   && consent.terms && consent.dataUse
-  //   && !errors.email && !errors.telefoon && !errors.kvk
-  // );
+  const canReview = Boolean(
+    form.naam.trim() && form.email.trim() && form.bedrijf.trim() && form.kvk.trim()
+    && consent.terms && consent.dataUse
+    && !errors.email && !errors.telefoon && !errors.kvk
+  );
 
   const updateForm = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
