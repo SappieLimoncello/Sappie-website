@@ -13,9 +13,8 @@ import AlgemeneVoorwaarden from './pages/public/AlgemeneVoorwaarden.jsx';
 import PrivacyStatement from './pages/public/PrivacyStatement.jsx';
 
 // Lazy geladen: bevat mapbox-gl, een zware library die alleen nodig is
-// op deze pagina's — niet meesturen in het hoofdbundle van de site.
+// op deze pagina — niet meesturen in het hoofdbundle van de site.
 const WinkelsEnRestaurants = lazy(() => import('./pages/public/WinkelsEnRestaurants.jsx'));
-const AroundTheWorld = lazy(() => import('./pages/public/AroundTheWorld.jsx'));
 
 // Fallback tijdens het laden van die mapbox-gl-chunk: zonder dit voelt de
 // pagina aan alsof de site vastloopt (leeg wit scherm terwijl er wordt gewacht).
@@ -61,8 +60,6 @@ export default function App() {
           <Route path="/siroop-bestellen" element={<SiroopBestellen />} />
           <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
           <Route path="/privacy-statement" element={<PrivacyStatement />} />
-          {/* Nog bewust niet in het menu: pas toevoegen aan SiteNav zodra er meer foto's op staan. */}
-          <Route path="/around-the-world" element={<Suspense fallback={null}><AroundTheWorld /></Suspense>} />
         </Route>
       </Routes>
     </BrowserRouter>
