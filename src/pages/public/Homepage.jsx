@@ -47,7 +47,7 @@ function Hero() {
               {lines.map((line, i) => (
                 <React.Fragment key={i}>
                   {line.text}
-                  {line.dot && <img src={sappieMark} alt="" className="hero__dot-logo" />}
+                  {line.dot && '.'}
                   {line.accentMark && (
                     <span className="qmark">
                       {line.accentMark}

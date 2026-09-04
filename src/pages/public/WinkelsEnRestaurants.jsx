@@ -78,7 +78,7 @@ const LOCATIONS = [
   {
     id: 'bottles-booze', category: 'slijterij', name: 'Bottles & Booze',
     addr: 'Vinkenburgstraat 6, 3512 AB Utrecht', tel: '030 633 18 00',
-    hours: null, comingSoon: true, availableFrom: '21 augustus',
+    hours: { ma: null, di: null, wo: ['13:00', '19:00'], do: ['12:00', '20:00'], vr: ['12:00', '20:00'], za: ['12:00', '20:00'], zo: null },
     lat: 52.0921054, lng: 5.1175336,
   },
   {
@@ -132,6 +132,76 @@ function getOpenStatus(hours) {
   return { isOpen: false, text: 'Nu gesloten', todayKey };
 }
 
+const LOCATE_STORAGE_KEY = 'sappie-locator-coords';
+
+function useIsMobile(maxWidth = 820) {
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(`(max-width: ${maxWidth}px)`).matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${maxWidth}px)`);
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, [maxWidth]);
+
+  return isMobile;
+}
+
+function distanceKm(a, b) {
+  const R = 6371;
+  const dLat = ((b.lat - a.lat) * Math.PI) / 180;
+  const dLng = ((b.lng - a.lng) * Math.PI) / 180;
+  const lat1 = (a.lat * Math.PI) / 180;
+  const lat2 = (b.lat * Math.PI) / 180;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+
+function formatDistance(km) {
+  if (km < 1) return `${Math.round(km * 1000)}m`;
+  return `${km.toFixed(1).replace('.', ',')}km`;
+}
+
+async function geocodePostcode(postcode, token) {
+  if (!token) throw new Error('no-token');
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(postcode.trim())}.json?access_token=${token}&country=NL&types=postcode,address&limit=1`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('geocode-failed');
+  const data = await res.json();
+  const feature = data.features?.[0];
+  if (!feature) throw new Error('not-found');
+  const [lng, lat] = feature.center;
+  return { lat, lng };
+}
+
+function LocateBar({ postcodeInput, setPostcodeInput, status, errorMsg, onUseGeolocation, onSubmitPostcode }) {
+  return (
+    <div className="locatebar">
+      <button
+        type="button"
+        className="locatebar__btn"
+        onClick={onUseGeolocation}
+        disabled={status === 'loading'}
+      >
+        {status === 'loading' ? 'Bezig…' : 'Gebruik mijn locatie'}
+      </button>
+      <form className="locatebar__form" onSubmit={onSubmitPostcode}>
+        <input
+          type="text"
+          className="locatebar__input"
+          placeholder="Postcode of adres"
+          value={postcodeInput}
+          onChange={(e) => setPostcodeInput(e.target.value)}
+        />
+        <button type="submit" className="locatebar__submit" disabled={status === 'loading'}>Zoek</button>
+      </form>
+      {errorMsg && <p className="locatebar__error">{errorMsg}</p>}
+    </div>
+  );
+}
+
 function PageHead() {
   const markColor = useRandomMark();
   return (
@@ -140,8 +210,10 @@ function PageHead() {
       <h1 className="ph__title ph__title--big">Waar vind je <span className={`ph__mark ${markColor}`}>ons Sappie</span> allemaal?</h1>
       <p className="ph__body ph__body--medium">
         Onze limoncello is verkrijgbaar bij winkels, slijterijen en caf&eacute;s in en rondom Utrecht,
-        op de kaart hieronder kun je alle plekken vinden! Mis je nog plekken waar je ons heerlijke
-        Sappie kunt krijgen? Laat het ons dan vooral weten!
+        op de kaart hieronder kun je alle plekken vinden!{' '}
+        <span className="ph__body-extra">
+          Mis je nog plekken waar je ons heerlijke Sappie kunt krijgen? Laat het ons dan vooral weten!
+        </span>
       </p>
     </header>
   );
@@ -238,12 +310,18 @@ function MapPanel({ activeId, setActiveId, setExpandedId }) {
   );
 }
 
-function LocationList({ activeId, setActiveId, expandedId, setExpandedId }) {
+function LocationList({ activeId, setActiveId, expandedId, setExpandedId, userCoords }) {
   const byName = (a, b) => a.name.localeCompare(b.name, 'nl');
+  const withDistance = (loc) => ({ ...loc, _dist: distanceKm(userCoords, loc) });
+  const byDistance = (a, b) => a._dist - b._dist;
+
   const groups = [
-    { label: 'Slijterijen', key: 'slijterij', items: LOCATIONS.filter((l) => l.category === 'slijterij').sort(byName) },
-    { label: 'Restaurants', key: 'restaurant', items: LOCATIONS.filter((l) => l.category === 'restaurant').sort(byName) },
-  ];
+    { label: 'Slijterijen', key: 'slijterij', items: LOCATIONS.filter((l) => l.category === 'slijterij') },
+    { label: 'Restaurants', key: 'restaurant', items: LOCATIONS.filter((l) => l.category === 'restaurant') },
+  ].map((g) => ({
+    ...g,
+    items: userCoords ? g.items.map(withDistance).sort(byDistance) : [...g.items].sort(byName),
+  }));
 
   return (
     <div className="locator__list">
@@ -267,6 +345,7 @@ function LocationList({ activeId, setActiveId, expandedId, setExpandedId }) {
                   <p className="list__name">
                     <span className="list__name-text">
                       {loc.name}
+                      {typeof loc._dist === 'number' && <span className="list__dist"> - {formatDistance(loc._dist)}</span>}
                       {loc.comingSoon && <span className="list__soon">Vanaf {loc.availableFrom}.</span>}
                     </span>
                     <span className="list__chev" aria-hidden="true">{open ? '–' : '+'}</span>
@@ -359,11 +438,88 @@ function SiteFooter() {
 export default function WinkelsEnRestaurants() {
   const [activeId, setActiveId] = useState(null);
   const [expandedId, setExpandedId] = useState(null);
+  const isMobile = useIsMobile();
+  const [userCoords, setUserCoords] = useState(null);
+  const [postcodeInput, setPostcodeInput] = useState('');
+  const [locateStatus, setLocateStatus] = useState('idle');
+  const [locateError, setLocateError] = useState('');
+
+  useEffect(() => {
+    if (!isMobile) return;
+    try {
+      const saved = JSON.parse(localStorage.getItem(LOCATE_STORAGE_KEY) || 'null');
+      if (saved && typeof saved.lat === 'number' && typeof saved.lng === 'number') {
+        setUserCoords({ lat: saved.lat, lng: saved.lng });
+        if (saved.postcode) setPostcodeInput(saved.postcode);
+      }
+    } catch {
+      // localStorage kan geblokkeerd zijn (privémodus e.d.); dan gewoon zonder opgeslagen locatie starten.
+    }
+  }, [isMobile]);
+
+  const handleUseGeolocation = () => {
+    if (!navigator.geolocation) {
+      setLocateError('Locatie wordt niet ondersteund op dit apparaat.');
+      return;
+    }
+    setLocateStatus('loading');
+    setLocateError('');
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        setUserCoords(coords);
+        setPostcodeInput('');
+        setLocateStatus('idle');
+        try {
+          localStorage.setItem(LOCATE_STORAGE_KEY, JSON.stringify({ ...coords, postcode: null }));
+        } catch {
+          // opslaan is optioneel; werkt de sessie ook zonder prima.
+        }
+      },
+      () => {
+        setLocateStatus('idle');
+        setLocateError('Locatie ophalen is niet gelukt. Probeer een postcode.');
+      },
+      { timeout: 8000 }
+    );
+  };
+
+  const handleSubmitPostcode = async (e) => {
+    e.preventDefault();
+    if (!postcodeInput.trim()) return;
+    setLocateStatus('loading');
+    setLocateError('');
+    try {
+      const coords = await geocodePostcode(postcodeInput, mapboxgl.accessToken);
+      setUserCoords(coords);
+      setLocateStatus('idle');
+      try {
+        localStorage.setItem(LOCATE_STORAGE_KEY, JSON.stringify({ ...coords, postcode: postcodeInput.trim() }));
+      } catch {
+        // opslaan is optioneel; werkt de sessie ook zonder prima.
+      }
+    } catch {
+      setLocateStatus('idle');
+      setLocateError('Postcode niet gevonden. Controleer de invoer.');
+    }
+  };
+
+  const activeUserCoords = isMobile ? userCoords : null;
 
   return (
     <>
       <SiteNav />
       <PageHead />
+      {isMobile && (
+        <LocateBar
+          postcodeInput={postcodeInput}
+          setPostcodeInput={setPostcodeInput}
+          status={locateStatus}
+          errorMsg={locateError}
+          onUseGeolocation={handleUseGeolocation}
+          onSubmitPostcode={handleSubmitPostcode}
+        />
+      )}
       <div className="locator locator--split">
         <MapPanel activeId={activeId} setActiveId={setActiveId} setExpandedId={setExpandedId} />
         <LocationList
@@ -371,6 +527,7 @@ export default function WinkelsEnRestaurants() {
           setActiveId={setActiveId}
           expandedId={expandedId}
           setExpandedId={setExpandedId}
+          userCoords={activeUserCoords}
         />
       </div>
       <SiteFooter />

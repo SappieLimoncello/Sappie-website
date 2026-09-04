@@ -9,6 +9,16 @@ const THEMES = ['geel', 'blauw', 'creme', 'sage', 'groen'];
 const SIZES = ['normal', 'tall', 'short'];
 
 const RAW_REVIEWS = [
+  { name: 'Roan Faber', when: '20 uur geleden', text: 'Het is echt een hele lekkere limoncello. De beste die ik tot nu toe heb gedronken. Leuk ook dat het echt vanuit Utrecht komt.' },
+  { name: 'Nina Dresselhuys', when: 'een dag geleden', text: 'Zeer lekkere limoncello, zeker aan te raden!!!!!' },
+  { name: 'Dr. de Wit', when: 'een week geleden', text: 'De limonade is erg lekker 😊' },
+  { name: 'Mike Meijer', when: 'een week geleden', text: 'Ik heb de siroop nu een paar keer gehad en ik ben er dol op. Vooral lekker met een beetje koolzuurhoudend water. Top mannen!' },
+  { name: 'Casper Bergenhenegouwen', when: 'een week geleden', text: 'Lekker, goed te nippen en te shotten. Zowel warm als koud smaakvol. Mijn nieuwe favoriet, en dan ook nog eens uit Utreg!!!' },
+  { name: 'Machteld Menkveld', when: 'een week geleden', text: 'Deze fles werd aangeraden bij de una mas, we hebben dit cadeau gegeven aan vrienden die in Utrecht zijn komen wonen. Super tevens met deze heerlijke limoncello, gaan we zeker vaker halen!' },
+  { name: 'arjen blok', when: 'een week geleden', text: 'Leuk dat je van die bijpassende citroenglazen hebt, past mooi bij het product' },
+  { name: 'Mik', when: '3 weken geleden', text: 'Попробовал Лимончелло у ребят - очень вкусно, оригинальный букет! Рекомендую, даже лучше чем в Неаполе!' },
+  { name: 'Zindaba Juliet Chongwe', when: '4 weken geleden', text: "It's such a nice taste, easy on the mouth and lovely flavor. Hope to try it again" },
+  { name: 'federico cioci', when: '4 weken geleden', text: 'Limoncello squisito, dal sapore estremamente delicato e raffinato. Davvero fantastico! 👏' },
   { name: 'niels seriere', when: 'een maand geleden', text: 'Ik heb meerdere keren zelf limoncello gemaakt maar deze was echt lekker. Ik heb met de maker gepraat en ik was echt onder de indruk. Hij wist alles en ik ga zeker vaker kopen' },
   { name: 'Martijn Sterk', when: 'een maand geleden', text: 'Smaakt goed, en een leuk lokaal product!' },
   { name: 'Timothy Davis', when: 'een maand geleden', text: "Best limoncello I've had in the Netherlands" },
@@ -95,8 +105,8 @@ function PageHead() {
       <span className="ph__eyebrow">Reviews</span>
       <h1 className="ph__title ph__title--big">Wat vindt men van <span className={`ph__mark ${markColor}`}>Sappie?</span></h1>
       <p className="ph__body">
-        Alles wat je hier leest komt van onze Google-reviews. Klik op een blokje
-        om de volledige review te lezen.
+        Op onze Google pagina hebben we meer dan 60 reviews van 5 sterren!
+        Hieronder staan ze allemaal weergegeven.
       </p>
     </header>
   );

@@ -40,10 +40,6 @@
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.hero__dot-logo {
-  display: inline-block; width: 0.3em; height: 0.3em;
-  object-fit: contain; vertical-align: -0.02em;
-}
 .qmark { position: relative; display: inline-block; }
 .qmark__dot {
   position: absolute; left: 50%; bottom: 0.02em;

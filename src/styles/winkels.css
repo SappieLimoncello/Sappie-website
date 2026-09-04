@@ -3,6 +3,36 @@
    Locator grid, De Stijl map, pins, location list.
    ================================================================ */
 
+/* ---- Locatiebalk (alleen gerenderd op mobiel, zie WinkelsEnRestaurants.jsx) ---- */
+.locatebar {
+  margin: 0 clamp(1.5rem, 4vw, 3.5rem) 1.5rem;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem;
+}
+.locatebar__btn {
+  flex: 1 1 100%;
+  font-family: var(--font-display); font-weight: 700; font-size: 0.78rem;
+  text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;
+  padding: 0.55rem 1rem; background: var(--lucht-blauw); color: var(--olijf-zwart);
+  border: 2px solid var(--lucht-blauw); cursor: pointer;
+}
+.locatebar__btn:disabled { opacity: 0.6; cursor: default; }
+.locatebar__form { display: flex; gap: 0.4rem; flex: 1; min-width: 180px; }
+.locatebar__input {
+  flex: 1; min-width: 0; padding: 0.5rem 0.7rem; font-size: 0.85rem;
+  border: 2px solid var(--ink-16); background: var(--creme);
+  color: var(--text);
+}
+.locatebar__submit {
+  font-family: var(--font-display); font-weight: 700; font-size: 0.78rem;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 0.55rem 1rem; background: transparent; color: var(--olijf-zwart);
+  border: 2px solid var(--olijf-zwart); cursor: pointer;
+}
+.locatebar__submit:disabled { opacity: 0.6; cursor: default; }
+.locatebar__error {
+  flex-basis: 100%; margin: 0; font-size: 0.78rem; color: var(--utrecht-rood);
+}
+
 /* ---- Locator: map + list ---- */
 .locator {
   margin: 1.5rem clamp(1.5rem, 4vw, 3.5rem) clamp(3rem, 6vw, 5rem);
@@ -95,6 +125,7 @@
 .list__item--open .list__chev { color: var(--utrecht-rood); }
 .list__addr { font-size: 0.82rem; color: var(--text-soft); margin: 0; line-height: 1.4; }
 .list__tel { font-size: 0.78rem; color: var(--text-soft); margin: 0.2rem 0 0; }
+.list__dist { font-size: 0.78rem; font-weight: 700; color: var(--text-soft); }
 .list--compact .list__item { padding: 0.55rem 1.25rem; }
 .list--compact .list__item:not(.list__item--open) .list__tel { display: none; }
 
@@ -130,4 +161,5 @@
   .locator { grid-template-columns: 1fr; }
   .locator__map { min-height: 380px; }
   .locator__list { max-height: none; }
+  .ph__body-extra { display: none; }
 }

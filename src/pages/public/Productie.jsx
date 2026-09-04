@@ -10,7 +10,10 @@ const SECTIONS = [
   {
     id: 'ingredienten', num: '01', eyebrow: 'Stap 1', title: 'Ingrediënten',
     accent: 'sappie-sage', dark: true,
-    body: ['De reis van ons Sappie begint met het juiste hoofdingrediënt, de Amalfi-citroenen. Deze citroenen zijn bij uitstek geschikt voor het maken van een klassieke limoncello. De dikke, aromatische schil bevat de oliën die de volle en zachte smaak geven aan ons heerlijke Sappie!'],
+    body: [
+      'De reis van ons Sappie begint met het juiste hoofdingrediënt, de Amalfi-citroenen. Deze citroenen zijn bij uitstek geschikt voor het maken van een klassieke limoncello.',
+      'De dikke, aromatische schil bevat de oliën die de volle en zachte smaak geven aan ons heerlijke Sappie!',
+    ],
     photo: 'Amalfi-citroenen',
   },
   {
@@ -25,19 +28,25 @@ const SECTIONS = [
   {
     id: 'maceratie', num: '03', eyebrow: 'Stap 3', title: 'Maceratie en filtratie',
     accent: 'citroengeel', dark: false,
-    body: ['De schillen gaan in een bad van pure alcohol en trekken daar wekenlang in. Zo geven ze hun geur, kleur en smaak af. Daarna wordt alles gezeefd, zodat een heldere basis overblijft zonder schilresten.'],
+    body: [
+      'De schillen gaan in een bad van pure alcohol en trekken daar wekenlang in. Zo geven ze hun geur, kleur en smaak af.',
+      'Vervolgens wordt dit mengsel gezeefd, hierna is het alcoholmengsel klaar om verwerkt te worden met het suikerwater.',
+    ],
     photo: 'maceratie / zeven',
   },
   {
     id: 'mengen', num: '04', eyebrow: 'Stap 4', title: 'Mengen',
     accent: 'sappie-sage', dark: true,
-    body: ['De gefilterde alcohol wordt in deze stap voorzichtig gemengd met een suikerwater mengsel, in deze stap wordt het Sappie echt tot leven gebracht. Door de twee vloeistoffen langzaam met elkaar te laten mengen, ontstaat de typische troebele kleur van Sappie!'],
+    body: [
+      'De gefilterde alcohol wordt in deze stap voorzichtig gemengd met een suikerwater mengsel, in deze stap wordt het Sappie echt tot leven gebracht.',
+      'Door de twee vloeistoffen langzaam met elkaar te laten mengen, ontstaat de typische troebele kleur van Sappie!',
+    ],
     photo: 'mengen: suiker & water',
   },
   {
     id: 'bottelen', num: '05', eyebrow: 'Stap 5', title: 'Bottelen & labelen',
     accent: 'lucht-blauw', dark: false,
-    body: ['Nadat het suikerwater en de alcohol volledig gemengd is worden de flessen stuk voor stuk gevuld, voorzien van dop met waxlaag en als allerlaatste gelabeld. We proberen zo veel mogelijk met de hand te doen, om het een echt ambachtelijk product te kunnen noemen!'],
+    body: ['Nadat het suikerwater en de alcohol volledig gemengd is worden de flessen stuk voor stuk gevuld, voorzien van dop en als allerlaatste gelabeld.'],
     photo: 'bottelen & labelen',
   },
   {

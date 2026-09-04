@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { ChevronDown, Menu, X } from 'lucide-react';
 
@@ -20,11 +20,23 @@ const LINKS = [
 export function SiteNav() {
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isStuck, setIsStuck] = useState(false);
   const closeMenu = () => setMenuOpen(false);
   const variant = pathname === '/' ? 'home' : 'sub';
 
+  // Op mobiel staat de balk (beide varianten) op 26px afstand van de
+  // paginarand (zie components.css), dus zodra er meer dan 26px is
+  // gescrold, plakt hij vast. Op desktop heeft de klasse geen effect,
+  // want daar reageert geen media-query-regel erop.
+  useEffect(() => {
+    const handleScroll = () => setIsStuck(window.scrollY > 26);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [variant]);
+
   return (
-    <div className={`nav-float nav-float--${variant}`}>
+    <div className={`nav-float nav-float--${variant}${isStuck ? ' nav-float--stuck' : ''}`}>
       <nav className="nav">
         <NavLink to="/" className="nav__word" onClick={closeMenu}>Sappie Limoncello<span className="drop">.</span></NavLink>
         <div className="nav__right">
