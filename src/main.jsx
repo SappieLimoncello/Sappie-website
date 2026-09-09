@@ -4,8 +4,18 @@ import App from './App.jsx'
 import './styles/design-system.css'
 import './styles/components.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const rootElement = document.getElementById('root')
+const app = (
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
 )
+
+// scripts/prerender.mjs schrijft voor de publieke pagina's al gevulde HTML
+// in dist/. Staat die er al (root heeft kinderen), dan hydrateren we die in
+// plaats van 'm weg te gooien en opnieuw op te bouwen.
+if (rootElement.hasChildNodes()) {
+  ReactDOM.hydrateRoot(rootElement, app)
+} else {
+  ReactDOM.createRoot(rootElement).render(app)
+}

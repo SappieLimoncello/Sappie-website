@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "postbuild": "node scripts/prerender.mjs",
     "preview": "vite preview",
     "email": "email dev --dir emails"
   },
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@react-email/ui": "^6.9.1",
     "@vitejs/plugin-react": "^4.3.1",
+    "puppeteer": "^25.10.0",
     "react-email": "^6.9.1",
     "vite": "^5.4.6"
   }

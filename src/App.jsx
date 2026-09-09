@@ -11,7 +11,6 @@ import Welkom from './pages/public/Welkom.jsx';
 import SiroopBestellen from './pages/public/SiroopBestellen.jsx';
 import AlgemeneVoorwaarden from './pages/public/AlgemeneVoorwaarden.jsx';
 import PrivacyStatement from './pages/public/PrivacyStatement.jsx';
-import AroundTheWorld from './pages/public/AroundTheWorld.jsx';
 
 // Lazy geladen: bevat mapbox-gl, een zware library die alleen nodig is
 // op deze pagina — niet meesturen in het hoofdbundle van de site.
@@ -61,7 +60,7 @@ export default function App() {
           <Route path="/siroop-bestellen" element={<SiroopBestellen />} />
           <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
           <Route path="/privacy-statement" element={<PrivacyStatement />} />
-          <Route path="/around-the-world" element={<AroundTheWorld />} />
+          {/* Nog bewust niet in het menu: pas toevoegen aan SiteNav zodra dit live mag. */}
         </Route>
       </Routes>
     </BrowserRouter>
