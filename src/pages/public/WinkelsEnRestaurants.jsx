@@ -9,6 +9,7 @@ import { applyBrandMapStyle } from '../../lib/mapboxBrandStyle.js';
 import aanduidingGeel from '../../assets/marks/aanduiding-geel.png';
 import aanduidingBlauw from '../../assets/marks/aanduiding-blauw.png';
 import '../../styles/winkels.css';
+import '../../styles/welkom.css';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN || '';
 
@@ -78,7 +79,7 @@ const LOCATIONS = [
   {
     id: 'bottles-booze', category: 'slijterij', name: 'Bottles & Booze',
     addr: 'Vinkenburgstraat 6, 3512 AB Utrecht', tel: '030 633 18 00',
-    hours: { ma: null, di: null, wo: ['13:00', '19:00'], do: ['12:00', '20:00'], vr: ['12:00', '20:00'], za: ['12:00', '20:00'], zo: null },
+    hours: { ma: null, di: null, wo: ['12:00', '19:00'], do: ['12:00', '19:00'], vr: ['12:00', '20:00'], za: ['11:00', '20:00'], zo: ['12:00', '18:00'] },
     lat: 52.0921054, lng: 5.1175336,
   },
   {
@@ -296,17 +297,20 @@ function MapPanel({ activeId, setActiveId, setExpandedId }) {
   }, [activeId]);
 
   return (
-    <div className="locator__map">
-      {mapboxgl.accessToken ? (
-        <div ref={containerRef} className="mapbox-container" />
-      ) : (
-        <p className="mapnote">Mapbox-token ontbreekt (VITE_MAPBOX_TOKEN).</p>
-      )}
-      <div className="locator__legend">
-        <span className="legend__item"><span className="legend__dot" style={{ background: 'var(--citroengeel)' }}></span>Slijterijen</span>
-        <span className="legend__item"><span className="legend__dot" style={{ background: 'var(--lucht-blauw)' }}></span>Restaurants</span>
+    <figure className="mappolaroid mappolaroid--blauw">
+      <div className="locator__map">
+        {mapboxgl.accessToken ? (
+          <div ref={containerRef} className="mapbox-container" />
+        ) : (
+          <p className="mapnote">Mapbox-token ontbreekt (VITE_MAPBOX_TOKEN).</p>
+        )}
+        <div className="locator__legend">
+          <span className="legend__item"><span className="legend__dot" style={{ background: 'var(--citroengeel)' }}></span>Slijterijen</span>
+          <span className="legend__item"><span className="legend__dot" style={{ background: 'var(--lucht-blauw)' }}></span>Restaurants</span>
+        </div>
       </div>
-    </div>
+      <figcaption className="wc-story__cap"></figcaption>
+    </figure>
   );
 }
 

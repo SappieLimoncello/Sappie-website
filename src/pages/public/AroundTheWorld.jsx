@@ -11,6 +11,7 @@ import domtuinUtrecht from '../../assets/photos/domtuin-utrecht.jpg';
 import whitbyAbbey from '../../assets/photos/whitby-abbey.jpg';
 import '../../styles/winkels.css';
 import '../../styles/reviews.css';
+import '../../styles/welkom.css';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN || '';
 
@@ -19,7 +20,7 @@ mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN || '';
 const WORLD_PHOTOS = [
   {
     id: 'utrecht',
-    place: 'Utrecht, Nederland',
+    place: 'Nederland, Utrecht',
     lat: 52.0907,
     lng: 5.1214,
     photo: domtuinUtrecht,
@@ -27,7 +28,7 @@ const WORLD_PHOTOS = [
   },
   {
     id: 'whitby-abbey',
-    place: 'Whitby Abbey, Verenigd Koninkrijk',
+    place: 'Verenigd Koninkrijk, Whitby Abbey',
     lat: 54.4869,
     lng: -0.6068,
     photo: whitbyAbbey,
@@ -45,15 +46,17 @@ function PageHead() {
       </h1>
       <p className="ph__body ph__body--medium">
         Draai de aardbol rond en klik op een citroen om te zien waar Sappie al is geweest.
-        Heb jij een foto met Sappie op een bijzondere plek? Stuur 'm naar ons Instagram!
+        Heb jij een foto met Sappie op een bijzondere plek? <a href="mailto:info@sappie-limoncello.nl" className="ph__link">Stuur</a> deze naar ons op.
+        Als ons Sappie nog niet in het land is geweest krijg je van ons een mini flesje cadeau!
       </p>
     </header>
   );
 }
 
-function GlobePanel({ onOpenPhoto }) {
+function GlobePanel({ onOpenPhoto, activeId }) {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
+  const markerElsRef = useRef({});
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current || !mapboxgl.accessToken) return;
@@ -62,8 +65,8 @@ function GlobePanel({ onOpenPhoto }) {
       container: containerRef.current,
       style: 'mapbox://styles/mapbox/light-v11',
       projection: 'globe',
-      center: [10, 30],
-      zoom: 1.3,
+      center: [10, 48],
+      zoom: 2.3,
     });
     mapRef.current = map;
 
@@ -88,6 +91,7 @@ function GlobePanel({ onOpenPhoto }) {
       new mapboxgl.Marker({ element: el, anchor: 'bottom' })
         .setLngLat([item.lng, item.lat])
         .addTo(map);
+      markerElsRef.current[item.id] = el;
     });
 
     // Geen map.remove() hier: React 18 Strict Mode voert deze effect in
@@ -96,13 +100,44 @@ function GlobePanel({ onOpenPhoto }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    Object.entries(markerElsRef.current).forEach(([id, el]) => {
+      el.classList.toggle('pin--active', id === activeId);
+    });
+  }, [activeId]);
+
   return (
-    <div className="locator__map">
-      {mapboxgl.accessToken ? (
-        <div ref={containerRef} className="mapbox-container" />
-      ) : (
-        <p className="mapnote">Mapbox-token ontbreekt (VITE_MAPBOX_TOKEN).</p>
-      )}
+    <figure className="mappolaroid">
+      <div className="locator__map">
+        {mapboxgl.accessToken ? (
+          <div ref={containerRef} className="mapbox-container" />
+        ) : (
+          <p className="mapnote">Mapbox-token ontbreekt (VITE_MAPBOX_TOKEN).</p>
+        )}
+      </div>
+      <figcaption className="wc-story__cap">Sappie around the world.</figcaption>
+    </figure>
+  );
+}
+
+function WorldList({ activeId, setActiveId, onOpenPhoto }) {
+  return (
+    <div className="locator__list">
+      <p className="list__group-title list__group-title--wereld">Waar Sappie is geweest</p>
+      {WORLD_PHOTOS.map((item) => (
+        <div
+          key={item.id}
+          className={`list__item ${activeId === item.id ? 'list__item--active' : ''}`}
+          onMouseEnter={() => setActiveId(item.id)}
+          onMouseLeave={() => setActiveId(null)}
+          onClick={() => onOpenPhoto(item)}
+        >
+          <span className="list__dot list__dot--wereld"></span>
+          <div className="list__body">
+            <p className="list__name list__name--wereld"><span className="list__name-text">{item.place}</span></p>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -177,12 +212,14 @@ function SiteFooter() {
 
 export default function AroundTheWorld() {
   const [openPhoto, setOpenPhoto] = useState(null);
+  const [activeId, setActiveId] = useState(null);
   return (
     <>
       <SiteNav />
       <PageHead />
-      <div className="locator locator--breed">
-        <GlobePanel onOpenPhoto={setOpenPhoto} />
+      <div className="locator locator--split">
+        <GlobePanel onOpenPhoto={setOpenPhoto} activeId={activeId} />
+        <WorldList activeId={activeId} setActiveId={setActiveId} onOpenPhoto={setOpenPhoto} />
       </div>
       <SiteFooter />
       <PhotoModal item={openPhoto} onClose={() => setOpenPhoto(null)} />
