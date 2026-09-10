@@ -96,6 +96,57 @@ const LOCATIONS = [
   },
 ];
 
+// Onzichtbaar blok (application/ld+json), puur voor crawlers/AI-zoekmachines:
+// vertelt expliciet bij welke verkooppunten Sappie Limoncello te krijgen is.
+// Gebouwd vanuit LOCATIONS hierboven, dus altijd in sync met wat er op de
+// pagina zelf staat. Alleen al publieke gegevens (naam, adres, telefoon),
+// geen prijs (die stelt elke winkel zelf vast) en geen "coming soon"-locaties.
+const ADDR_PATTERN = /^(.+),\s*(\d{4}\s?[A-Z]{2})\s+(.+)$/;
+
+function buildProductAvailabilityJsonLd() {
+  const offers = LOCATIONS.filter((loc) => !loc.comingSoon).map((loc) => {
+    const match = loc.addr.match(ADDR_PATTERN);
+    const address = match
+      ? {
+          '@type': 'PostalAddress',
+          streetAddress: match[1],
+          postalCode: match[2],
+          addressLocality: match[3],
+          addressCountry: 'NL',
+        }
+      : { '@type': 'PostalAddress', streetAddress: loc.addr, addressCountry: 'NL' };
+
+    return {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      seller: {
+        '@type': 'LocalBusiness',
+        name: loc.name,
+        address,
+        telephone: loc.tel,
+      },
+    };
+  });
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Sappie Limoncello',
+    brand: { '@type': 'Brand', name: 'Sappie Limoncello' },
+    offers,
+  };
+}
+
+function ProductAvailabilityJsonLd() {
+  return (
+    <script
+      type="application/ld+json"
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProductAvailabilityJsonLd()) }}
+    />
+  );
+}
+
 function toMinutes(time) {
   const [h, m] = time.split(':').map(Number);
   return h * 60 + m;
@@ -512,6 +563,7 @@ export default function WinkelsEnRestaurants() {
 
   return (
     <>
+      <ProductAvailabilityJsonLd />
       <SiteNav />
       <PageHead />
       {isMobile && (
