@@ -305,7 +305,11 @@ function MapPanel({ activeId, setActiveId, setExpandedId }) {
       el.className = `pin pin--${loc.category}`;
       el.style.zIndex = String(i + 1);
       const markerSrc = loc.category === 'slijterij' ? aanduidingGeel : aanduidingBlauw;
-      el.innerHTML = `<img class="pin__marker" src="${markerSrc}" alt="" />`;
+      const markerImg = document.createElement('img');
+      markerImg.className = 'pin__marker';
+      markerImg.src = markerSrc;
+      markerImg.alt = loc.name;
+      el.appendChild(markerImg);
       el.addEventListener('mouseenter', () => setActiveId(loc.id));
       el.addEventListener('mouseleave', () => setActiveId(null));
       el.addEventListener('click', () => {

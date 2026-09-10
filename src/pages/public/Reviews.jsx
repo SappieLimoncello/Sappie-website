@@ -76,6 +76,33 @@ const REVIEWS = RAW_REVIEWS.map((r, i) => ({
   size: SIZES[i % SIZES.length],
 }));
 
+// Moet handmatig gelijk gehouden worden met het echte, actuele cijfer op het
+// Google Bedrijfsprofiel (niet automatisch af te lezen vanaf hier) — dus bij
+// het bijwerken van deze pagina ook even het Bedrijfsprofiel checken.
+const GOOGLE_RATING = { value: 5, count: 64 };
+
+function ReviewsAggregateRatingJsonLd() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Sappie Limoncello',
+    brand: { '@type': 'Brand', name: 'Sappie Limoncello' },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: GOOGLE_RATING.value,
+      reviewCount: GOOGLE_RATING.count,
+      bestRating: 5,
+    },
+  };
+  return (
+    <script
+      type="application/ld+json"
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
 function useIsMobile(breakpoint) {
   const query = `(max-width: ${breakpoint}px)`;
   const [isMobile, setIsMobile] = useState(() => window.matchMedia(query).matches);
@@ -316,6 +343,7 @@ export default function Reviews() {
 
   return (
     <>
+      <ReviewsAggregateRatingJsonLd />
       <SiteNav />
       <PageHead />
       <div className="wall" ref={wallRef}>

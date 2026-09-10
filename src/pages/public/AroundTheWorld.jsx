@@ -85,7 +85,11 @@ function GlobePanel({ onOpenPhoto, activeId }) {
     WORLD_PHOTOS.forEach((item) => {
       const el = document.createElement('div');
       el.className = 'pin';
-      el.innerHTML = `<img class="pin__marker" src="${aanduidingGeel}" alt="" />`;
+      const markerImg = document.createElement('img');
+      markerImg.className = 'pin__marker';
+      markerImg.src = aanduidingGeel;
+      markerImg.alt = item.place;
+      el.appendChild(markerImg);
       el.addEventListener('click', () => onOpenPhoto(item));
 
       new mapboxgl.Marker({ element: el, anchor: 'bottom' })
