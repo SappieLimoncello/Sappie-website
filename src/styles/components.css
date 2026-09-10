@@ -287,6 +287,8 @@ a { color: inherit; text-decoration: none; }
   transition: color 140ms ease;
 }
 .foot__link:hover { color: var(--citroengeel); }
+.foot__tel { display: flex; gap: 0.6rem; }
+.foot__tel-name { font-weight: 800; min-width: 3.2em; }
 .foot__social {
   color: var(--warm-wit); width: fit-content; display: inline-flex; align-items: center;
   transition: color 140ms ease;

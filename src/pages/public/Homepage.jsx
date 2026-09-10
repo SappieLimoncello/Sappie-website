@@ -152,7 +152,7 @@ function VariantWerf() {
         <p className="shop__intro">
           Als ondernemer kun je onze limoncello direct kopen vanaf onze website. Klik op één
           van de onderstaande producten om naar de bestelpagina te gaan. Als particulier kun je
-          ons Sappie vinden bij een van onze verschillende <Link to="/winkels-en-restaurants">verkooppunten</Link> in Utrecht.
+          ons Sappie vinden bij een van onze verschillende <Link to="/winkels-en-restaurants">verkooppunten in Utrecht</Link>.
         </p>
         <div className="shop__grid">
           <Link to="/bestellen" className="prod prod--geel">
@@ -251,8 +251,8 @@ function SiteFooter() {
         <div className="foot__col foot__col--contact">
           <p className="foot__col-title">Contact</p>
           <a href="mailto:info@sappie-limoncello.nl" className="foot__link">info@sappie-limoncello.nl</a>
-          <a href="tel:+31657966718" className="foot__link">Jesse: 06 57 96 67 18</a>
-          <a href="tel:+31619365416" className="foot__link">Oscar: 06 19 36 54 16</a>
+          <a href="tel:+31657966718" className="foot__link foot__tel"><span className="foot__tel-name">Jesse</span>06 57 96 67 18</a>
+          <a href="tel:+31619365416" className="foot__link foot__tel"><span className="foot__tel-name">Oscar</span>06 19 36 54 16</a>
         </div>
         <div className="foot__col foot__col--menu">
           <p className="foot__col-title">Menu</p>

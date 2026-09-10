@@ -99,8 +99,8 @@ function SiteFooter() {
         <div className="foot__col foot__col--contact">
           <p className="foot__col-title">Contact</p>
           <a href="mailto:info@sappie-limoncello.nl" className="foot__link">info@sappie-limoncello.nl</a>
-          <a href="tel:+31657966718" className="foot__link">Jesse: 06 57 96 67 18</a>
-          <a href="tel:+31619365416" className="foot__link">Oscar: 06 19 36 54 16</a>
+          <a href="tel:+31657966718" className="foot__link foot__tel"><span className="foot__tel-name">Jesse</span>06 57 96 67 18</a>
+          <a href="tel:+31619365416" className="foot__link foot__tel"><span className="foot__tel-name">Oscar</span>06 19 36 54 16</a>
         </div>
         <div className="foot__col foot__col--menu">
           <p className="foot__col-title">Menu</p>
