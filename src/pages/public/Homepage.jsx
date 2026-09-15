@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Instagram } from 'lucide-react';
 import { SiteNav } from '../../components/SiteNav.jsx';
 import '../../styles/homepage.css';
-import sappieMark from '../../assets/marks/sappie-mark.png';
 import iwsc93 from '../../assets/badges/iwsc-93.png';
 import oscarEnJesseDomtuin from '../../assets/photos/oscar-en-jesse-domtuin.jpg';
 
@@ -48,12 +47,7 @@ function Hero() {
                 <React.Fragment key={i}>
                   {line.text}
                   {line.dot && '.'}
-                  {line.accentMark && (
-                    <span className="qmark">
-                      {line.accentMark}
-                      <img src={sappieMark} alt="" className="qmark__dot" />
-                    </span>
-                  )}
+                  {line.accentMark}
                   {i < lines.length - 1 && <br />}
                 </React.Fragment>
               ))}

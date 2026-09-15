@@ -9,6 +9,8 @@ import { applyBrandMapStyle } from '../../lib/mapboxBrandStyle.js';
 import aanduidingGeel from '../../assets/marks/aanduiding-geel.png';
 import domtuinUtrecht from '../../assets/photos/domtuin-utrecht.jpg';
 import whitbyAbbey from '../../assets/photos/whitby-abbey.jpg';
+import monteDeiCappuccini1 from '../../assets/photos/monte-dei-cappuccini-1.jpg';
+import monteDeiCappuccini2 from '../../assets/photos/monte-dei-cappuccini-2.jpg';
 import '../../styles/winkels.css';
 import '../../styles/reviews.css';
 import '../../styles/welkom.css';
@@ -20,19 +22,27 @@ mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN || '';
 const WORLD_PHOTOS = [
   {
     id: 'utrecht',
-    place: 'Nederland, Utrecht',
+    place: 'Domtuin, Nederland',
     lat: 52.0907,
     lng: 5.1214,
-    photo: domtuinUtrecht,
+    photos: [domtuinUtrecht],
     caption: 'Waar het allemaal begon: in de Domtuin.',
   },
   {
     id: 'whitby-abbey',
-    place: 'Verenigd Koninkrijk, Whitby Abbey',
+    place: 'Whitby Abbey, Verenigd Koninkrijk',
     lat: 54.4869,
     lng: -0.6068,
-    photo: whitbyAbbey,
+    photos: [whitbyAbbey],
     caption: 'Sappie op bezoek bij Whitby Abbey.',
+  },
+  {
+    id: 'monte-dei-cappuccini',
+    place: 'Monte dei Cappuccini, Italië',
+    lat: 45.0596,
+    lng: 7.6975,
+    photos: [monteDeiCappuccini1, monteDeiCappuccini2],
+    caption: 'Ons Sappie geniet van het uitzicht over de Monte dei Cappuccini.',
   },
 ];
 
@@ -119,7 +129,7 @@ function GlobePanel({ onOpenPhoto, activeId }) {
           <p className="mapnote">Mapbox-token ontbreekt (VITE_MAPBOX_TOKEN).</p>
         )}
       </div>
-      <figcaption className="wc-story__cap">Sappie around the world.</figcaption>
+      <figcaption className="wc-story__cap"></figcaption>
     </figure>
   );
 }
@@ -147,23 +157,62 @@ function WorldList({ activeId, setActiveId, onOpenPhoto }) {
 }
 
 function PhotoModal({ item, onClose }) {
+  const [photoIndex, setPhotoIndex] = useState(0);
+
+  // Bij een nieuwe locatie (ander item) altijd weer bij de eerste foto beginnen.
   useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    setPhotoIndex(0);
+  }, [item]);
+
+  const photoCount = item?.photos.length ?? 0;
+  const goPrev = () => setPhotoIndex((i) => Math.max(0, i - 1));
+  const goNext = () => setPhotoIndex((i) => Math.min(photoCount - 1, i + 1));
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      else if (e.key === 'ArrowLeft') goPrev();
+      else if (e.key === 'ArrowRight') goNext();
+    };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onClose, photoCount]);
 
   if (!item) return null;
+  const hasMultiple = photoCount > 1;
   return (
     <div className="modal" onClick={onClose}>
+      {hasMultiple && (
+        <button
+          type="button"
+          className="modal__nav modal__nav--prev"
+          style={{ visibility: photoIndex > 0 ? 'visible' : 'hidden' }}
+          onClick={(e) => { e.stopPropagation(); goPrev(); }}
+          aria-label="Vorige foto"
+        >
+          &lsaquo;
+        </button>
+      )}
       <div className="modal__card modal__card--creme" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
         <button type="button" className="modal__close" onClick={onClose} aria-label="Sluiten">&times;</button>
-        <img src={item.photo} alt={item.place} style={{ width: '100%', height: 'auto', display: 'block', marginBottom: '1rem' }} />
+        <img src={item.photos[photoIndex]} alt={item.place} style={{ width: '100%', height: 'auto', display: 'block', marginBottom: '1rem' }} />
         <div className="modal__meta">
           <span className="modal__name">{item.place}</span>
           <span className="modal__when">{item.caption}</span>
         </div>
       </div>
+      {hasMultiple && (
+        <button
+          type="button"
+          className="modal__nav modal__nav--next"
+          style={{ visibility: photoIndex < photoCount - 1 ? 'visible' : 'hidden' }}
+          onClick={(e) => { e.stopPropagation(); goNext(); }}
+          aria-label="Volgende foto"
+        >
+          &rsaquo;
+        </button>
+      )}
     </div>
   );
 }

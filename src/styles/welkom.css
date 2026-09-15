@@ -83,4 +83,6 @@ header.ph--welkom .ph__body {
   .wc-story .wc-story__photo--polaroid { width: 86%; }
   .wc-story .wc-story__cap { padding: 0.3rem 0 0.4rem; }
   header.ph--welkom { margin-top: 1rem; margin-bottom: 0.75rem; }
+  header.ph--welkom .ph__body { font-size: 15px; }
+  .wc-story .wc-story__body p { font-size: 15px; }
 }
