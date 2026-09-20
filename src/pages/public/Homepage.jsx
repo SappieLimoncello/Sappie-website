@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram } from 'lucide-react';
 import { SiteNav } from '../../components/SiteNav.jsx';
@@ -19,6 +19,48 @@ const HEADLINES = [
   [{ text: 'Geen' }, { text: 'Gedoe' }, { text: 'Gewoon' }, { text: 'Sappie', dot: true }],
 ];
 const HEADLINE_INTERVAL = 4000;
+
+const LEMON_COUNT_TARGET = 1735;
+const LEMON_COUNT_DURATION = 6000;
+
+function LemonCounterPanel() {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    let raf;
+    // Telt pas op zodra het blok in beeld scrolt, anders is de animatie
+    // allang voorbij tegen de tijd dat iemand hier voorbij scrolt.
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || started.current) return;
+      started.current = true;
+      let start = null;
+      function tick(timestamp) {
+        if (start === null) start = timestamp;
+        const progress = Math.min((timestamp - start) / LEMON_COUNT_DURATION, 1);
+        setCount(Math.round(progress * LEMON_COUNT_TARGET));
+        if (progress < 1) raf = requestAnimationFrame(tick);
+      }
+      raf = requestAnimationFrame(tick);
+      observer.disconnect();
+    }, { threshold: 0.4 });
+    observer.observe(node);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <div className="panel panel--counter" ref={ref}>
+      <span className="panel-counter__label">Totaal geschilde citroenen</span>
+      <span className="panel-counter__count">{count.toLocaleString('nl-NL')}</span>
+    </div>
+  );
+}
 
 function Hero() {
   const [headlineIndex, setHeadlineIndex] = useState(0);
@@ -53,17 +95,19 @@ function Hero() {
               ))}
             </h1>
           </div>
-          <div className="tiles">
-            <Link to="/bestellen" className="tile tile--mark tile--mark-geel">
-              <img src={beeldmerk9} alt="" className="tile__bg" />
-              <span className="tile__text">Bestel<br />hier</span>
-              <span className="arr">&rarr;</span>
-            </Link>
-            <Link to="/productie" className="tile tile--mark tile--mark-blauw">
-              <img src={beeldmerk8} alt="" className="tile__bg" />
-              <span className="tile__text">Ontdek<br />Sappie</span>
-              <span className="arr">&rarr;</span>
-            </Link>
+          <div className="tiles-col">
+            <div className="tiles">
+              <Link to="/bestellen" className="tile tile--mark tile--mark-geel">
+                <img src={beeldmerk9} alt="" className="tile__bg" />
+                <span className="tile__text">Bestel<br />hier</span>
+                <span className="arr">&rarr;</span>
+              </Link>
+              <Link to="/productie" className="tile tile--mark tile--mark-blauw">
+                <img src={beeldmerk8} alt="" className="tile__bg" />
+                <span className="tile__text">Ontdek<br />Sappie</span>
+                <span className="arr">&rarr;</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -123,8 +167,7 @@ function VariantWerf() {
           <div className="panel__body panel__body--wide">
             <p className="panel__text">
               We proberen zo veel mogelijk van onze grondstoffen te gebruiken, zo
-              maken we van het citroensap heerlijke limonade! Ook leveren wij alle
-              Sappies met elektrisch vervoer, zo houden we onze impact laag.
+              maken we van het citroensap heerlijke limonade!
             </p>
           </div>
         </div>
@@ -135,10 +178,10 @@ function VariantWerf() {
             <p className="panel__text">
               Omdat je kiest voor lokale Uteregse ondernemers! Elke fles wordt
               door ons (Jesse &amp; Oscar) gemaakt, zonder fabriek of tussenpersonen.
-              Daardoor houden we het simpel en puur: <strong>Geen gedoe, gewoon Sappie!</strong>
             </p>
           </div>
         </div>
+        <LemonCounterPanel />
       </div>
 
       <section className="shop shop--home">

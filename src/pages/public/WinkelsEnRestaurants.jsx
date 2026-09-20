@@ -257,7 +257,7 @@ function LocateBar({ postcodeInput, setPostcodeInput, status, errorMsg, onUseGeo
 function PageHead() {
   const markColor = useRandomMark();
   return (
-    <header className="ph ph--statement">
+    <header className="ph ph--statement ph--winkels">
       <span className="ph__eyebrow">Verkooppunten</span>
       <h1 className="ph__title ph__title--big">Waar vind je <span className={`ph__mark ${markColor}`}>ons Sappie</span> allemaal?</h1>
       <p className="ph__body ph__body--medium">
@@ -369,7 +369,7 @@ function MapPanel({ activeId, setActiveId, setExpandedId }) {
   );
 }
 
-function LocationList({ activeId, setActiveId, expandedId, setExpandedId, userCoords }) {
+function LocationList({ activeId, setActiveId, expandedId, setExpandedId, userCoords, listRef }) {
   const byName = (a, b) => a.name.localeCompare(b.name, 'nl');
   const withDistance = (loc) => ({ ...loc, _dist: distanceKm(userCoords, loc) });
   const byDistance = (a, b) => a._dist - b._dist;
@@ -383,7 +383,7 @@ function LocationList({ activeId, setActiveId, expandedId, setExpandedId, userCo
   }));
 
   return (
-    <div className="locator__list">
+    <div className="locator__list" ref={listRef}>
       {groups.map((g) => (
         <React.Fragment key={g.label}>
           <p className={`list__group-title list__group-title--${g.key}`}>{g.label}</p>
@@ -502,6 +502,7 @@ export default function WinkelsEnRestaurants() {
   const [postcodeInput, setPostcodeInput] = useState('');
   const [locateStatus, setLocateStatus] = useState('idle');
   const [locateError, setLocateError] = useState('');
+  const listRef = useRef(null);
 
   useEffect(() => {
     if (!isMobile) return;
@@ -557,6 +558,14 @@ export default function WinkelsEnRestaurants() {
       } catch {
         // opslaan is optioneel; werkt de sessie ook zonder prima.
       }
+      // Op mobiel staat de lijst onder de kaart, buiten beeld: zonder deze
+      // scroll lijkt het alsof zoeken niets doet. Met een offset, anders
+      // valt de "Slijterijen"-kop precies achter de sticky navbalk.
+      if (isMobile && listRef.current) {
+        const NAV_OFFSET = 90;
+        const top = listRef.current.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
     } catch {
       setLocateStatus('idle');
       setLocateError('Postcode niet gevonden. Controleer de invoer.');
@@ -588,6 +597,7 @@ export default function WinkelsEnRestaurants() {
           expandedId={expandedId}
           setExpandedId={setExpandedId}
           userCoords={activeUserCoords}
+          listRef={listRef}
         />
       </div>
       <SiteFooter />

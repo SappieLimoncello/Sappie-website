@@ -174,3 +174,7 @@
   .locator__list { max-height: none; }
   .ph__body-extra { display: none; }
 }
+
+@media (max-width: 480px) {
+  header.ph--winkels .ph__title--big { font-size: 1.5rem; }
+}

@@ -41,6 +41,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 /* ---- Entry tiles ---- */
+.tiles-col { display: flex; flex-direction: column; }
 .tiles { display: flex; gap: 0; }
 .tile {
   display: flex; flex-direction: column; justify-content: space-between;
@@ -137,6 +138,7 @@
   font-size: clamp(2rem, 4.5vw, 3.2rem); margin: 0 0 1.2rem;
 }
 .intro__body { max-width: 67%; margin: 0 auto; line-height: 1.65; color: var(--text-soft); font-weight: 500; }
+.intro__body a { text-decoration: underline; }
 
 /* ================================================================
    CELL — generic content block inside .bg grid
@@ -203,6 +205,7 @@
   display: grid; grid-template-columns: 1fr 1fr;
   gap: clamp(1rem, 2.5vw, 1.75rem);
   padding: clamp(1.5rem, 4vw, 3.5rem);
+  padding-top: calc(clamp(1.5rem, 4vw, 3.5rem) - 13.6px);
   background: var(--warm-wit);
 }
 .panel {
@@ -235,12 +238,38 @@
 .panel--blauw .panel__num,
 .panel--geel .panel__num { color: var(--olijf-zwart); }
 
+.panel--counter {
+  grid-column: 1 / -1;
+  display: flex; flex-direction: row; align-items: center; justify-content: center;
+  gap: 1.5rem;
+  padding: clamp(1.4rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.25rem);
+  background: #4E543B; color: var(--warm-wit);
+}
+.panel-counter__label {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.01em; line-height: 0.98; font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+  text-align: left;
+}
+.panel-counter__count {
+  font-family: var(--font-display); font-weight: 900; letter-spacing: -0.02em;
+  line-height: 0.95; font-variant-numeric: tabular-nums; color: var(--warm-wit);
+  font-size: clamp(2.2rem, 5vw, 3.6rem); white-space: nowrap;
+}
+
 @media (max-width: 700px) {
   .stack { grid-template-columns: 1fr; }
   .intro__body { max-width: 640px; font-size: 0.9375rem; }
-  .panel { grid-template-areas: "num title" "body body"; align-items: center; }
+  .panel {
+    grid-template-areas: "num title" "body body"; align-items: center;
+    padding: 1.55rem 1.4rem 1.1rem;
+  }
   .panel__title { font-size: 1.25rem; }
-  .panel__text { font-size: 0.9375rem; text-align: justify; }
+  .panel__text { font-size: 0.9375rem; text-align: justify; margin-bottom: 0; }
+  .panel--counter {
+    flex-direction: column; align-items: center; gap: 0.2rem;
+    padding: clamp(1rem, 4vw, 1.4rem) 1rem;
+  }
+  .panel-counter__label { text-align: center; font-size: 0.92rem; white-space: nowrap; }
 }
 
 /* ================================================================
@@ -421,7 +450,7 @@
    ================================================================ */
 @media (max-width: 760px) {
   .hero__content { flex-direction: column; align-items: flex-start; }
-  .tiles { align-self: flex-end; }
+  .tiles-col { align-self: flex-end; }
   .bg[data-cols="2"] { grid-template-columns: 1fr !important; }
   .bg[data-cols="3"] { grid-template-columns: 1fr !important; }
 }

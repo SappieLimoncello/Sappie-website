@@ -52,7 +52,7 @@ const SECTIONS = [
   {
     id: 'leveren', num: '06', eyebrow: 'Stap 6', title: 'Leveren',
     accent: 'citroengeel', dark: false,
-    body: ['De allerlaatste stap is het leveren van onze Sappies! We brengen al onze bestellingen zelf langs en proberen dit zo veel mogelijk met elektrisch vervoer te doen, of soms gewoon op de fiets. Zo houden we onze voetafdruk zo laag mogelijk, proost!'],
+    body: ['De allerlaatste stap is het leveren van onze Sappies! We brengen al onze bestellingen zelf langs. Soms ook gewoon op de fiets. Zo houden we onze voetafdruk zo laag mogelijk, proost!'],
     photo: 'leveren',
   },
 ];
