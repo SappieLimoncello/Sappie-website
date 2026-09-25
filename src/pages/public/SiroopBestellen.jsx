@@ -18,10 +18,6 @@ const VOORRAAD_WAARSCHUWING = 5;
 // bijgewerkt. Op false zetten herstelt meteen de volledige bestelflow.
 const SIROOP_COMING_SOON = true;
 
-// Alleen voor /sirooptestomgeving: vaste voorraad zodat de melding
-// "Nog x op voorraad" zichtbaar is zonder databasekoppeling.
-const DEMO_VOORRAAD = 5;
-
 function euro(bedrag) {
   return bedrag.toFixed(2).replace('.', ',');
 }
@@ -138,6 +134,7 @@ function SiroopKassabon({ aantal, totaal, formZichtbaar, onVerder }) {
   // verandert het knoplabel tijdelijk in "Nog niks geselecteerd".
   const [label, setLabel] = useState('Verder met bestellen');
   const [fading, setFading] = useState(false);
+  const [leeg, setLeeg] = useState(false);
   const holdRef = useRef(null);
   const fadeRef = useRef(null);
 
@@ -152,8 +149,10 @@ function SiroopKassabon({ aantal, totaal, formZichtbaar, onVerder }) {
       clearTimeout(fadeRef.current);
       setLabel('Nog niks geselecteerd');
       setFading(false);
+      setLeeg(true);
       holdRef.current = setTimeout(() => {
         setFading(true);
+        setLeeg(false);
         fadeRef.current = setTimeout(() => {
           setLabel('Verder met bestellen');
           setFading(false);
@@ -188,7 +187,7 @@ function SiroopKassabon({ aantal, totaal, formZichtbaar, onVerder }) {
           Bestellen (nog niet actief)
         </button>
       ) : (
-        <button type="button" className="siroop__cart-cta" onClick={handleVerder}>
+        <button type="button" className={`siroop__cart-cta${leeg ? ' siroop__cart-cta--invalid' : ''}`} onClick={handleVerder}>
           <span className={`cart__cta-label${fading ? ' is-fading' : ''}`}>{label}</span>
         </button>
       )}
@@ -198,39 +197,32 @@ function SiroopKassabon({ aantal, totaal, formZichtbaar, onVerder }) {
 
 function SiroopForm({ values, onChange, consent, onConsentChange }) {
   return (
-    <div className="siroop__form">
-      <h3 className="siroop__form-title">Jouw gegevens</h3>
-      <div className="cform__grid">
-        <label className="field">
-          <span className="field__label">Voor- &amp; achternaam *</span>
-          <input className="field__input" type="text" placeholder="Je voor- en achternaam" value={values.naam} onChange={(e) => onChange('naam', e.target.value)} />
+    <div className="cform__grid siroop__velden">
+      <label className="field">
+        <span className="field__label">Voor- &amp; achternaam *</span>
+        <input className="field__input" type="text" placeholder="Je voor- en achternaam" value={values.naam} onChange={(e) => onChange('naam', e.target.value)} />
+      </label>
+      <label className="field">
+        <span className="field__label">E-mail *</span>
+        <input className="field__input" type="email" placeholder="jij@voorbeeld.nl" value={values.email} onChange={(e) => onChange('email', e.target.value)} />
+      </label>
+      <div className="field cform__consent-group">
+        <span className="field__label cform__consent-spacer" aria-hidden="true">&nbsp;</span>
+        <label className="consent">
+          <input type="checkbox" className="consent__box" checked={consent.terms} onChange={(e) => onConsentChange('terms', e.target.checked)} />
+          <span className="consent__text">
+            Ik ga akkoord met de{' '}
+            <Link to="/algemene-voorwaarden" target="_blank" rel="noreferrer" className="consent__link" onClick={(e) => e.stopPropagation()}>algemene voorwaarden</Link>{' '}
+            van Sappie Limoncello*
+          </span>
         </label>
-        <label className="field">
-          <span className="field__label">E-mail *</span>
-          <input className="field__input" type="email" placeholder="jij@voorbeeld.nl" value={values.email} onChange={(e) => onChange('email', e.target.value)} />
+        <label className="consent">
+          <input type="checkbox" className="consent__box" checked={consent.dataUse} onChange={(e) => onConsentChange('dataUse', e.target.checked)} />
+          <span className="consent__text">
+            Ik ga akkoord met het{' '}
+            <Link to="/privacy-statement" target="_blank" rel="noreferrer" className="consent__link" onClick={(e) => e.stopPropagation()}>privacy statement</Link>*
+          </span>
         </label>
-        <label className="field">
-          <span className="field__label">Telefoonnummer</span>
-          <input className="field__input" type="tel" placeholder="06 12 34 56 90" value={values.telefoon} onChange={(e) => onChange('telefoon', e.target.value)} />
-        </label>
-        <div className="field cform__consent-group">
-          <span className="field__label cform__consent-spacer" aria-hidden="true">&nbsp;</span>
-          <label className="consent">
-            <input type="checkbox" className="consent__box" checked={consent.terms} onChange={(e) => onConsentChange('terms', e.target.checked)} />
-            <span className="consent__text">
-              Ik ga akkoord met de{' '}
-              <Link to="/algemene-voorwaarden" target="_blank" rel="noreferrer" className="consent__link" onClick={(e) => e.stopPropagation()}>algemene voorwaarden</Link>{' '}
-              van Sappie Limoncello*
-            </span>
-          </label>
-          <label className="consent">
-            <input type="checkbox" className="consent__box" checked={consent.dataUse} onChange={(e) => onConsentChange('dataUse', e.target.checked)} />
-            <span className="consent__text">
-              Ik ga akkoord met het{' '}
-              <Link to="/privacy-statement" target="_blank" rel="noreferrer" className="consent__link" onClick={(e) => e.stopPropagation()}>privacy statement</Link>*
-            </span>
-          </label>
-        </div>
       </div>
     </div>
   );
@@ -287,10 +279,10 @@ function SiteFooter() {
 export default function SiroopBestellen({ testmodus = false }) {
   const [aantal, setAantal] = useState(0);
   const [formZichtbaar, setFormZichtbaar] = useState(false);
-  const [form, setForm] = useState({ naam: '', email: '', telefoon: '' });
+  const [form, setForm] = useState({ naam: '', email: '' });
   const [consent, setConsent] = useState({ terms: false, dataUse: false });
-  // null = nog niet geladen (of Supabase niet gekoppeld); daarna een getal.
-  const [voorraad, setVoorraad] = useState(testmodus ? DEMO_VOORRAAD : null);
+  // null = geen voorraadmelding tonen (nog niet geladen, of bewust uit).
+  const [voorraad, setVoorraad] = useState(null);
 
   useEffect(() => {
     if (testmodus || !supabaseConfigured) return;
@@ -299,10 +291,10 @@ export default function SiroopBestellen({ testmodus = false }) {
     });
   }, [testmodus]);
 
-  const formRef = useRef(null);
+  const sectieRef = useRef(null);
   useEffect(() => {
-    if (formZichtbaar && formRef.current) {
-      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (formZichtbaar && sectieRef.current) {
+      sectieRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }, [formZichtbaar]);
 
@@ -320,10 +312,26 @@ export default function SiroopBestellen({ testmodus = false }) {
       {comingSoon ? (
         <ComingSoon />
       ) : (
-        <div className="siroop">
+        <form className="cform cform--contact siroop" ref={sectieRef} onSubmit={(e) => e.preventDefault()}>
           <div className="siroop__row">
-            <SiroopCard aantal={aantal} voorraad={voorraad} onMinder={minder} onMeer={meer} />
-            <SiroopInfo />
+            <div className="siroop__col">
+              <div className="siroop__blokken">
+                <SiroopCard aantal={aantal} voorraad={voorraad} onMinder={minder} onMeer={meer} />
+                <SiroopInfo />
+              </div>
+              {formZichtbaar && (
+                <div className="contact contact--tight contact--nested">
+                  <div className="contact__form-wrap">
+                    <SiroopForm
+                      values={form}
+                      onChange={(veld, waarde) => setForm((prev) => ({ ...prev, [veld]: waarde }))}
+                      consent={consent}
+                      onConsentChange={(veld, waarde) => setConsent((prev) => ({ ...prev, [veld]: waarde }))}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
             <SiroopKassabon
               aantal={aantal}
               totaal={totaal}
@@ -331,17 +339,7 @@ export default function SiroopBestellen({ testmodus = false }) {
               onVerder={() => setFormZichtbaar(true)}
             />
           </div>
-          {formZichtbaar && (
-            <div ref={formRef}>
-              <SiroopForm
-                values={form}
-                onChange={(veld, waarde) => setForm((prev) => ({ ...prev, [veld]: waarde }))}
-                consent={consent}
-                onConsentChange={(veld, waarde) => setConsent((prev) => ({ ...prev, [veld]: waarde }))}
-              />
-            </div>
-          )}
-        </div>
+        </form>
       )}
       <SiteFooter />
     </>

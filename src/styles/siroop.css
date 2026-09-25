@@ -7,8 +7,19 @@
 .siroop {
   margin: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 4vw, 3.5rem) clamp(3rem, 6vw, 5rem);
 }
+/* Zelfde opzet als het limoncello-bestelformulier (.shop__row/.shop__col):
+   links de productblokken met daaronder het gegevensformulier, rechts de
+   kassabon die daarnaast blijft staan. */
 .siroop__row {
-  display: grid; grid-template-columns: repeat(3, 1fr) minmax(230px, 322px);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(230px, 322px);
+  align-items: stretch; gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+.siroop__col {
+  display: flex; flex-direction: column; min-width: 0;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+.siroop__blokken {
+  display: grid; grid-template-columns: repeat(3, 1fr);
   align-items: stretch; gap: clamp(1.25rem, 2.5vw, 2rem);
 }
 .siroop__info { grid-column: span 2; }
@@ -101,7 +112,7 @@
   font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
   letter-spacing: -0.01em; font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: 0;
 }
-.siroop__cart-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+.siroop__cart-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 0.6rem; flex: 1; }
 .siroop__cart-empty { flex: 1; font-size: 0.86rem; color: var(--text-soft); margin: 0; }
 .siroop__cart-item { display: flex; justify-content: space-between; gap: 0.6rem; font-size: 0.88rem; }
 .siroop__cart-item-name { font-weight: 600; }
@@ -115,24 +126,22 @@
   border: none; background: var(--citroengeel); color: var(--olijf-zwart);
   font-family: var(--font-display); font-weight: 800; font-size: 0.82rem;
   letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 0.85rem 1rem; cursor: pointer; transition: filter 140ms ease;
+  padding: 0.85rem 1rem; cursor: pointer;
+  transition: filter 140ms ease, background-color 600ms ease, color 600ms ease;
 }
 .siroop__cart-cta:hover { filter: brightness(0.94); }
 .siroop__cart-cta:disabled { opacity: 0.45; cursor: not-allowed; filter: none; }
+.siroop__cart-cta--invalid {
+  background: var(--utrecht-rood); color: var(--warm-wit); transition: filter 140ms ease;
+}
 
-/* ---- Gegevensformulier (verschijnt na "Verder met bestellen") ---- */
-.siroop__form {
-  background: var(--zand); padding: clamp(1.5rem, 3vw, 2.25rem);
-  margin-top: clamp(1.25rem, 2.5vw, 2rem);
-  display: flex; flex-direction: column; gap: 1.1rem;
-}
-.siroop__form-title {
-  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
-  letter-spacing: -0.01em; font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: 0;
-}
+/* Naam en e-mail onder elkaar links, de twee akkoordvinkjes ernaast rechts. */
+.siroop__velden { align-items: start; }
+.siroop__velden .cform__consent-group { grid-column: 2; grid-row: 1 / 3; }
 
 @media (max-width: 900px) {
   .siroop__row { grid-template-columns: 1fr; }
+  .siroop__blokken { grid-template-columns: 1fr; }
   .siroop__info { grid-column: auto; }
   .siroop__info-boat { display: none; }
 }

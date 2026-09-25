@@ -121,6 +121,7 @@ function ProductGrid({ qty, onChange }) {
 function Kassabon({ qty, cartItems, subtotal, onContinue, showSubmit, canReview, onReview }) {
   const [label, setLabel] = useState('Verder met bestellen');
   const [fading, setFading] = useState(false);
+  const [leeg, setLeeg] = useState(false);
   const holdRef = useRef(null);
   const fadeRef = useRef(null);
 
@@ -140,8 +141,10 @@ function Kassabon({ qty, cartItems, subtotal, onContinue, showSubmit, canReview,
       clearTimeout(fadeRef.current);
       setLabel('Nog niks geselecteerd');
       setFading(false);
+      setLeeg(true);
       holdRef.current = setTimeout(() => {
         setFading(true);
+        setLeeg(false);
         fadeRef.current = setTimeout(() => {
           setLabel('Verder met bestellen');
           setFading(false);
@@ -194,7 +197,7 @@ function Kassabon({ qty, cartItems, subtotal, onContinue, showSubmit, canReview,
         </div>
       </aside>
       {onContinue && (
-        <button type="button" className="cart__cta" onClick={handleContinue}>
+        <button type="button" className={`cart__cta${leeg ? ' cart__cta--invalid' : ''}`} onClick={handleContinue}>
           <span className={`cart__cta-label${fading ? ' is-fading' : ''}`}>{label}</span>
         </button>
       )}
