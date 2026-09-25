@@ -41,6 +41,7 @@ const PRERENDER_ROUTES = [
 const EXCLUDED_ROUTES = {
   '/welkom': 'redirect naar /welkom-bij-sappie, geen eigen inhoud',
   '/around-the-world': 'nog niet in het menu, bewust nog niet vindbaar voor crawlers',
+  '/sirooptestomgeving': 'tijdelijke testomgeving om te delen, bewust niet vindbaar voor crawlers',
 };
 
 function checkRoutesAccountedFor() {

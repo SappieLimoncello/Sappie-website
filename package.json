@@ -13,6 +13,7 @@
   "dependencies": {
     "@react-email/components": "^1.0.12",
     "@react-email/render": "^2.1.0",
+    "@supabase/supabase-js": "^2.117.1",
     "lucide-react": "^0.446.0",
     "mapbox-gl": "^3.26.0",
     "react": "^18.3.1",

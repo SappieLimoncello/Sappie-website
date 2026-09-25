@@ -48,6 +48,11 @@
 .siroop__prod-vat {
   font-size: 0.7rem; font-weight: 600; opacity: 0.65; margin: -0.55rem 0 0; text-align: center;
 }
+.siroop__prod-stock {
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.04em; font-size: 0.72rem; margin: 0; color: var(--utrecht-rood);
+}
+.siroop__prod-stock--out { font-size: 0.85rem; }
 .siroop__prod-qtybtn {
   width: 24px; height: 24px; flex: none; border-radius: 50%;
   background: transparent; color: inherit; border: 2px solid currentColor;
@@ -77,6 +82,9 @@
 .siroop__info-list {
   margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 0.75rem;
   line-height: 1.55; font-size: 0.95rem;
+}
+@media (max-width: 900px) {
+  .siroop__info-list { font-size: 0.875rem; }
 }
 .siroop__info-list li::marker { color: var(--utrecht-rood); }
 .siroop__info-link { color: inherit; text-decoration: underline; }
@@ -110,8 +118,21 @@
   padding: 0.85rem 1rem; cursor: pointer; transition: filter 140ms ease;
 }
 .siroop__cart-cta:hover { filter: brightness(0.94); }
+.siroop__cart-cta:disabled { opacity: 0.45; cursor: not-allowed; filter: none; }
+
+/* ---- Gegevensformulier (verschijnt na "Verder met bestellen") ---- */
+.siroop__form {
+  background: var(--zand); padding: clamp(1.5rem, 3vw, 2.25rem);
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+  display: flex; flex-direction: column; gap: 1.1rem;
+}
+.siroop__form-title {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  letter-spacing: -0.01em; font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: 0;
+}
 
 @media (max-width: 900px) {
   .siroop__row { grid-template-columns: 1fr; }
+  .siroop__info { grid-column: auto; }
   .siroop__info-boat { display: none; }
 }

@@ -1,6 +1,5 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
 import PublicLayout from './pages/public/PublicLayout.jsx';
 import Homepage from './pages/public/Homepage.jsx';
 import Productie from './pages/public/Productie.jsx';
@@ -59,6 +58,9 @@ export default function App() {
           {/* Vorige interne route: laten doorverwijzen i.p.v. verwijderen. */}
           <Route path="/welkom" element={<Navigate to="/welkom-bij-sappie" replace />} />
           <Route path="/siroop-bestellen" element={<SiroopBestellen />} />
+          {/* Testomgeving om te delen: toont de volledige bestelflow terwijl
+              /siroop-bestellen nog de "komt binnenkort"-melding houdt. */}
+          <Route path="/sirooptestomgeving" element={<SiroopBestellen testmodus />} />
           <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
           <Route path="/privacy-statement" element={<PrivacyStatement />} />
           {/* Nog bewust niet in het menu: pas toevoegen aan SiteNav zodra dit live mag. */}
